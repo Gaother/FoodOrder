@@ -1,0 +1,34 @@
+[
+  {
+    "_id": {
+      "$oid": "66d0460da1e840d27a210c48"
+    },
+    "firstName": "Camille",
+    "lastName": "Lecoq",
+    "companyName": "SDL",
+    "email": "xirayt@gmail.com",
+    "phone": "0785083783",
+    "password": "$2a$10$dufk/e72dn407ARYZyJUVe/ryT30WxKqKCQUiCOX8EQQ/eQbUYSA2",
+    "role": "guest",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmQwNDYwZGExZTg0MGQyN2EyMTBjNDgiLCJyb2xlIjoiZ3Vlc3QiLCJpYXQiOjE3MjQ5MjU0NTMsImV4cCI6MTcyNDk1NDI1M30.SagaPDZBqF9bWU7X9Pk2HWQFQchduwJjKkGY3Y0MhSs",
+    "__v": {
+      "$numberInt": "0"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "66d046442f852f2252e082ef"
+    },
+    "firstName": "SuperAdmin",
+    "lastName": "SuperAdmin",
+    "companyName": "SuperAdmin",
+    "email": "admin@mail.fr",
+    "phone": "0000000000",
+    "password": "$2a$10$lhvKcke.dgcyJCB8jNPYnuaG9hIJ.cuB1Qoi7nbWr1bX9ClmpzcUK",
+    "role": "superadmin",
+    "__v": {
+      "$numberInt": "0"
+    },
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmQwNDY0NDJmODUyZjIyNTJlMDgyZWYiLCJyb2xlIjoic3VwZXJhZG1pbiIsImlhdCI6MTcyNTQ1MzkzOSwiZXhwIjoxNzI1NzEzMTM5fQ.95C3d1JDmcqIGT4hpFmOUAH6mdrDTYmIDV86wTv3QiY"
+  }
+]

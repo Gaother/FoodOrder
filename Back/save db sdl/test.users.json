@@ -1,0 +1,44 @@
+[{
+  "_id": {
+    "$oid": "658ec749fd5f8c26305e6e63"
+  },
+  "email": "admin@mail.fr",
+  "username": "admin",
+  "password": "$2a$10$6eZccAZY01h291uhLHVojOFr1uhnyzALdNkibm0o0Zgy80tsHyBAS",
+  "role": "admin",
+  "__v": 0,
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NThlYzc0OWZkNWY4YzI2MzA1ZTZlNjMiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MDQxODYxMDEsImV4cCI6MTcwNDQ0NTMwMX0.DE1Qdc4mAMW-Z8eG6coUYLqWGDAC3fXlC1PepVbSmTM"
+},
+{
+  "_id": {
+    "$oid": "6593c85e7a3dd7e98c0f4434"
+  },
+  "email": "alexis@mail.fr",
+  "username": "Alexis",
+  "password": "$2a$10$nKPUMZmrFSm2mUglj4cqy.kB0iPEhOxpuL8ILA8cIhZw1skoBgNky",
+  "role": "manager",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTkzYzg1ZTdhM2RkN2U5OGMwZjQ0MzQiLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTcwNDE4NzQ0NiwiZXhwIjoxNzA0NDQ2NjQ2fQ.Ukl7VmQ25wRZjuKlcUvurIzkQurvEuqVaYIGHsQV5l4",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6593c8797a3dd7e98c0f4441"
+  },
+  "email": "guillaume@mail.fr",
+  "username": "Guillaume",
+  "password": "$2a$10$YFdz26XWiaAeMmDQOaykPuFGrh6EgAMfU1eYrHjDxQS8dgQpV6VO.",
+  "role": "manager",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTkzYzg3OTdhM2RkN2U5OGMwZjQ0NDEiLCJyb2xlIjoidXNlciIsImlhdCI6MTcwNDE4NDA2NSwiZXhwIjoxNzA0NDQzMjY1fQ.rmFYOCbisEVRKgaBKeV3Z6mMlQz6i4yvYi0Ymz2zXxs",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6593d24d7a3dd7e98c100577"
+  },
+  "email": "thibaut@mail.fr",
+  "username": "Thibaut",
+  "password": "$2a$10$BdpKrwkdR7PmoARyCN.7DenVMcSAROGcS6/lpPxIOfivc1X8Q9M0C",
+  "role": "manager",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTkzZDI0ZDdhM2RkN2U5OGMxMDA1NzciLCJyb2xlIjoidXNlciIsImlhdCI6MTcwNDE4NjQ0NSwiZXhwIjoxNzA0MTkwMDQ1fQ.cHnX5ZIb4FOfun-biV5Qera_TrZDYLKzB2I2UyLD1uI",
+  "__v": 0
+}]

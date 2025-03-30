@@ -1,0 +1,22 @@
+require('dotenv').config();
+const jwt = require('jsonwebtoken');
+const SECRET_KEY = process.env.JWT_SECRET;
+
+function verifyToken(req, res, next) {
+    const token = req.headers['authorization']?.split(' ')[1]; // Extrait le token du header Authorization: Bearer <token>
+
+    if (token) {
+        jwt.verify(token, SECRET_KEY, (err, decoded) => {
+            if (err) {
+                return res.status(403).json({ message: "Le jeton est invalide" });
+            } else {
+                req.userId = decoded.userId; // Ajoutez l'ID utilisateur à la requête
+                next();
+            }
+        });
+    } else {
+        return res.status(401).json({ message: "Aucun jeton fourni, l'utilisateur n'est pas connecté" });
+    }
+}
+
+module.exports = verifyToken;
