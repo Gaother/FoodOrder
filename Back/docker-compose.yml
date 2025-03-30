@@ -90,6 +90,8 @@ services:
     build:
       context: .
       dockerfile: dockerfile
+    depends_on:
+      - mongodb
     environment:
       MONGODB_URI: mongodb://paolo:paoloMai@mongodb:27017/
       JWT_SECRET: "@4bG7!fZsP3wH9#M"
