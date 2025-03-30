@@ -84,7 +84,7 @@ services:
   #   networks:
   #     - nginx-proxy
   #     - my_network
-      
+
 
   food-back:
     build:
@@ -131,6 +131,8 @@ services:
       - mongodb_data:/data/db# - ./init-mongo:/docker-entrypoint-initdb.d  # Monter le répertoire des scripts d'initialisation
     networks:
       - nginx-proxy
+volumes:
+  mongodb_data:
 
 networks:
   nginx-proxy:
