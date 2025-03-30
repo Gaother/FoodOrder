@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { sub } from 'date-fns';
 
-const API_BASE_URL = 'https://api-stock.destockdis.com/api';
+const API_BASE_URL = 'https://api.paolo-sportelli.fr/api';
 // const API_BASE_URL = 'http://localhost:2700/api';
 
 const getAuthConfig = () => {
