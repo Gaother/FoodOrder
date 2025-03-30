@@ -1,0 +1,76 @@
+# version: '3.8'
+
+# services:
+#   mongodb:
+#     image: mongo:latest
+#     container_name: mongodb
+#     restart: always
+#     environment:
+#       MONGO_INITDB_ROOT_USERNAME: cuisinieregrandelargeur
+#       MONGO_INITDB_ROOT_PASSWORD: Agentpepites007
+#       MONGO_INITDB_DATABASE: Intranet
+#     ports:
+#       - "27017:27017"
+#     volumes:
+#       - mongodb_data:/data/db
+#     networks:
+#       - my_network
+
+#   express-app:
+#     build:
+#       context: .
+#       dockerfile: dockerfile
+#     environment:
+#       MONGODB_URI: mongodb://cuisinieregrandelargeur:Agentpepites007@mongodb:27017/
+#       JWT_SECRET: "@4bG7!fZsP3wH9#M"
+#       SESSION_SECRET: Y6n%8kPq@1#4!vTz
+#       COOKIE_SECRET: M4%rSfwh8:eAztq
+#       CSRF_SECRET: P$rN5o+AZ1H]~Bk
+#       DB_URI: mongodb://cuisinieregrandelargeur:Agentpepites007@mongodb:27017
+#       DB_HOST: mongo
+#       DB_PORT: 27017
+#       DB_USER: cuisinieregrandelargeur
+#       DB_PASS: Agentpepites007
+#     volumes:
+#       - "/home/ubuntu/web-api:/var/www"
+#     depends_on:
+#       - mongodb
+#     networks:
+#       - my_network
+#     restart:
+#       always
+
+#   
+
+# volumes:
+#   mongodb_data:
+
+# networks:
+#   my_network:
+
+
+version: '3.8'
+
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+      # - /home/ubuntu/web-api/public:/var/www/public
+    networks:
+      - nginx-proxy
+      - my_network
+    restart:
+      always
+
+networks:
+  nginx-proxy:
+    external: true
+  my_network:
+    driver: bridge
+
+

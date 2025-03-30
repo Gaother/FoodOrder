@@ -1,16 +1,16 @@
 version: '3.8'
 
 services:
-  destockdis-front:
+  food-front:
     build:
       context: .
       dockerfile: dockerfile
     environment:
       PORT: 2800
       VIRTUAL_PORT: 2800
-      VIRTUAL_HOST: stock.destockdis.com  # Assurez-vous de remplacer par votre domaine
-      LETSENCRYPT_HOST: stock.destockdis.com  # Assurez-vous de remplacer par votre domaine
-      LETSENCRYPT_EMAIL: camille@cuisinesetfourneaux.com
+      VIRTUAL_HOST: food.paolo-sportelli.fr  # Assurez-vous de remplacer par votre domaine
+      LETSENCRYPT_HOST: food.paolo-sportelli.fr  # Assurez-vous de remplacer par votre domaine
+      LETSENCRYPT_EMAIL: paolo110101@yahoo.fr
     networks:
       - nginx-proxy
     restart: always

@@ -1,0 +1,80 @@
+{{ $CurrentContainer := . }}
+{{ $IPAddress := $CurrentContainer.NetworkSettings.IPAddress }}
+{{ $NetworkSettings := $CurrentContainer.NetworkSettings }}
+{{ $Networks := $NetworkSettings.Networks }}
+
+{{ range $index, $network := $Networks }}
+  {{ if $network.IPAddress }}
+    {{ $IPAddress = $network.IPAddress }}
+  {{ end }}
+{{ end }}
+
+{{ $host := index $CurrentContainer.Labels "com.docker.compose.service" }}
+{{ $proto := "http" }}
+{{ $port := 80 }}
+
+{{ if index $CurrentContainer.Labels "VIRTUAL_PROTO" }}
+  {{ $proto = index $CurrentContainer.Labels "VIRTUAL_PROTO" }}
+{{ end }}
+{{ if index $CurrentContainer.Labels "VIRTUAL_PORT" }}
+  {{ $port = index $CurrentContainer.Labels "VIRTUAL_PORT" }}
+{{ end }}
+
+{{ $scheme := "http" }}
+{{ if eq $proto "https" }}
+  {{ $scheme = "https" }}
+{{ end }}
+
+upstream {{ $host }} {
+  server {{ $IPAddress }}:{{ $port }};
+}
+
+server {
+  listen 80;
+  server_name {{ $host }};
+
+  location /.well-known/acme-challenge/ {
+    root /var/www/certbot;
+  }
+
+  location / {
+    return 301 https://$host$request_uri;
+  }
+}
+
+server {
+  listen 443 ssl;
+  server_name {{ $host }};
+
+  ssl_certificate /etc/letsencrypt/live/{{ $host }}/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/{{ $host }}/privkey.pem;
+  client_max_body_size 100M;
+  proxy_connect_timeout 3600;
+  proxy_send_timeout 3600;
+  proxy_read_timeout 3600;
+  send_timeout 3600;
+  proxy_buffer_size 1024k;
+  proxy_buffers 4 1024k;
+  proxy_busy_buffers_size 1024k;
+
+  location /public/ {
+    alias /var/www/public/;
+  }
+
+  location / {
+    proxy_pass {{ $scheme }}://{{ $host }};
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection $connection_upgrade;
+    proxy_set_header Host $host;
+    proxy_cache_bypass $http_upgrade;
+  }
+
+  location /ws {
+    proxy_pass {{ $scheme }}://{{ $host }};
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection $connection_upgrade;
+    proxy_set_header Host $host;
+  }
+}
