@@ -109,8 +109,8 @@ services:
       VIRTUAL_HOST: api.paolo-sportelli.com  # Assurez-vous de remplacer par votre domaine
       LETSENCRYPT_HOST: api.paolo-sportelli.com  # Assurez-vous de remplacer par votre domaine
       LETSENCRYPT_EMAIL: paolo110101@yahoo.fr
-      #VAPID_PUBLIC_KEY: BH6Kn4hcDhq0fPY1eC5f40MF6gR2b6JIRhdl5rSCWRqZiRTJEqS3NisROYkPOeFiD_J2IKifjbsdb_Sz78IEcQo
-      #VAPID_PRIVATE_KEY: Nhld1bsoEH-kvCQ3roVe_wG4yVNRAKhOY-fKkjiS_LA
+      VAPID_PUBLIC_KEY: BH6Kn4hcDhq0fPY1eC5f40MF6gR2b6JIRhdl5rSCWRqZiRTJEqS3NisROYkPOeFiD_J2IKifjbsdb_Sz78IEcQo
+      VAPID_PRIVATE_KEY: Nhld1bsoEH-kvCQ3roVe_wG4yVNRAKhOY-fKkjiS_LA
     volumes:
       - "/home/ubuntu/web-api:/var/www"
     networks:
