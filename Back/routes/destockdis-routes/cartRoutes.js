@@ -178,7 +178,7 @@ router.post('/filter', checkRole(['admin', 'superadmin']), async (req, res) => {
             .populate({
             path: 'user',
             model: UserModel,
-            select: 'firstName lastName companyName email phone'
+            select: 'firstName lastName email phone'
             })
             .sort({ createdAt: -1 }) // Sort by createdAt in descending order
             .skip(skip)
@@ -290,7 +290,7 @@ router.get('/download-pdf/:id', checkRole(['admin', 'superadmin', "certifiate"])
             },
         }).populate({
             path: 'user', model: UserModel,
-            select: 'firstName lastName companyName email phone'
+            select: 'firstName lastName email phone'
         });
         if (!cart) {
             return res.status(404).send('Panier non trouvé');
@@ -317,7 +317,6 @@ router.get('/download-pdf/:id', checkRole(['admin', 'superadmin', "certifiate"])
 
         // Client Details
         doc.fontSize(10).text(`Client N° ${cart.user._id}`, { align: 'left' });
-        doc.fontSize(10).text(`Entreprise : ${cart.user.companyName}`, { align: 'left' });
         doc.text(`Client : M. ${cart.user.lastName} ${cart.user.firstName}`, { align: 'left' });
         doc.moveDown();
 

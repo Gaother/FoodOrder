@@ -94,7 +94,6 @@ const OrderItemComponent = ({ order, onStatusChange }) => {
       <div className="flex lg:flex-row flex-col justify-between lg:items-center border-gray-200 ">
         <div className="lg:w-2/6 overflow-x-auto mr-2">
           <h3 className="text-lg font-bold">Ref. commande: {order.orderID}</h3>
-          <p className="text-lg text-gray-600">Entreprise: {order.user.companyName}</p>
         </div>
         <div className="lg:w-2/6">
           <p className="text-lg text-gray-600">Utilisateur: {order.user.firstName} {order.user.lastName}</p>

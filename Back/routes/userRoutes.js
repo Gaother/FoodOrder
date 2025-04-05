@@ -16,7 +16,7 @@ const router = express.Router();
 
 // Inscription
 router.post('/register', async (req, res) => {
-    const { email, password, firstName, lastName, companyName, phone } = req.body;
+    const { email, password, firstName, lastName, phone } = req.body;
     try {
         await userHistoryLogger('register')(req);
         const UserModel = req.db.model('User', User.schema);  // Utilisez req.db pour accéder à la base
@@ -27,7 +27,6 @@ router.post('/register', async (req, res) => {
         user = await UserModel.create({
             firstName,
             lastName,
-            companyName,
             email,
             phone,
             password
@@ -240,7 +239,7 @@ router.get('/:id', checkRole(['admin', 'superadmin']), async (req, res) => {
 
 // Mettre à jour un utilisateur (admin seulement ou l'utilisateur lui-même)
 router.put('/:id', async (req, res) => {
-    const { firstName, lastName, companyName, password, role, email, phone, mailFeedSubscription, mailFeedMail, pushNotification } = req.body;
+    const { firstName, lastName, password, role, email, phone, mailFeedSubscription, mailFeedMail, pushNotification } = req.body;
 
     try {
         const UserModel = req.db.model('User', User.schema);
@@ -258,7 +257,6 @@ router.put('/:id', async (req, res) => {
         // Mise à jour de l'utilisateur
         if (firstName) user.firstName = firstName;
         if (lastName) user.lastName = lastName;
-        if (companyName) user.companyName = companyName;
         if (role && (userWhoAsk.role === 'admin' || userWhoAsk.role === 'superadmin')) user.role = role; // Seuls les admins peuvent changer le rôle
         if (email) user.email = email;
         if (password) user.password = password;

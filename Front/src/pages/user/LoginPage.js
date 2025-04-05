@@ -11,7 +11,6 @@ const LoginRegister = () => {
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState(''); // État pour gérer le prénom
   const [lastName, setLastName] = useState(''); // État pour gérer le nom
-  const [companyName, setCompanyName] = useState(''); // État pour gérer le nom public
   const [isRegister, setIsRegister] = useState(false); // État pour basculer entre login et register
   const [error, setError] = useState(''); // État pour gérer les messages d'erreur
   const [fieldErrors, setFieldErrors] = useState({});
@@ -49,11 +48,6 @@ const LoginRegister = () => {
     if (error) setError('');
   };
 
-  const handleCompanyNameChange = (event) => {
-    setCompanyName(event.target.value);
-    if (error) setError('');
-  };
-
   const handleLogin = async (event) => {
     event.preventDefault();
     const body = {
@@ -88,7 +82,6 @@ const LoginRegister = () => {
       password,
       firstName,
       lastName,
-      companyName,
       phone,
     };
     try {
@@ -109,7 +102,6 @@ const LoginRegister = () => {
       const translations = {
         firstName: 'Le prénom',
         lastName: 'Le nom',
-        companyName: 'Le nom de société',
         email: 'L\'email',
         password: 'Le mot de passe',
         phone: "Le numéro de téléphone"
@@ -165,17 +157,6 @@ const LoginRegister = () => {
                       onChange={handleFirstNameChange}
                     />
                     {fieldErrors.firstName && <p className="text-red-500">{fieldErrors.firstName}</p>}
-                  </div>
-
-                  <div className="mb-5">
-                    <label htmlFor="companyName" className="block mb-2 text-sm font-medium text-gray-600">Société</label>
-                    <input
-                      className={`block w-full p-3 rounded bg-gray-200 border ${fieldErrors.companyName ? 'border-red-500' : 'border-transparent'} focus:outline-none`}
-                      placeholder="Société"
-                      value={companyName}
-                      onChange={handleCompanyNameChange}
-                    />
-                    {fieldErrors.companyName && <p className="text-red-500">{fieldErrors.companyName}</p>}
                   </div>
 
                   <div className="mb-5">

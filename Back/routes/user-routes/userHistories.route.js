@@ -12,7 +12,7 @@ router.get('/', checkRole(['superadmin', 'admin']), async (req, res) => {
         const userHistories = await UserHistoryModel.find().sort({ createdAt: -1 }).populate({
             path: 'userId',
             model: UserModel,
-            select: 'firstName lastName companyName email phone'
+            select: 'firstName lastName email phone'
         });
         res.status(200).json(userHistories);
     } catch (error) {
