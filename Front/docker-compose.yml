@@ -1,4 +1,4 @@
-version: '3.8'
+#version: '3.8'
 
 services:
   food-front:
@@ -7,29 +7,6 @@ services:
       dockerfile: dockerfile
     environment:
       PORT: 2800
-      VIRTUAL_PORT: 2800
-      VIRTUAL_HOST: food.paolo-sportelli.fr  # Assurez-vous de remplacer par votre domaine
-      LETSENCRYPT_HOST: food.paolo-sportelli.fr  # Assurez-vous de remplacer par votre domaine
-      LETSENCRYPT_EMAIL: paolo110101@yahoo.fr
-    networks:
-      - nginx-proxy
+    ports:
+      - "2800:2800"  # Expose le port 2800 de votre machine hôte vers le conteneur
     restart: always
-
-  # nginx:
-  #   image: nginx:latest
-  #   ports:
-  #     - "80:80"
-  #     - "443:443"
-  #     - "8081:8081"
-  #   volumes:
-  #     - ./nginx:/etc/nginx/conf.d
-  #     - /etc/letsencrypt:/etc/letsencrypt:ro
-  #   depends_on:
-  #     - app
-  #   networks:
-  #     - my_network
-  #   restart: always
-networks:
-  nginx-proxy:
-    external: true
-  # Ajoutez d'autres services ici si nécessaire (comme une base de données, etc.)
