@@ -15,7 +15,6 @@ const ProfilePage = () => {
     _id: '',
     firstName: '',
     lastName: '',
-    companyName: '',
     email: '',
     role: '',
     password: '',
@@ -40,7 +39,6 @@ const ProfilePage = () => {
         _id: data._id,
         firstName: data.firstName,
         lastName: data.lastName,
-        companyName: data.companyName,
         email: data.email,
         role: data.role,
         password: '******',
@@ -51,7 +49,6 @@ const ProfilePage = () => {
       setEditableUserInfo({
         firstName: data.firstName,
         lastName: data.lastName,
-        companyName: data.companyName,
         email: data.email,
         password: '',
         mailFeedSubscription: data.mailFeedSubscription ? data.mailFeedSubscription : false,
@@ -83,7 +80,7 @@ const handleEditProfile = async () => {
     }
 
     // Check if any required field is empty
-    const requiredFields = ['firstName', 'lastName', 'companyName', 'email'];
+    const requiredFields = ['firstName', 'lastName', 'email'];
     const emptyFields = requiredFields.filter(field => body[field] === '');
     if (emptyFields.length > 0) {
         console.error('Erreur: Veuillez remplir tous les champs obligatoires');
@@ -165,17 +162,6 @@ const handleEditProfile = async () => {
                   type="text"
                   name="lastName"
                   value={editableUserInfo.lastName}
-                  onChange={handleInputChange}
-                  className="border-2 rounded-md p-1 flex-grow"
-                />
-              </div>
-              <div className="flex items-center border-b py-2">
-                <FaBuilding className="text-gray-400 mr-2" />
-                <span className="p-1">Société: </span>
-                <input
-                  type="text"
-                  name="companyName"
-                  value={editableUserInfo.companyName}
                   onChange={handleInputChange}
                   className="border-2 rounded-md p-1 flex-grow"
                 />

@@ -45,7 +45,6 @@ async function initializeAdminUser(db) {
             const adminUser = {
                 firstName: 'SuperAdmin',
                 lastName: 'SuperAdmin',
-                companyName: 'SuperAdmin',
                 password: 'P@ssw0rdP@ssw0rd',
                 email: "admin@mail.fr",
                 phone: '0000000000',

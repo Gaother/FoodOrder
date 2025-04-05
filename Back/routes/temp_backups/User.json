@@ -3,13 +3,12 @@
     "_id": {
       "$oid": "66d0460da1e840d27a210c48"
     },
-    "firstName": "Camille",
-    "lastName": "Lecoq",
-    "companyName": "SDL",
+    "firstName": "Paolo",
+    "lastName": "Sportelli",
     "email": "xirayt@gmail.com",
-    "phone": "0785083783",
+    "phone": "0664089400",
     "password": "$2a$10$dufk/e72dn407ARYZyJUVe/ryT30WxKqKCQUiCOX8EQQ/eQbUYSA2",
-    "role": "guest",
+    "role": "Autre",
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmQwNDYwZGExZTg0MGQyN2EyMTBjNDgiLCJyb2xlIjoiZ3Vlc3QiLCJpYXQiOjE3MjQ5MjU0NTMsImV4cCI6MTcyNDk1NDI1M30.SagaPDZBqF9bWU7X9Pk2HWQFQchduwJjKkGY3Y0MhSs",
     "__v": {
       "$numberInt": "0"
@@ -21,7 +20,6 @@
     },
     "firstName": "SuperAdmin",
     "lastName": "SuperAdmin",
-    "companyName": "SuperAdmin",
     "email": "admin@mail.fr",
     "phone": "0000000000",
     "password": "$2a$10$lhvKcke.dgcyJCB8jNPYnuaG9hIJ.cuB1Qoi7nbWr1bX9ClmpzcUK",

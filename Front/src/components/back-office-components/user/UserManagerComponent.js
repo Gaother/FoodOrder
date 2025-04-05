@@ -5,7 +5,7 @@ import { FaTrash, FaPencilAlt, FaTimes, FaCheck, FaPlus, FaExclamationTriangle, 
 
 const UserManagerComponent = ({ onUserCreated }) => {
     const [users, setUsers] = useState([]);
-    const [newUser, setNewUser] = useState({ lastName: '', firstName: '', companyName: '', email: '', phone:'', password: '', role: 'user' });
+    const [newUser, setNewUser] = useState({ lastName: '', firstName: '', email: '', phone:'', password: '', role: 'user' });
     const [editingIndex, setEditingIndex] = useState(-1); // -1 signifie qu'aucun utilisateur n'est en cours d'édition
     const [showModal, setShowModal] = useState(false);
     const [roles] = useState(['guest', 'viewer', 'certifiate', 'admin', 'superadmin']);
@@ -39,7 +39,7 @@ const UserManagerComponent = ({ onUserCreated }) => {
     const createUser = async () => {
         try {
           await api.register(newUser);
-          setNewUser({ lastName: '', firstName: '', companyName: '', email: '', phone:'', password: '' });
+          setNewUser({ lastName: '', firstName: '', email: '', phone:'', password: '' });
           await getAllUsers();
           onUserCreated();
         } catch (error) {
@@ -94,9 +94,6 @@ const UserManagerComponent = ({ onUserCreated }) => {
                 </div>
                 <div>
                   <input className="border-2 pl-1 border-white-100" type="text" name="firstName" value={newUser.firstName} onChange={handleNewUserChange} placeholder="Prénom"/>
-                </div>
-                <div>
-                  <input className="border-2 pl-1 border-white-100" type="text" name="companyName" value={newUser.companyName} onChange={handleNewUserChange} placeholder="Société"/>
                 </div>
                 <div>
                   <input className="border-2 pl-1 border-white-100" type="email" name="email" value={newUser.email} onChange={handleNewUserChange} placeholder="Email"/>
@@ -163,13 +160,6 @@ const UserManagerComponent = ({ onUserCreated }) => {
                             <input type="text" value={user.firstName} name="firstName" onChange={(e) => handleInputChange(e, index)} className="form-input rounded-md shadow-sm mt-1 block w-full" />
                           ) : (
                             <span className="block w-full">{user.firstName}</span>
-                          )}
-                        </td>
-                        <td className="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                          {editingIndex === index ? (
-                            <input type="text" value={user.companyName} name="companyName" onChange={(e) => handleInputChange(e, index)} className="form-input rounded-md shadow-sm mt-1 block w-full" />
-                          ) : (
-                            <span className="block w-full">{user.companyName}</span>
                           )}
                         </td>
                         <td className="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">

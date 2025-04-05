@@ -21,7 +21,7 @@ const UserHistoryComponent = () => {
 
     // Filter the user histories based on the search term
     const filteredUserHistories = userHistories.filter((history) =>
-        `${history.userId.lastName} ${history.userId.firstName} ${history.userId.companyName} ${history.userId.email} ${history.userId.phone} ${history.userCommand} ${history.userCommandData}`
+        `${history.userId.lastName} ${history.userId.firstName} ${history.userId.email} ${history.userId.phone} ${history.userCommand} ${history.userCommandData}`
             .toLowerCase()
             .includes(searchTerm.toLowerCase())
     );
@@ -68,7 +68,6 @@ const UserHistoryComponent = () => {
                                 <tr key={history._id} className="border-b hover:bg-gray-50">
                                     <td className="px-6 py-4 text-sm text-gray-900">{history.userId.lastName}</td>
                                     <td className="px-6 py-4 text-sm text-gray-900">{history.userId.firstName}</td>
-                                    <td className="px-6 py-4 text-sm text-gray-900">{history.userId.companyName}</td>
                                     <td className="px-6 py-4 text-sm text-gray-900">{history.userId.email}</td>
                                     <td className="px-6 py-4 text-sm text-gray-900">{history.userId.phone}</td>
                                     <td className="px-6 py-4 text-sm text-gray-900">
