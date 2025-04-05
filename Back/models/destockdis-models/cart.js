@@ -40,6 +40,9 @@ const CartSchema = new Schema({
     type: Boolean,
     default: false
   },
+  shippingDate: {
+    type: Date
+  },
   dateUserValidation: {
     type: Date
   },
