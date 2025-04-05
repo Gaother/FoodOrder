@@ -1,7 +1,6 @@
 const transporter = require('./mail.service');
 const User = require('../models/user');
 const Product = require('../models/destockdis-models/product');
-const Brand = require('../models/destockdis-models/brand');
 const path = require('path');
 const fs = require('fs');
 const excelJS = require('exceljs');  // Assurez-vous d'avoir installé cette bibliothèque avec `npm install exceljs`
@@ -10,12 +9,8 @@ const newsletterService = {
     async generateProductExcel(db) {
         try {
             const ProductModel = db.model('Product', Product.schema);
-            const BrandModel = db.model('Brand', Brand.schema);
             // Récupérer tous les produits actifs et populater la marque
-            const products = await ProductModel.find({ active: true }).populate({
-                path: 'brand',
-                model: BrandModel
-            });
+            const products = await ProductModel.find({ active: true });
             // Définir le chemin et le nom du fichier Excel
             const timestamp = new Date();
             const fileName = `stockDestockdis-${timestamp.getDate()}-${timestamp.getMonth() + 1}-${timestamp.getFullYear()}-${timestamp.getHours()}h${timestamp.getMinutes()}m${timestamp.getSeconds()}.xlsx`;
@@ -31,7 +26,7 @@ const newsletterService = {
             // Définir les en-têtes de colonnes
             worksheet.columns = [
                 { header: 'Marque', key: 'brand', width: 20 },
-                { header: 'Désignation', key: 'designation', width: 30 },
+                { header: 'Nom', key: 'nom', width: 30 },
                 { header: 'Référence', key: 'reference', width: 20 },
                 { header: 'EAN', key: 'ean', width: 20 },
                 { header: 'Prix Unitaire', key: 'price', width: 15 },
@@ -41,7 +36,7 @@ const newsletterService = {
             products.forEach((product) => {
                 worksheet.addRow({
                     brand: product.brand?.brand || 'N/A',
-                    designation: product.designation,
+                    nom: product.nom,
                     reference: product.reference,
                     ean: product.ean,
                     price: product.price.toFixed(2),

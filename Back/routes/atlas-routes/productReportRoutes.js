@@ -137,7 +137,7 @@ router.get('/gen-csv', async (req, res) => {
             if (!latestReport) return null; // Sauter si aucun rapport n'est trouvé
 
             const dataStructure = {
-                "Désignation": product.designation,
+                "Nom": product.nom,
                 "Référence": product.reference,
             };
 
@@ -226,7 +226,7 @@ router.post('/', async (req, res) => {
                 const nameLower = name.toLowerCase();
                 productQuery['$or'] = [
                     { reference: { $regex: new RegExp(nameLower, 'i') } },
-                    { designation: { $regex: new RegExp(nameLower, 'i') } }
+                    { nom: { $regex: new RegExp(nameLower, 'i') } }
                 ];
             }
             const products = await Product.find(productQuery);
@@ -253,7 +253,7 @@ router.post('/', async (req, res) => {
         if (name) {
             reports = reports.filter(report => 
                 report.product.reference.toLowerCase().includes(name.toLowerCase()) ||
-                report.product.designation.toLowerCase().includes(name.toLowerCase())
+                report.product.nom.toLowerCase().includes(name.toLowerCase())
             );
         }
 

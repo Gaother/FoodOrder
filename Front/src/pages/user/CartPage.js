@@ -153,10 +153,8 @@ return (
                     </div>
                   <div className="w-full flex items-center">
                     <div className="flex flex-col items-start space-y-1">
-                      <p className="text-base font-semibold text-gray-900">{item.product.designation}</p>
-                      <p className="text-sm text-gray-500">Marque: {item.product.brand.brand}</p>
+                      <p className="text-base font-semibold text-gray-900">{item.product.nom}</p>
                       <p className="text-sm text-gray-500">Réf: {item.product.reference}</p>
-                      <p className="text-sm text-gray-500">EAN: {item.product.ean}</p>
                       <p className="text-sm text-gray-500">Prix unitaire: {item.price} €</p>
                     </div>
     

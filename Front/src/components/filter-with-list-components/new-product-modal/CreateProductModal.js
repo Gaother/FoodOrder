@@ -3,37 +3,23 @@ import api from '../../../api/api';
 import { FaPlus, FaTrash, FaCheck, FaTimes, FaExclamationTriangle } from 'react-icons/fa';
 
 const CreateProductModal = ({ onClose, onCreate }) => {
-  const [brands, setBrands] = useState([]);
   const [specifications, setSpecifications] = useState([]);
   const [values, setValues] = useState({});
   const [selectedValues, setSelectedValues] = useState([]); // To store selected value IDs
   const [selectedSpecification, setSelectedSpecification] = useState(null);
-  const [productData, setProductData] = useState({
-    brand: '',
-    ean: '',
-    reference: '',
-    designation: '',
-    price: '',
-    stock: '',
-    comment: '',
-  });
   const [errorMessage, setErrorMessage] = useState('');
   const [searchTerm, setSearchTerm] = useState(''); // Local search term
+  const [productData, setProductData] = useState({
+    reference: '',
+    nom: '',
+    price: '',
+    comment: '',
+  });
 
   // Fetch brands and specifications on mount
   useEffect(() => {
-    fetchBrands();
     fetchSpecifications();
   }, []);
-
-  const fetchBrands = async () => {
-    try {
-      const response = await api.getAllBrand();
-      setBrands(response.data.sort((a, b) => a.brand.localeCompare(b.brand)));
-    } catch (error) {
-      console.error('Erreur lors de la récupération des marques:', error);
-    }
-  };
 
   const fetchSpecifications = async () => {
     try {
@@ -72,18 +58,15 @@ const CreateProductModal = ({ onClose, onCreate }) => {
   };
 
   const validateFields = () => {
-    const { brand, ean, reference, designation, price, stock } = productData;
-    return brand && ean && reference && designation && price && stock && selectedValues.length > 0;
+    const { reference, nom, price } = productData;
+    return reference && nom && price;
   };
 
   const resetFields = () => {
     setProductData({
-      brand: '',
-      ean: '',
       reference: '',
-      designation: '',
+      nom: '',
       price: '',
-      stock: '',
       comment: '',
     });
     setSelectedValues([]);
@@ -145,35 +128,21 @@ const CreateProductModal = ({ onClose, onCreate }) => {
         </div>
         <div className="p-5">
           <form onSubmit={(e) => { e.preventDefault(); createProduct(); }}>
-            {/* Select Brand */}
+            {/* Nom */}
             <div className="mb-4">
-              <label className="block text-sm font-bold mb-2">Marque</label>
-              <select
-                name="brand"
-                value={productData.brand}
+              <label className="block text-sm font-bold mb-2">Nom</label>
+              <input
+                type="text"
+                name="nom"
+                value={productData.nom}
                 onChange={handleInputChange}
                 className="border-2 w-full p-2 rounded-md"
-              >
-                <option value="">Sélectionner une marque</option>
-                {brands.map((brand) => (
-                  <option key={brand._id} value={brand._id}>{brand.brand}</option>
-                ))}
-              </select>
+                placeholder="Nom"
+              />
             </div>
-  
-            {/* EAN and Reference */}
-            <div className="flex justify-between gap-4 mb-4">
-              <div className="w-1/2">
-                <label className="block text-sm font-bold mb-2">EAN</label>
-                <input
-                  type="text"
-                  name="ean"
-                  value={productData.ean}
-                  onChange={handleInputChange}
-                  className="border-2 w-full p-2 rounded-md"
-                  placeholder="EAN"
-                />
-              </div>
+
+            {/* Reference */}
+            <div className="flex mb-4">
               <div className="w-1/2">
                 <label className="block text-sm font-bold mb-2">Référence</label>
                 <input
@@ -185,19 +154,6 @@ const CreateProductModal = ({ onClose, onCreate }) => {
                   placeholder="Référence"
                 />
               </div>
-            </div>
-  
-            {/* Designation */}
-            <div className="mb-4">
-              <label className="block text-sm font-bold mb-2">Désignation</label>
-              <input
-                type="text"
-                name="designation"
-                value={productData.designation}
-                onChange={handleInputChange}
-                className="border-2 w-full p-2 rounded-md"
-                placeholder="Désignation"
-              />
             </div>
   
             {/* Comment */}
@@ -213,8 +169,8 @@ const CreateProductModal = ({ onClose, onCreate }) => {
               />
             </div>
   
-            {/* Price and Stock */}
-            <div className="flex justify-between gap-4 mb-4">
+            {/* Price */}
+            <div className="flex mb-4">
               <div className="w-1/2">
                 <label className="block text-sm font-bold mb-2">Prix</label>
                 <input
@@ -224,17 +180,6 @@ const CreateProductModal = ({ onClose, onCreate }) => {
                   onChange={handleInputChange}
                   className="border-2 w-full p-2 rounded-md"
                   placeholder="Prix"
-                />
-              </div>
-              <div className="w-1/2">
-                <label className="block text-sm font-bold mb-2">Stock</label>
-                <input
-                  type="number"
-                  name="stock"
-                  value={productData.stock}
-                  onChange={handleInputChange}
-                  className="border-2 w-full p-2 rounded-md"
-                  placeholder="Stock"
                 />
               </div>
             </div>

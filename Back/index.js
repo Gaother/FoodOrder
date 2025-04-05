@@ -21,7 +21,6 @@ var cors = require('cors')
 const userRoutes = require('./routes/userRoutes');
 const userHistoriesRoutes = require('./routes/user-routes/userHistories.route');
 const resetPasswordRoutes = require('./routes/user-routes/resetPassword.route');
-const brandRoutes = require('./routes/destockdis-routes/brandRoutes');
 
 const backupRoutes = require('./routes/backupRoutes');
 

@@ -39,7 +39,7 @@ const SearchBarFilter = ({ searchQuery, onSearchChange }) => {
       <input
         className="flex-grow p-2 rounded-full border-2 border-gray-300 bg-white text-sm placeholder-gray-400 overflow-auto"
         type="text"
-        placeholder="Uniquement EAN, Référence, Nom"
+        placeholder="Uniquement Référence, Nom"
         value={searchTerm}
         onChange={handleSearchInputChange}
         onKeyDown={handleKeyPress}
