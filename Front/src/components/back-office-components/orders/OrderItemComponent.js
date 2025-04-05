@@ -141,10 +141,8 @@ const OrderItemComponent = ({ order, onStatusChange }) => {
               <div key={item.product._id}>
                 <li className="flex justify-between items-center py-4">
                   <div className="w-3/6 flex flex-col">
-                    <p className="text-base font-semibold text-gray-900">{item.product.designation}</p>
-                    <p className="text-sm text-gray-500">Marque: {item.product.brand.brand}</p>
+                    <p className="text-base font-semibold text-gray-900">{item.product.nom}</p>
                     <p className="text-sm text-gray-500">Réf: {item.product.reference}</p>
-                    <p className="text-sm text-gray-500">EAN: {item.product.ean}</p>
                   </div>
                   <div className="w-1/6 flex justify-start">
                     {editMode === item._id ? (

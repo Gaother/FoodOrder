@@ -5,7 +5,6 @@ const iconv = require('iconv-lite');
 const fs = require('fs');
 const path = require('path');
 const Product = require('../../models/destockdis-models/product');
-const Brand = require('../../models/destockdis-models/brand');
 const ProductSpecificationsValue = require('../../models/destockdis-models/productSpecificationsValue');
 const ProductSpecifications = require('../../models/destockdis-models/productSpecifications');
 const User = require('../../models/user');
@@ -146,7 +145,6 @@ router.post('/', checkRole(['admin', 'superadmin']), async (req, res) => {
 router.get('/', async (req, res) => {
     try {
         const ProductModel = req.db.model('Product', Product.schema);
-        const brand = req.db.model('brand', Brand.schema);
         const productSpecificationsValue = req.db.model('productSpecificationsValue', ProductSpecificationsValue.schema);
         const productSpecifications = req.db.model('productSpecifications', ProductSpecifications.schema);
 

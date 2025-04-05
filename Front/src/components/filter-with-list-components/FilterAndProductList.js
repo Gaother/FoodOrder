@@ -11,7 +11,6 @@ const FilterAndProductList = ({ onEdit }) => {
   const [maxPrice, setMaxPrice] = useState(0);
   const [minPrice, setMinPrice] = useState(0);
   const [specifications, setSpecifications] = useState([]);
-  const [brands, setBrands] = useState([]);
   const [activeFilters, setActiveFilters] = useState({}); // Contient les filtres actifs
   const location = useLocation(); // Utilisé pour lire l'URL actuelle
   const navigate = useNavigate(); // Utilisé pour mettre à jour l'URL
@@ -30,7 +29,6 @@ const FilterAndProductList = ({ onEdit }) => {
 
   useEffect(() => {
     fetchSpecifications();
-    fetchBrands();
     // Extraire les filtres de l'URL au démarrage
     parseFiltersFromURL();
   }, []);
@@ -57,15 +55,6 @@ const FilterAndProductList = ({ onEdit }) => {
       setSpecifications(response.data);
     } catch (error) {
       console.error('Erreur lors de la récupération des spécifications:', error);
-    }
-  };
-
-  const fetchBrands = async () => {
-    try {
-      const response = await api.getAllBrand();
-      setBrands(response.data);
-    } catch (error) {
-      console.error('Erreur lors de la récupération des marques:', error);
     }
   };
 
@@ -108,7 +97,6 @@ const FilterAndProductList = ({ onEdit }) => {
       <div className="md:w-1/4">
         <Filter
           specifications={specifications}
-          brands={brands}
           maxPrice={maxPrice}
           minPrice={minPrice}
           activeFilters={activeFilters} // Passer les filtres actifs au composant

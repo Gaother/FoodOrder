@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ProductsManagerComponent from '../../../components/filter-with-list-components/FilterAndProductList';
-import CreateBrandModal from '../../../components/filter-with-list-components/new-product-modal/CreateProductModal';
+import CreateProductModal from '../../../components/filter-with-list-components/new-product-modal/CreateProductModal';
 import UpdateProductStockButton from '../../../components/filter-with-list-components/UpdateProductStockButton';
 import { FaTrash, FaPencilAlt, FaTimes, FaCheck, FaPlus, FaExclamationTriangle, FaSearch } from 'react-icons/fa';
 
@@ -39,7 +39,7 @@ const ProductsManager = () => {
           </div>
         </div>
         {showModal && (
-        <CreateBrandModal onCreate={handleRefresh} showModal={showModal} onClose={() => setShowModal(false)} />
+        <CreateProductModal onCreate={handleRefresh} showModal={showModal} onClose={() => setShowModal(false)} />
         )}
         <ProductsManagerComponent key={refreshKey} onEdit={handleRefresh}/>
       </div>
