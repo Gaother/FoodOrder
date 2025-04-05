@@ -31,7 +31,7 @@ const newsletterService = {
             // Définir les en-têtes de colonnes
             worksheet.columns = [
                 { header: 'Marque', key: 'brand', width: 20 },
-                { header: 'Désignation', key: 'designation', width: 30 },
+                { header: 'Nom', key: 'nom', width: 30 },
                 { header: 'Référence', key: 'reference', width: 20 },
                 { header: 'EAN', key: 'ean', width: 20 },
                 { header: 'Prix Unitaire', key: 'price', width: 15 },
@@ -41,7 +41,7 @@ const newsletterService = {
             products.forEach((product) => {
                 worksheet.addRow({
                     brand: product.brand?.brand || 'N/A',
-                    designation: product.designation,
+                    nom: product.nom,
                     reference: product.reference,
                     ean: product.ean,
                     price: product.price.toFixed(2),

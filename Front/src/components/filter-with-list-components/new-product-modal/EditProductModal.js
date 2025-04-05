@@ -9,12 +9,9 @@ const EditProductModal = ({ product, onClose, onEdit }) => {
   const [selectedValues, setSelectedValues] = useState(product.specifications.map(spec => spec._id)); // IDs des valeurs spécifiées du produit
   const [selectedSpecification, setSelectedSpecification] = useState(null);
   const [productData, setProductData] = useState({
-    brand: product.brand._id || '',
-    ean: product.ean || '',
     reference: product.reference || '',
-    designation: product.designation || '',
+    nom: product.nom || '',
     price: product.price || '',
-    stock: product.stock || 0,
     comment: product.comment || '',
     active: product.active
   });
@@ -22,18 +19,8 @@ const EditProductModal = ({ product, onClose, onEdit }) => {
   const [searchTerm, setSearchTerm] = useState(''); // Local search term
 
   useEffect(() => {
-    fetchBrands();
     fetchSpecifications();
   }, []);
-
-  const fetchBrands = async () => {
-    try {
-      const response = await api.getAllBrand();
-      setBrands(response.data.sort((a, b) => a.brand.localeCompare(b.brand)));
-    } catch (error) {
-      console.error('Erreur lors de la récupération des marques:', error);
-    }
-  };
 
   const fetchSpecifications = async () => {
     try {
@@ -86,8 +73,8 @@ const EditProductModal = ({ product, onClose, onEdit }) => {
   };
 
   const validateFields = () => {
-    const { brand, ean, reference, designation, price, stock } = productData;
-    return brand && ean && reference && designation && price && stock && selectedValues.length > 0;
+    const { reference, nom, price } = productData;
+    return reference && nom && price;
   };
 
   const updateProduct = async () => {
@@ -154,35 +141,9 @@ const EditProductModal = ({ product, onClose, onEdit }) => {
         </div>
         <div className="p-5">
           <form onSubmit={(e) => { e.preventDefault(); updateProduct(); }}>
-            {/* Select Brand */}
-            <div className="mb-4">
-              <label className="block text-sm font-bold mb-2">Marque</label>
-              <select
-                name="brand"
-                value={productData.brand}
-                onChange={handleInputChange}
-                className="border-2 w-full p-2 rounded-md"
-              >
-                <option value="">Sélectionner une marque</option>
-                {brands.map((brand) => (
-                  <option key={brand._id} value={brand._id}>{brand.brand}</option>
-                ))}
-              </select>
-            </div>
   
-            {/* EAN and Reference */}
-            <div className="flex justify-between gap-4 mb-4">
-              <div className="w-1/2">
-                <label className="block text-sm font-bold mb-2">EAN</label>
-                <input
-                  type="text"
-                  name="ean"
-                  value={productData.ean}
-                  onChange={handleInputChange}
-                  className="border-2 w-full p-2 rounded-md"
-                  placeholder="EAN"
-                />
-              </div>
+            {/* Reference */}
+            <div className="flex mb-4">
               <div className="w-1/2">
                 <label className="block text-sm font-bold mb-2">Référence</label>
                 <input
@@ -196,13 +157,13 @@ const EditProductModal = ({ product, onClose, onEdit }) => {
               </div>
             </div>
   
-            {/* Designation */}
+            {/* Nom */}
             <div className="mb-4">
-              <label className="block text-sm font-bold mb-2">Désignation</label>
+              <label className="block text-sm font-bold mb-2">Nom</label>
               <input
                 type="text"
                 name="designation"
-                value={productData.designation}
+                value={productData.nom}
                 onChange={handleInputChange}
                 className="border-2 w-full p-2 rounded-md"
                 placeholder="Désignation"
@@ -222,8 +183,8 @@ const EditProductModal = ({ product, onClose, onEdit }) => {
               />
             </div>
   
-            {/* Price and Stock */}
-            <div className="flex justify-between gap-4 mb-4">
+            {/* Price */}
+            <div className="flex mb-4">
               <div className="w-1/2">
                 <label className="block text-sm font-bold mb-2">Prix</label>
                 <input
@@ -233,17 +194,6 @@ const EditProductModal = ({ product, onClose, onEdit }) => {
                   onChange={handleInputChange}
                   className="border-2 w-full p-2 rounded-md"
                   placeholder="Prix"
-                />
-              </div>
-              <div className="w-1/2">
-                <label className="block text-sm font-bold mb-2">Stock</label>
-                <input
-                  type="number"
-                  name="stock"
-                  value={productData.stock}
-                  onChange={handleInputChange}
-                  className="border-2 w-full p-2 rounded-md"
-                  placeholder="Stock"
                 />
               </div>
             </div>

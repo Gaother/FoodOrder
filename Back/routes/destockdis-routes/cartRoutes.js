@@ -1,7 +1,6 @@
 const express = require('express');
 const Cart = require('../../models/destockdis-models/cart');
 const Product = require('../../models/destockdis-models/product');
-const Brand = require('../../models/destockdis-models/brand')
 const User = require ('../../models/user');
 const checkRole = require('../../middleware/roleMiddleware');
 const user = require('../../models/user');
@@ -34,7 +33,6 @@ router.post('/product', checkRole(['certifiate', 'admin', 'superadmin']), async 
     try {
         const CartModel = req.db.model('Cart', Cart.schema);
         const ProductModel = req.db.model('Product', Product.schema);
-        const BrandModel = req.db.model('Brand', Brand.schema);
         let activeUserCart;
         if (cartID) {
             activeUserCart = await CartModel.findById(cartID);
@@ -54,13 +52,9 @@ router.post('/product', checkRole(['certifiate', 'admin', 'superadmin']), async 
                 }]
             });
         } else {
-            // ICI il faut vérifier si le produit à ajouter n'as pas la quantité supérieur à la quantité en stock
+            // ICI il faut vérifier si le produit à ajouter n'a pas la quantité supérieur à la quantité en stock
             const existingProductIndex = activeUserCart.products.findIndex(p => p.product.toString() === productID);
             if (existingProductIndex !== -1) {
-                const product = await ProductModel.findById(productID);
-                if (product.stock < activeUserCart.products[existingProductIndex].quantity + productQTY) {
-                    return res.status(404).send('Quantité supérieure à la quantité en stock');
-                }
                 // If the product already exists in the cart, update the quantity
                 activeUserCart.products[existingProductIndex].quantity += productQTY;
             } else {
@@ -78,10 +72,6 @@ router.post('/product', checkRole(['certifiate', 'admin', 'superadmin']), async 
                 populate: {
                     path: 'product',
                     model: ProductModel,
-                    populate: {
-                        path: 'brand',
-                        model: BrandModel
-                    }
                 }
         });
         res.status(201).json(activeUserCart);
@@ -98,7 +88,6 @@ router.post('/filter', checkRole(['admin', 'superadmin']), async (req, res) => {
         const UserModel = req.db.model('User', User.schema);
         const CartModel = req.db.model('Cart', Cart.schema);
         const ProductModel = req.db.model('Product', Product.schema);
-        const BrandModel = req.db.model('Brand', Brand.schema);
 
         let filterQuery = {};
 
@@ -169,10 +158,6 @@ router.post('/filter', checkRole(['admin', 'superadmin']), async (req, res) => {
             populate: {
                 path: 'product',
                 model: ProductModel,
-                populate: {
-                path: 'brand',
-                model: BrandModel
-                }
             }
             })
             .populate({
@@ -213,17 +198,12 @@ router.get('/active-user-cart', async (req, res) => {
     try {
         const CartModel = req.db.model('Cart', Cart.schema);
         const ProductModel = req.db.model('Product', Product.schema);
-        const BrandModel = req.db.model('Brand', Brand.schema)
 
         const cart = await CartModel.find({ user: req.user.userId , adminValidated: false, adminCanceled: false, userValidated: false, userCanceled: false }).populate({
           path: 'products',
             populate: {
                 path: 'product',
                 model: ProductModel,
-                populate: {
-                    path: 'brand',
-                    model: BrandModel
-                }
             }  
         });
         if (!cart) {
@@ -241,17 +221,12 @@ router.get('/user-cart', async (req, res) => {
         const CartModel = req.db.model('Cart', Cart.schema);
         const ProductModel = req.db.model('Product', Product.schema);
         const UserModel = req.db.model('User', User.schema);
-        const BrandModel = req.db.model('Brand', Brand.schema)
 
         const cart = await CartModel.find({ user: req.user.userId, userValidated: true }).populate({
           path: 'products',
             populate: {
                 path: 'product',
                 model: ProductModel,
-                populate: {
-                    path: 'brand',
-                    model: BrandModel
-                }
             }  
         });
         if (!cart) {
@@ -269,7 +244,6 @@ router.get('/download-pdf/:id', checkRole(['admin', 'superadmin', "certifiate"])
         const CartModel = req.db.model('Cart', Cart.schema);
         const ProductModel = req.db.model('Product', Product.schema);
         const UserModel = req.db.model('User', User.schema);
-        const BrandModel = req.db.model('Brand', Brand.schema);
 
         // Define the directory for PDF storage and ensure it exists
         const directoryPath = path.join(__dirname, '../..', 'carts-pdf');
@@ -283,10 +257,6 @@ router.get('/download-pdf/:id', checkRole(['admin', 'superadmin', "certifiate"])
             populate: {
                 path: 'product',
                 model: ProductModel,
-                populate: {
-                    path: 'brand',
-                    model: BrandModel
-                }
             },
         }).populate({
             path: 'user', model: UserModel,
@@ -380,7 +350,7 @@ router.get('/download-pdf/:id', checkRole(['admin', 'superadmin', "certifiate"])
             const y = doc.y;
             doc.fontSize(10)
                 .text(`${product.reference} (${product.ean})`, 75, y, { width: 100, align: 'left' })
-                .text(`${product.designation} (${product.brand.brand})`, 175, y, { width: 200, align: 'left' })
+                .text(`${product.nom}`, 175, y, { width: 200, align: 'left' })
                 .text(productItem.quantity, 375, y, { width: 50, align: 'right' })
                 .text(productItem.price.toFixed(2), 425, y, { width: 50, align: 'right' })
                 .text(amountHT.toFixed(2), 475, y, { width: 50, align: 'right' });
@@ -516,9 +486,6 @@ router.put('/active-cart-user-action', async (req, res) => {
                 if (!existingProduct) {
                     return res.status(404).send(`Produit avec l'ID ${product.product} non trouvé`);
                 }
-                if (existingProduct.stock < product.quantity) {
-                    return res.status(404).send(`Quantité désirée pour le produit ${existingProduct.reference} supérieure à la quantité en stock`);
-                }
             }
             userCart.userValidated = true;
             userCart.dateUserValidation = new Date();
@@ -567,12 +534,6 @@ router.put('/admin-action', checkRole(['admin', 'superadmin']), async (req, res)
             userCart.dateAdminValidation = new Date();
             for (let product of userCart.products) {
                 const existingProduct = await ProductModel.findById(product.product);
-                existingProduct.stock -= product.quantity;
-                if (existingProduct.stock < 0) {
-                    return res.status(404).send(`Quantité désirée pour le produit ${existingProduct.reference} supérieure à la quantité en stock`);
-                } else if (existingProduct.stock === 0) {
-                    existingProduct.active = false;
-                }
                 await existingProduct.save();
             }
             await userCart.save();
@@ -592,7 +553,6 @@ router.put('/admin-action', checkRole(['admin', 'superadmin']), async (req, res)
                 console.log('Admin validated cart is being canceled');
                 for (let product of userCart.products) {
                     const existingProduct = await ProductModel.findById(product.product);
-                    existingProduct.stock += product.quantity;
                     existingProduct.active = true;
                     await existingProduct.save();
                 }
@@ -630,9 +590,6 @@ router.put('/:id', checkRole(['admin', 'superadmin']), async (req, res) => {
                 return res.status(404).send('Produit non présent dans le panier');
             if (productQuantity) {
                 const product = await ProductModel.findById(productID);
-                if (product.stock < productQuantity) {
-                    return res.status(404).send('Quantité supérieure à la quantité en stock pour le produit ' + product.reference + ", quantité en stock: " + product.stock);
-                }
                 existingCart.products[existingProductIndex].quantity = productQuantity;
             }
             if (productPrice)
@@ -652,7 +609,6 @@ router.delete('/product', checkRole(['certifiate', 'admin', 'superadmin']), asyn
     try {
         const CartModel = req.db.model('Cart', Cart.schema);
         const ProductModel = req.db.model('Product', Product.schema);
-        const BrandModel = req.db.model('Brand', Brand.schema)
         let activeUserCart;
         if (cartID) {
             activeUserCart = await CartModel.findById(cartID);
@@ -676,10 +632,6 @@ router.delete('/product', checkRole(['certifiate', 'admin', 'superadmin']), asyn
                           populate: {
                               path: 'product',
                               model: ProductModel,
-                              populate: {
-                                  path: 'brand',
-                                  model: BrandModel
-                              }
                           }  
                       }));
                 }
@@ -694,10 +646,6 @@ router.delete('/product', checkRole(['certifiate', 'admin', 'superadmin']), asyn
             populate: {
                 path: 'product',
                 model: ProductModel,
-                    populate: {
-                        path: 'brand',
-                        model: BrandModel
-                    }
                 }
             });
         res.status(201).json(activeUserCart);

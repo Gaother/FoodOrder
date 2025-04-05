@@ -4,16 +4,6 @@ const Schema = mongoose.Schema;
 
 const ProductSchema = new Schema({
   // MARQUE	- EAN	- REFERENCE	- DÉSIGNATION - PRIX UNITAIRE HT -	FAMILLE 1	- FAMILLE 3	- STOCK	-- DATE DE RECEPTTION	COMMANDE
-  brand : {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'brand',
-    required: true
-  },
-  ean: {
-    type: String,
-    required: true,
-    unique: true
-  },
   reference: {
     type: String,
     required: true,
@@ -23,15 +13,11 @@ const ProductSchema = new Schema({
     type: String,
     unique: true
   },
-  designation: {
+  nom: {
     type: String,
     required: true
   },
   price: {
-    type: Number,
-    required: true
-  },
-  stock : {
     type: Number,
     required: true
   },
@@ -53,7 +39,7 @@ const ProductSchema = new Schema({
     required: true,
     default: true
   },
- //Famille 1 famille 2 marque designation reference EAN prix stock
+ //Famille 1 famille 2 marque nom reference EAN prix stock
 
 
 
@@ -86,21 +72,14 @@ function capitalizeString(str) {
 // Hook "pre-save" pour forcer l'encodage UTF-8
 ProductSchema.pre('save', function (next) {
   try {
-    if (this.ean) {
-      this.ean = this.ean.replace(/\s+/g, ''); // Supprimer tous les espaces
-      this.ean = forceUTF8(this.ean);
-      if (this.ean.length !== 13 || !/^\d+$/.test(this.ean)) {
-        throw new Error('EAN must be 13 digits');
-      }
-    }
     if (this.reference) {
       this.reference = forceUTF8(this.reference);
       this.reference = this.reference.toUpperCase();
       this.normalizedReference = this.reference.replace(/[\s/-]/g, '').toLowerCase();
     }
-    if (this.designation) {
-      this.designation = forceUTF8(this.designation);
-      this.designation = capitalizeString(this.designation);
+    if (this.nom) {
+      this.nom = forceUTF8(this.nom);
+      this.nom = capitalizeString(this.nom);
     }
     if (this.comment) {
       this.comment = forceUTF8(this.comment);
