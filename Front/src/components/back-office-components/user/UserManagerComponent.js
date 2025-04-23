@@ -8,7 +8,7 @@ const UserManagerComponent = ({ onUserCreated }) => {
     const [newUser, setNewUser] = useState({ lastName: '', firstName: '', email: '', phone:'', password: '', role: 'user' });
     const [editingIndex, setEditingIndex] = useState(-1); // -1 signifie qu'aucun utilisateur n'est en cours d'édition
     const [showModal, setShowModal] = useState(false);
-    const [roles] = useState(['guest', 'viewer', 'certifiate', 'admin', 'superadmin']);
+    const [roles] = useState(['epitech', 'quadra', 'autre', 'superadmin']);
     const [searchTerm, setSearchTerm] = useState(''); // État pour gérer la recherche
 
     useEffect(() => {

@@ -40,7 +40,7 @@ const ProductList = ({ products, handleEditProduct, loading }) => {
         }
     } else {
         content = products.map((product, index) => (
-            <div key={index} onClick={() => handleRowClick(product)} className={((userRole === 'admin' || userRole === 'superadmin') && isAdminPage) ? 'cursor-pointer border-2 hover:border-yellow-400' : ''}>
+            <div key={index} onClick={() => handleRowClick(product)} className={(userRole === 'superadmin' && isAdminPage) ? 'cursor-pointer border-2 hover:border-yellow-400' : ''}>
                 <ProductListRow
                     product_id={product._id}
                     nom={product.nom}
@@ -64,7 +64,7 @@ const ProductList = ({ products, handleEditProduct, loading }) => {
                 </div>
             </div>
             {content}
-            {selectedProduct && (userRole === 'admin' || userRole === 'superadmin') && isAdminPage && (
+            {selectedProduct && userRole === 'superadmin' && isAdminPage && (
                 <EditProductModal onEdit={handleEditProduct} product={selectedProduct} onClose={handleCloseModal} />
             )}
         </div>

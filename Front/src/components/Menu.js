@@ -53,22 +53,24 @@ const Menu = () => {
         <div className="flex items-center">
           {isLoggedIn && <Link to="/"><img src={destockdisSvg} alt="Logo" className="h-12 w-36 mr-4 visible sm:block" /></Link>}
           {!isLoggedIn && <img src={destockdisSvg} alt="Logo" className="h-12 w-36 mr-4 visible sm:block" />}
-          {isLoggedIn && (userRole === "admin" || userRole === "superadmin") && <Link to="/admin/orders" className="text-white px-3 py-2 rounded-md text-lg leading-6 font-bold hover:bg-yellow-600">Admin Dashboard</Link>}
+          {isLoggedIn && userRole === "superadmin" && <Link to="/admin/orders" className="text-white px-3 py-2 rounded-md text-lg leading-6 font-bold hover:bg-yellow-600">Admin Dashboard</Link>}
         </div>
         <div className="flex items-center">
           {!isLoggedIn && location.pathname !== "/login" && location.pathname !== "/reset-password" && location.pathname !== "/change-password" && <Link to="/login" className="text-black px-3 py-2 rounded-md text-sm font-medium bg-yellow-500 hover:bg-yellow-600">Se connecter</Link>}
-          {isLoggedIn && <Link to="/profile" className="ml-4 flex p-0.5 items-center justify-center bg-yellow-500 text-white rounded-full h-12 w-12 hover:bg-yellow-600">
+          {isLoggedIn &&
+            <Link to="/profile" className="ml-4 flex p-0.5 items-center justify-center bg-yellow-500 text-white rounded-full h-12 w-12 hover:bg-yellow-600">
               <FaUser color='black' className='p-2 h-full w-full' />
-          </Link>}
-          {isLoggedIn && (userRole === "admin" || userRole === "superadmin") && 
+            </Link>
+          }
+          {isLoggedIn && userRole === "superadmin" ?
               <NotificationsManager/>
+            :
+            null
+              //<UserNotificationsManager/>
           }
-          {isLoggedIn && userRole === "certifiate" && 
-              <UserNotificationsManager/>
-          }
-          {isLoggedIn && userRole !== "guest" && userRole !== "viewer" && <Link to="/cart" className="ml-4 flex p-0.5 items-center justify-center bg-yellow-500 text-white rounded-full h-12 w-12 hover:bg-yellow-600">
-              <FaShoppingCart color='black' className='p-2 h-full w-full' />
-          </Link>}
+          <Link to="/cart" className="ml-4 flex p-0.5 items-center justify-center bg-yellow-500 text-white rounded-full h-12 w-12 hover:bg-yellow-600">
+            <FaShoppingCart color='black' className='p-2 h-full w-full' />
+          </Link>
         </div>
       </nav>
       <div className="mt-4 w-full h-full">

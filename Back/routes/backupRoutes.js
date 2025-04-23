@@ -59,7 +59,7 @@ const serializeDocument = (doc) => {
 };
 
 // Route pour générer les fichiers JSON de sauvegarde
-router.get('/generate', checkRole(['admin', 'superadmin']), async (req, res) => {
+router.get('/generate', checkRole(['superadmin']), async (req, res) => {
   try {
     // Supprimer les fichiers précédents s'ils existent
     if (fs.existsSync(backupDir)) {
@@ -92,7 +92,7 @@ router.get('/generate', checkRole(['admin', 'superadmin']), async (req, res) => 
 });
 
 // Route pour télécharger un fichier JSON spécifique
-router.get('/download/:filename', checkRole(['admin', 'superadmin']), (req, res) => {
+router.get('/download/:filename', checkRole(['superadmin']), (req, res) => {
   const filePath = path.join(backupDir, req.params.filename);
 
   if (fs.existsSync(filePath)) {

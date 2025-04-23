@@ -5,7 +5,7 @@ const UserHistory = require('../../models/userHistory');
 const checkRole = require('../../middleware/roleMiddleware');
 const userHistoryLogger = require('../../middleware/userHistoryMiddleware');
 
-router.get('/', checkRole(['superadmin', 'admin']), async (req, res) => {
+router.get('/', checkRole(['superadmin']), async (req, res) => {
     try {
         const UserModel = req.db.model('User', User.schema);  // Utilisez req.db pour accéder à la base
         const UserHistoryModel = req.db.model('UserHistory', UserHistory.schema);  // Utilisez req.db pour accéder à la base

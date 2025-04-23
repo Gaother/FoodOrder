@@ -6,7 +6,7 @@ const checkRole = require('../../middleware/roleMiddleware');
 const router = express.Router();
 
 // Créer une nouvelle valeur de spécification de produit
-router.post('/', checkRole(['admin', 'superadmin']), async (req, res) => {
+router.post('/', checkRole(['superadmin']), async (req, res) => {
     const { value, specification } = req.body;
 
     try {
@@ -60,7 +60,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // Mettre à jour une valeur de spécification de produit
-router.put('/:id', checkRole(['admin', 'superadmin']), async (req, res) => {
+router.put('/:id', checkRole(['superadmin']), async (req, res) => {
     try {
         const ProductSpecificationsValueModel = req.db.model('productSpecificationsValue', ProductSpecificationsValue.schema);
 
@@ -81,7 +81,7 @@ router.put('/:id', checkRole(['admin', 'superadmin']), async (req, res) => {
 });
 
 // Supprimer une valeur de spécification de produit
-router.delete('/:id', checkRole(['admin', 'superadmin']), async (req, res) => {
+router.delete('/:id', checkRole(['superadmin']), async (req, res) => {
     try {
         const ProductSpecificationsValueModel = req.db.model('productSpecificationsValue', ProductSpecificationsValue.schema);
         const ProductSpecificationsModel = req.db.model('productSpecifications', ProductSpecifications.schema);
