@@ -143,7 +143,6 @@ connectDB().then((db) => {
     app.use('/api/user-histories', userHistoriesRoutes);
 
     app.use('/api/backup', backupRoutes);
-    app.use('/api/brands', brandRoutes);
 
     app.use('/api/products', productRoutes);
     app.use('/api/product-specifications', productSpecificationsRoutes);

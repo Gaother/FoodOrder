@@ -22,7 +22,7 @@ const checkRole = require('../../middleware/roleMiddleware');
 const router = express.Router();
 
 // Créer une nouvelle marque
-router.post('/', checkRole(['admin', 'superadmin']), async (req, res) => {
+router.post('/', checkRole(['superadmin']), async (req, res) => {
     const { brand } = req.body;
 
     try {
@@ -66,7 +66,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // Mettre à jour une marque par son ID
-router.put('/:id', checkRole(['admin', 'superadmin']), async (req, res) => {
+router.put('/:id', checkRole(['superadmin']), async (req, res) => {
     const { brand } = req.body;
 
     try {

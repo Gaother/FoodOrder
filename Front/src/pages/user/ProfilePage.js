@@ -217,7 +217,7 @@ const handleEditProfile = async () => {
                   className="border-2 rounded-md p-1 flex-grow"
                 />
               </div></>)}
-              { (userInfo.role === "superadmin" || userInfo.role === "admin" )&& <div className="flex items-center border-b py-2">
+              { userInfo.role === "superadmin"&& <div className="flex items-center border-b py-2">
                 <PushNotification checked={editableUserInfo.pushNotificationsIsSubscribe} user={userInfo}/>
               </div>}
             </div>

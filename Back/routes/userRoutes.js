@@ -16,7 +16,7 @@ const router = express.Router();
 
 // Inscription
 router.post('/register', async (req, res) => {
-    const { email, password, firstName, lastName, phone } = req.body;
+    const { email, password, firstName, lastName, phone, role } = req.body;
     try {
         await userHistoryLogger('register')(req);
         const UserModel = req.db.model('User', User.schema);  // Utilisez req.db pour accéder à la base
@@ -29,14 +29,15 @@ router.post('/register', async (req, res) => {
             lastName,
             email,
             phone,
-            password
+            password,
+            role
         });
 
         const token = jwt.sign({ userId: user.id, role: user.role }, JWT_SECRET, { expiresIn: '30d' });
         user.token = token;
 
         await user.save();
-        notificationLogger.logger(req.db, 'user', `Nouvel utilisateur inscrit : ${lastName} ${firstName}`, "", ['admin', 'superadmin']);
+        notificationLogger.logger(req.db, 'user', `Nouvel utilisateur inscrit : ${lastName} ${firstName}`, "", ['superadmin']);
         res.status(201).json({ message: 'Inscription réussie', user });
     } catch (err) {
         console.error(err.message);
@@ -190,8 +191,8 @@ router.get('/info', async (req, res) => {
 
 // CRUD Operations
 
-// Créer un nouvel utilisateur (admin ou superadmin)
-router.post('/', checkRole(['admin', 'superadmin']), async (req, res) => {
+// Créer un nouvel utilisateur (superadmin)
+router.post('/', checkRole(['superadmin']), async (req, res) => {
     const { username, password, role, email, phone } = req.body;
     try {
         const UserModel = req.db.model('User', User.schema);
@@ -207,8 +208,8 @@ router.post('/', checkRole(['admin', 'superadmin']), async (req, res) => {
     }
 });
 
-// Lire tous les utilisateurs (admin et superadmin seulement)
-router.get('/', checkRole(['admin', 'superadmin']), async (req, res) => {
+// Lire tous les utilisateurs (superadmin seulement)
+router.get('/', checkRole(['superadmin']), async (req, res) => {
     try {
         const UserModel = req.db.model('User', User.schema);
 
@@ -220,8 +221,8 @@ router.get('/', checkRole(['admin', 'superadmin']), async (req, res) => {
     }
 });
 
-// Lire un utilisateur spécifique (admin et superadmin seulement)
-router.get('/:id', checkRole(['admin', 'superadmin']), async (req, res) => {
+// Lire un utilisateur spécifique (superadmin seulement)
+router.get('/:id', checkRole(['superadmin']), async (req, res) => {
     try {
         const UserModel = req.db.model('User', User.schema);
 
@@ -250,14 +251,14 @@ router.put('/:id', async (req, res) => {
         if (!userWhoAsk)
             return res.status(404).send('Utilisateur non trouvé');
         // Vérification des permissions
-        if (userWhoAsk.role !== 'admin' && userWhoAsk.role !== 'superadmin' && userWhoAsk._id.toString() !== req.params.id) {
+        if (userWhoAsk.role !== 'superadmin' && userWhoAsk._id.toString() !== req.params.id) {
             return res.status(403).send('Accès refusé');
         }
 
         // Mise à jour de l'utilisateur
         if (firstName) user.firstName = firstName;
         if (lastName) user.lastName = lastName;
-        if (role && (userWhoAsk.role === 'admin' || userWhoAsk.role === 'superadmin')) user.role = role; // Seuls les admins peuvent changer le rôle
+        if (role && userWhoAsk.role === 'superadmin') user.role = role; // Seuls les admins peuvent changer le rôle
         if (email) user.email = email;
         if (password) user.password = password;
         if (phone) user.phone = phone;
@@ -283,7 +284,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // Supprimer un utilisateur (admin seulement)
-router.delete('/:id', checkRole(['admin', 'superadmin']), async (req, res) => {
+router.delete('/:id', checkRole(['superadmin']), async (req, res) => {
     try {
         const UserModel = req.db.model('User', User.schema);
 

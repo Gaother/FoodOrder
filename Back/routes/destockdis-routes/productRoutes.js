@@ -92,7 +92,7 @@ router.post('/filter', async (req, res) => {
         if (specificationsFilters.length > 0) {
             filterQuery.$and = specificationsFilters;
         }
-        if (user.role !== 'admin' && user.role !== 'superadmin') {
+        if (user.role !== 'superadmin') {
             filterQuery.active = true; // Filtrer les produits actifs uniquement si pas un admin
         }
         
@@ -118,7 +118,7 @@ router.post('/filter', async (req, res) => {
 });
 
 // Créer un nouveau produit
-router.post('/', checkRole(['admin', 'superadmin']), async (req, res) => {
+router.post('/', checkRole(['superadmin']), async (req, res) => {
     const { reference, nom, price, reception, comment, specifications } = req.body;
 
     try {
@@ -220,7 +220,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // Mettre à jour un produit par son ID
-router.put('/:id', checkRole(['admin', 'superadmin']), async (req, res) => {
+router.put('/:id', checkRole(['superadmin']), async (req, res) => {
     const { reference, nom, price, reception, comment, specifications, active } = req.body;
 
     try {
@@ -250,7 +250,7 @@ router.put('/:id', checkRole(['admin', 'superadmin']), async (req, res) => {
 });
 
 // Supprimer un produit par son ID
-router.delete('/:id', checkRole(['admin', 'superadmin']), async (req, res) => {
+router.delete('/:id', checkRole(['superadmin']), async (req, res) => {
     try {
         const ProductModel = req.db.model('Product', Product.schema);
 

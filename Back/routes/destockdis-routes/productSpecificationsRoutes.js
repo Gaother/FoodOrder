@@ -17,7 +17,7 @@ const generateIndex = async (ProductSpecificationsModel) => {
 };
 
 // Créer une nouvelle spécification de produit
-router.post('/', checkRole(['admin', 'superadmin']), async (req, res) => {
+router.post('/', checkRole(['superadmin']), async (req, res) => {
     const { name, values } = req.body;
     try {
         const ProductSpecificationsModel = req.db.model('productSpecifications', ProductSpecifications.schema);
@@ -87,7 +87,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // Mettre à jour une spécification de produit
-router.put('/:id', checkRole(['admin', 'superadmin']), async (req, res) => {
+router.put('/:id', checkRole(['superadmin']), async (req, res) => {
     try {
         const ProductSpecificationsModel = req.db.model('productSpecifications', ProductSpecifications.schema);
 
@@ -128,7 +128,7 @@ router.put('/:id', checkRole(['admin', 'superadmin']), async (req, res) => {
 });
 
 // Supprimer une spécification de produit
-router.delete('/:id', checkRole(['admin', 'superadmin']), async (req, res) => {
+router.delete('/:id', checkRole(['superadmin']), async (req, res) => {
     try {
         const ProductSpecificationsModel = req.db.model('productSpecifications', ProductSpecifications.schema);
         const ProductSpecificationsValueModel = req.db.model('productSpecificationsValue', ProductSpecificationsValue.schema);

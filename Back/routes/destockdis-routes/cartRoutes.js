@@ -12,7 +12,7 @@ const notificationLogger = require('../../middleware/userNotificationMiddleware'
 const router = express.Router();
 
 // Créer un nouveau panier
-router.post('/', checkRole(['admin', 'superadmin']), async (req, res) => {
+router.post('/', checkRole(['superadmin']), async (req, res) => {
     const { cart } = req.body;
 
     try {
@@ -27,7 +27,7 @@ router.post('/', checkRole(['admin', 'superadmin']), async (req, res) => {
 });
 
 // Ajouter un produit à un panier
-router.post('/product', checkRole(['certifiate', 'admin', 'superadmin']), async (req, res) => {
+router.post('/product', checkRole(['superadmin']), async (req, res) => {
     const { productID, productQTY, cartID, productPrice } = req.body;
 
     try {
@@ -81,7 +81,7 @@ router.post('/product', checkRole(['certifiate', 'admin', 'superadmin']), async 
     }
 });
 
-router.post('/filter', checkRole(['admin', 'superadmin']), async (req, res) => {
+router.post('/filter', checkRole(['superadmin']), async (req, res) => {
     const { ids, dateStart, dateEnd, userValidated, userCanceled, adminValidated, adminCanceled, userId, userName, page = 1, size = 100 } = req.body;
 
     try {
@@ -239,7 +239,7 @@ router.get('/user-cart', async (req, res) => {
     }
 });
 
-router.get('/download-pdf/:id', checkRole(['admin', 'superadmin', "certifiate"]), async (req, res) => {
+router.get('/download-pdf/:id', checkRole(['superadmin']), async (req, res) => {
     try {
         const CartModel = req.db.model('Cart', Cart.schema);
         const ProductModel = req.db.model('Product', Product.schema);
@@ -491,7 +491,7 @@ router.put('/active-cart-user-action', async (req, res) => {
             userCart.dateUserValidation = new Date();
             if (comment) userCart.comment = comment
             await userCart.save();
-            notificationLogger.logger(req.db, 'order', `Nouvelle commande validée, numéro ${userCart.orderID}`, "", ['admin', 'superadmin']);
+            notificationLogger.logger(req.db, 'order', `Nouvelle commande validée, numéro ${userCart.orderID}`, "", ['superadmin']);
         } else if (action === 'cancel') {
             userCart = await CartModel.findById(cartID);
             if (!userCart) {
@@ -501,7 +501,7 @@ router.put('/active-cart-user-action', async (req, res) => {
             }
             userCart.userCanceled = true;
             await userCart.save();
-            notificationLogger.logger(req.db, 'order', `Nouvelle commande annulée, numéro ${userCart.orderID}`, "", ['admin', 'superadmin']);
+            notificationLogger.logger(req.db, 'order', `Nouvelle commande annulée, numéro ${userCart.orderID}`, "", ['superadmin']);
         } else {
             return res.status(404).send('Action non trouvée');
         }
@@ -512,7 +512,7 @@ router.put('/active-cart-user-action', async (req, res) => {
     }
 });
 
-router.put('/admin-action', checkRole(['admin', 'superadmin']), async (req, res) => {
+router.put('/admin-action', checkRole(['superadmin']), async (req, res) => {
     const { action, cartID } = req.body;
     try {
         const CartModel = req.db.model('Cart', Cart.schema);
@@ -570,7 +570,7 @@ router.put('/admin-action', checkRole(['admin', 'superadmin']), async (req, res)
 });
 
 // Mettre à jour un panier par son ID
-router.put('/:id', checkRole(['admin', 'superadmin']), async (req, res) => {
+router.put('/:id', checkRole(['superadmin']), async (req, res) => {
     const { productID, productQuantity, productPrice } = req.body;
 
     try {
@@ -604,7 +604,7 @@ router.put('/:id', checkRole(['admin', 'superadmin']), async (req, res) => {
 });
 
 // Supprimer un produit d'un panier par son ID
-router.delete('/product', checkRole(['certifiate', 'admin', 'superadmin']), async (req, res) => {
+router.delete('/product', checkRole(['superadmin']), async (req, res) => {
     const { productID, productQTY, cartID } = req.body;
     try {
         const CartModel = req.db.model('Cart', Cart.schema);
@@ -656,7 +656,7 @@ router.delete('/product', checkRole(['certifiate', 'admin', 'superadmin']), asyn
 });
 
 // Supprimer un panier par son ID
-router.delete('/:id', checkRole(['admin', 'superadmin']), async (req, res) => {
+router.delete('/:id', checkRole(['superadmin']), async (req, res) => {
     try {
         const CartModel = req.db.model('Cart', Cart.schema);
 

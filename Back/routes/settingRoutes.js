@@ -4,7 +4,7 @@ const Settings = require('../../models/settings');
 const checkRole = require('../../middleware/roleMiddleware');
 
 // Récupérer les paramètres (il ne doit y en avoir qu'un)
-router.get('/', checkRole(['admin', 'superadmin']), async (req, res) => {
+router.get('/', checkRole(['superadmin']), async (req, res) => {
     try {
         const settings = await Settings.findOne();
         if (!settings) {
@@ -17,7 +17,7 @@ router.get('/', checkRole(['admin', 'superadmin']), async (req, res) => {
 });
 
 // Mettre à jour les paramètres (ou créer s'ils n'existent pas)
-router.put('/', checkRole(['admin', 'superadmin']), async (req, res) => {
+router.put('/', checkRole(['superadmin']), async (req, res) => {
     try {
         let settings = await Settings.findOne();
         if (!settings) {
