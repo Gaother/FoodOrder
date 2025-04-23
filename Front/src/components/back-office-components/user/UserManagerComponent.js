@@ -39,7 +39,8 @@ const UserManagerComponent = ({ onUserCreated }) => {
     const createUser = async () => {
         try {
           await api.register(newUser);
-          setNewUser({ lastName: '', firstName: '', email: '', phone:'', password: '' });
+          setNewUser({ lastName: '', firstName: '', email: '', phone:'', password: '', role:'' });
+          setShowModal(false)
           await getAllUsers();
           onUserCreated();
         } catch (error) {
@@ -85,7 +86,7 @@ const UserManagerComponent = ({ onUserCreated }) => {
               <button onClick={() => setShowModal(true)} className="rounded-md bg-green-500 hover:bg-green-600 p-4 m-4">
               <span className="text-white flex flex-row items-center md:text-nowrap"><FaPlus className='m-0 md:mr-2'/><span className='hidden md:block'>Ajouter un nouvel utilisateur</span></span>              </button>
             </div>
-          </div>  
+          </div>
           {showModal && (
             <Modal onClose={() => setShowModal(false)}>
               <form onSubmit={(e) => { e.preventDefault(); createUser(); }} className="space-y-4">
@@ -104,16 +105,31 @@ const UserManagerComponent = ({ onUserCreated }) => {
                 <div>
                   <input className="border-2 pl-1 border-white-100" type="password" name="password" value={newUser.password} onChange={handleNewUserChange} placeholder="Mot de passe"/>
                 </div>
+                <div>
+                  <select
+                    className="border-2 pl-1 border-white-100"
+                    value={newUser.role}
+                    onChange={handleNewUserChange}
+                    name="role">
+                    <option value="" disabled defaultValue>Choisissez un rôle</option>
+                    <option value="epitech">Epitech</option>
+                    <option value="quadra">Quadra Diffusion</option>
+                    <option value="superadmin">Super Admin</option>
+                    <option value="autre">Autre</option>
+                  </select>
+                </div>
                 <div className="whitespace-nowrap flex flex-col items-center pt-4">
-                  <button type="submit" className="w-max py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 flex items-center justify-center">Créer</button>
+                  <button type="submit"
+                          className="w-max py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 flex items-center justify-center">Créer
+                  </button>
                 </div>
               </form>
             </Modal>
           )}
 
-              
-              {users.length === 0 ? (
-              // Afficher un message centré lorsque la liste des utilisateurs est vide
+
+          {users.length === 0 ? (
+            // Afficher un message centré lorsque la liste des utilisateurs est vide
               <div className="flex flex-col items-center justify-center h-64">
                 <FaExclamationTriangle className="text-gray-400 text-6xl mb-4" />
                 <p className="text-gray-500 text-xl">Aucun utilisateur</p>

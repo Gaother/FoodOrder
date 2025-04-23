@@ -64,7 +64,7 @@ const UserSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        default: 'certifiate', // Les valeurs possibles sont 'epitech', 'quadra', 'autre', 'superadmin'
+        default: 'autre', // Les valeurs possibles sont 'epitech', 'quadra', 'autre', 'superadmin'
     },
     token: {
         type: String

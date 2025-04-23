@@ -16,7 +16,7 @@ const router = express.Router();
 
 // Inscription
 router.post('/register', async (req, res) => {
-    const { email, password, firstName, lastName, phone } = req.body;
+    const { email, password, firstName, lastName, phone, role } = req.body;
     try {
         await userHistoryLogger('register')(req);
         const UserModel = req.db.model('User', User.schema);  // Utilisez req.db pour accéder à la base
@@ -29,7 +29,8 @@ router.post('/register', async (req, res) => {
             lastName,
             email,
             phone,
-            password
+            password,
+            role
         });
 
         const token = jwt.sign({ userId: user.id, role: user.role }, JWT_SECRET, { expiresIn: '30d' });

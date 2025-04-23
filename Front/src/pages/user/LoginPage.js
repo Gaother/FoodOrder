@@ -8,6 +8,7 @@ const LoginRegister = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [role, setRole] = useState('');
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState(''); // État pour gérer le prénom
   const [lastName, setLastName] = useState(''); // État pour gérer le nom
@@ -27,6 +28,11 @@ const LoginRegister = () => {
     setPhone(event.target.value);
     if (error) setError('');
   };
+
+  const handleRoleChange = (event) => {
+    setRole(event.target.value);
+    if (error) setError('');
+  }
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -83,6 +89,7 @@ const LoginRegister = () => {
       firstName,
       lastName,
       phone,
+      role,
     };
     try {
       const response = await api.register(body); // Assurez-vous que la route API /register existe
@@ -104,7 +111,8 @@ const LoginRegister = () => {
         lastName: 'Le nom',
         email: 'L\'email',
         password: 'Le mot de passe',
-        phone: "Le numéro de téléphone"
+        phone: "Le numéro de téléphone",
+        role: 'Le rôle'
       };
 
       const newFieldErrors = errors.reduce((acc, curr) => {
@@ -169,11 +177,25 @@ const LoginRegister = () => {
                     />
                     {fieldErrors.phone && <p className="text-red-500">{fieldErrors.phone}</p>}
                   </div>
-                </>
-              )}
 
-              <div className="mb-5">
-                <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-600">Email</label>
+                  <div className="mb-5">
+                    <label htmlFor="role" className="block mb-2 text-sm font-medium text-gray-600">Rôle</label>
+                    <select
+                      className="block mb-2 text-sm font-medium text-gray-600"
+                      value={role}
+                      onChange={handleRoleChange}>
+                      <option value="" disabled selected>Choisissez un rôle</option>
+                      <option value="epitech">Epitech</option>
+                      <option value="quadra">Quadra Diffusion</option>
+                      <option value="autre">Autre</option>
+                    </select>
+                    {fieldErrors.role && <p className="text-red-500">{fieldErrors.role}</p>}
+                  </div>
+                  </>
+                  )}
+
+                  <div className="mb-5">
+                    <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-600">Email</label>
                 <input
                       className={`block w-full p-3 rounded bg-gray-200 border ${fieldErrors.email ? 'border-red-500' : 'border-transparent'} focus:outline-none`}
                       placeholder="Email"
