@@ -19,13 +19,16 @@ services:
       DB_PASS: paoloMai
       SMTP_PASS: "dhsp ufbv vmjd fhrq"
       SMTP_MAIL: "stock.destockdis@gmail.com"
+      VIRTUAL_PORT: 2700
+      VIRTUAL_HOST: api.paolo-sportelli.com  # Assurez-vous de remplacer par votre domaine
+      LETSENCRYPT_HOST: api.paolo-sportelli.com  # Assurez-vous de remplacer par votre domaine
+      LETSENCRYPT_EMAIL: paolo110101@yahoo.fr
       VAPID_PUBLIC_KEY: BH6Kn4hcDhq0fPY1eC5f40MF6gR2b6JIRhdl5rSCWRqZiRTJEqS3NisROYkPOeFiD_J2IKifjbsdb_Sz78IEcQo
       VAPID_PRIVATE_KEY: Nhld1bsoEH-kvCQ3roVe_wG4yVNRAKhOY-fKkjiS_LA
     volumes:
       - "/home/ubuntu/web-api:/var/www"
-    ports:
-      - "2700:2700"  # À adapter si votre API écoute sur un autre port
-    restart: always
+    networks:
+      - nginx-proxy
 
   mongodb:
     image: mongo:latest
@@ -35,10 +38,19 @@ services:
       MONGO_INITDB_ROOT_USERNAME: paolo
       MONGO_INITDB_ROOT_PASSWORD: paoloMai
       MONGO_INITDB_DATABASE: foodOrders
+      VIRTUAL_HOST: db.paolo-sportelli.com  # Assurez-vous de remplacer par votre domaine
+      LETSENCRYPT_HOST: db.paolo-sportelli.com  # Assurez-vous de remplacer par votre domaine
+      LETSENCRYPT_EMAIL: paolo110101@yahoo.fr
     ports:
-      - "27017:27017"
+        - "27017:27017"
     volumes:
-      - mongodb_data:/data/db
+      - mongodb_data:/data/db# - ./init-mongo:/docker-entrypoint-initdb.d  # Monter le répertoire des scripts d'initialisation
+    networks:
+      - nginx-prox
 
 volumes:
   mongodb_data:
+
+networks:
+  nginx-proxy:
+    external: true

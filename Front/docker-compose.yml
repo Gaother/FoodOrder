@@ -7,6 +7,14 @@ services:
       dockerfile: dockerfile
     environment:
       PORT: 2800
-    ports:
-      - "2800:2800"  # Expose le port 2800 de votre machine hôte vers le conteneur
+      VIRTUAL_PORT: 2800
+      VIRTUAL_HOST: food.paolo-sportelli.fr  # Assurez-vous de remplacer par votre domaine
+      LETSENCRYPT_HOST: food.paolo-sportelli.fr  # Assurez-vous de remplacer par votre domaine
+      LETSENCRYPT_EMAIL: paolo110101@yahoo.fr
+    networks:
+      - nginx-proxy
     restart: always
+
+networks:
+  nginx-proxy:
+    external: true
