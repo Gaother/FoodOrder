@@ -8,10 +8,10 @@ const LoginRegister = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [role, setRole] = useState('');
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState(''); // État pour gérer le prénom
   const [lastName, setLastName] = useState(''); // État pour gérer le nom
-  const [companyName, setCompanyName] = useState(''); // État pour gérer le nom public
   const [isRegister, setIsRegister] = useState(false); // État pour basculer entre login et register
   const [error, setError] = useState(''); // État pour gérer les messages d'erreur
   const [fieldErrors, setFieldErrors] = useState({});
@@ -28,6 +28,11 @@ const LoginRegister = () => {
     setPhone(event.target.value);
     if (error) setError('');
   };
+
+  const handleRoleChange = (event) => {
+    setRole(event.target.value);
+    if (error) setError('');
+  }
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -46,11 +51,6 @@ const LoginRegister = () => {
 
   const handleLastNameChange = (event) => {
     setLastName(event.target.value);
-    if (error) setError('');
-  };
-
-  const handleCompanyNameChange = (event) => {
-    setCompanyName(event.target.value);
     if (error) setError('');
   };
 
@@ -88,8 +88,8 @@ const LoginRegister = () => {
       password,
       firstName,
       lastName,
-      companyName,
       phone,
+      role,
     };
     try {
       const response = await api.register(body); // Assurez-vous que la route API /register existe
@@ -109,10 +109,10 @@ const LoginRegister = () => {
       const translations = {
         firstName: 'Le prénom',
         lastName: 'Le nom',
-        companyName: 'Le nom de société',
         email: 'L\'email',
         password: 'Le mot de passe',
-        phone: "Le numéro de téléphone"
+        phone: "Le numéro de téléphone",
+        role: 'Le rôle'
       };
 
       const newFieldErrors = errors.reduce((acc, curr) => {
@@ -168,17 +168,6 @@ const LoginRegister = () => {
                   </div>
 
                   <div className="mb-5">
-                    <label htmlFor="companyName" className="block mb-2 text-sm font-medium text-gray-600">Société</label>
-                    <input
-                      className={`block w-full p-3 rounded bg-gray-200 border ${fieldErrors.companyName ? 'border-red-500' : 'border-transparent'} focus:outline-none`}
-                      placeholder="Société"
-                      value={companyName}
-                      onChange={handleCompanyNameChange}
-                    />
-                    {fieldErrors.companyName && <p className="text-red-500">{fieldErrors.companyName}</p>}
-                  </div>
-
-                  <div className="mb-5">
                     <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-600">Numéro de téléphone</label>
                     <input
                       className={`block w-full p-3 rounded bg-gray-200 border ${fieldErrors.phone ? 'border-red-500' : 'border-transparent'} focus:outline-none`}
@@ -188,11 +177,25 @@ const LoginRegister = () => {
                     />
                     {fieldErrors.phone && <p className="text-red-500">{fieldErrors.phone}</p>}
                   </div>
-                </>
-              )}
 
-              <div className="mb-5">
-                <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-600">Email</label>
+                  <div className="mb-5">
+                    <label htmlFor="role" className="block mb-2 text-sm font-medium text-gray-600">Rôle</label>
+                    <select
+                      className="block mb-2 text-sm font-medium text-gray-600"
+                      value={role}
+                      onChange={handleRoleChange}>
+                      <option value="" disabled selected>Choisissez un rôle</option>
+                      <option value="epitech">Epitech</option>
+                      <option value="quadra">Quadra Diffusion</option>
+                      <option value="autre">Autre</option>
+                    </select>
+                    {fieldErrors.role && <p className="text-red-500">{fieldErrors.role}</p>}
+                  </div>
+                  </>
+                  )}
+
+                  <div className="mb-5">
+                    <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-600">Email</label>
                 <input
                       className={`block w-full p-3 rounded bg-gray-200 border ${fieldErrors.email ? 'border-red-500' : 'border-transparent'} focus:outline-none`}
                       placeholder="Email"

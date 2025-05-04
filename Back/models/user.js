@@ -12,10 +12,6 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required : true
     },
-    companyName : {
-        type: String,
-        required : true
-    },
     email: {
         type: String,
         required: true,
@@ -68,7 +64,7 @@ const UserSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        default: 'guest', // Les valeurs possibles sont 'guest', 'viewer', 'certifiate', 'admin', 'superadmin'
+        default: 'autre', // Les valeurs possibles sont 'epitech', 'quadra', 'autre', 'superadmin'
     },
     token: {
         type: String

@@ -33,7 +33,7 @@ const notificationLogger = {
                 return;
             }
             if (userID === "" && role === "") {
-                const users = await UserModel.find({ role: { $in: ['admin', 'superadmin'] } });
+                const users = await UserModel.find({ role: { $in: ['superadmin'] } });
                 for (let user of users) {
                     user.notifications.push({notification: userNotificationData._id});
                     await user.save();

@@ -4,14 +4,15 @@ import api from '../../../api/api';
 import CircularLoadingComponent from '../../CircularLoadingComponent';
 
 const AddProductToCartModal = ({ product, onClose }) => {
-  const { stock, brand, designation, reference, ean } = product;
+  const { nom, reference } = product;
   const [quantity, setQuantity] = useState(1);
+  const [spicy, setSpicy] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleQuantityChange = (value) => {
     // Vérifie que la valeur est un nombre entre 1 et le stock
-    const newValue = Math.max(1, Math.min(stock, value)); 
+    const newValue = Math.max(1, value);
     setQuantity(newValue);
   };
 
@@ -30,6 +31,7 @@ const AddProductToCartModal = ({ product, onClose }) => {
         productID: product._id,
         productQTY: quantity,
         productPrice: product.price,
+        productSpicy: spicy,
       });
       setIsLoading(false);
       onClose(); // Ferme la modal après ajout au panier
@@ -53,14 +55,10 @@ const AddProductToCartModal = ({ product, onClose }) => {
           </button>
         </div>
         <div className="p-5">
-          <div className="mb-4">
-            <p className="text-sm font-bold">Marque :</p>
-            <p>{brand}</p>
-          </div>
 
           <div className="mb-4">
-            <p className="text-sm font-bold">Désignation :</p>
-            <p>{designation}</p>
+            <p className="text-sm font-bold">Nom :</p>
+            <p>{nom}</p>
           </div>
 
           <div className="mb-4 flex justify-between gap-4">
@@ -68,10 +66,16 @@ const AddProductToCartModal = ({ product, onClose }) => {
               <p className="text-sm font-bold">Référence :</p>
               <p>{reference}</p>
             </div>
-            <div>
-              <p className="text-sm font-bold">EAN :</p>
-              <p>{ean}</p>
-            </div>
+          </div>
+
+          <div className="mb-4">
+            <p className="text-sm font-bold">Piquant :</p>
+            <button
+              onClick={() => setSpicy(!spicy)}
+              className={`py-1 px-2 rounded-full ${spicy ? 'bg-red-500' : 'bg-gray-300'} text-white`}
+            >
+              {spicy ? 'Oui' : 'Non'}
+            </button>
           </div>
 
           <div className="mb-4 flex items-center justify-between">
@@ -97,12 +101,10 @@ const AddProductToCartModal = ({ product, onClose }) => {
               <button
                 onClick={() => handleQuantityChange(quantity + 1)}
                 className="bg-gray-300 hover:bg-gray-400 text-gray-800 py-1 px-2 rounded-full"
-                disabled={quantity >= stock}
               >
                 <FaPlus />
               </button>
             </div>
-            <p className="text-sm font-bold">Stock: {stock}</p>
           </div>
 
           {errorMessage && <p className="text-red-500">{errorMessage}</p>}

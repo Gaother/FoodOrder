@@ -10,6 +10,9 @@ const CartPage = () => {
   const navigate = useNavigate();
   const [cartData, setCartData] = useState([]);
   const [comment, setComment] = useState('');
+  const [dateLivraison, setDateLivraison] = useState('') ;
+  const [lieuLivraison, setLieuLivraison] = useState('');
+  const [prixTotal, setPrixTotal] = useState(0); // Prix total du panier
   const [totalItems, setTotalItems] = useState(0); // Nombre total d'articles
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -27,11 +30,13 @@ const CartPage = () => {
       if (!cart) {
         setCartData([]);
         calculateTotalItems([]); // Aucun article dans le panier
+        setPrixTotal(0.00); // Prix total à 0
         setIsLoading(false);
         return;
       }
       setCartData(cart.products);
       calculateTotalItems(cart.products); // Calculer le nombre total d'articles
+      calculateTotalPrice(cart.products); // Calculer le prix total
         setIsLoading(false);
     } catch (error) {
       console.error('Erreur lors de la récupération du panier:', error);
@@ -42,6 +47,11 @@ const CartPage = () => {
     const total = products.reduce((sum, item) => sum + item.quantity, 0);
     setTotalItems(total);
   };
+
+  const calculateTotalPrice = (products) => {
+    const total = products.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    setPrixTotal(total.toFixed(2));
+  }
 
   const addProductQuantityToCart = async (productId, currentQty, change) => {
     try {
@@ -89,9 +99,13 @@ const CartPage = () => {
     }
   };
 
+  const canValidateCart = () => {
+    return cartData.length > 0 && dateLivraison !== '';
+  }
+
     const validateActiveCart = async () => {
         try {
-            await api.activeCartUserAction({ action: 'validate', comment });
+            await api.activeCartUserAction({ action: 'validate', comment, dateLivraison, lieuLivraison });
             navigate('/');
         } catch (error) {
           setCartError(error);
@@ -153,10 +167,9 @@ return (
                     </div>
                   <div className="w-full flex items-center">
                     <div className="flex flex-col items-start space-y-1">
-                      <p className="text-base font-semibold text-gray-900">{item.product.designation}</p>
-                      <p className="text-sm text-gray-500">Marque: {item.product.brand.brand}</p>
+                      <p className="text-base font-semibold text-gray-900">{item.product.nom}</p>
                       <p className="text-sm text-gray-500">Réf: {item.product.reference}</p>
-                      <p className="text-sm text-gray-500">EAN: {item.product.ean}</p>
+                      <p className="text-sm text-gray-500">Piquant: {item.product.spicy ? 'Oui' : 'Non'}</p>
                       <p className="text-sm text-gray-500">Prix unitaire: {item.price} €</p>
                     </div>
     
@@ -209,8 +222,31 @@ return (
             <span className="text-lg font-medium text-gray-600">Total des articles :</span><br />
             <span className="text-xl font-bold text-gray-800">{totalItems} produit(s)</span>
           </div>
+
+          <div className="mb-6 flex flex-col">
+            <label htmlFor="dateLivraison" className="text-lg font-medium text-gray-600">Date de livraison :</label>
+            <input
+              type="date"
+              name="dateLivraison"
+              value={dateLivraison}
+              onChange={(e) => setDateLivraison(e.target.value)}
+              className="border px-2 py-1 rounded-md"
+            />
+          </div>
+
+          <div className="mb-6 flex flex-col">
+            <label htmlFor="adresseLivraison" className="text-lg font-medium text-gray-600">Adresse de livraison :</label>
+            <input
+              type="text"
+              name="adresseLivraison"
+              placeholder="Entrez votre adresse de livraison"
+              onChange={(e) => setLieuLivraison(e.target.value)}
+              className="w-full mt-2 p-2 border border-gray-300 rounded-md"
+            />
+          </div>
+
           <div className="mb-6">
-            <label htmlFor="comment" className="text-lg font-medium text-gray-600">Commentaire :</label>
+            <label htmlFor="comment" className="text-lg font-medium text-gray-600">Commentaire et allergies :</label>
             <textarea
               id="comment"
               rows="4"
@@ -220,9 +256,13 @@ return (
               onChange={(e) => setComment(e.target.value)}
             />
           </div>
+          <div className="mb-6">
+            <label htmlFor="comment" className="text-lg font-medium text-gray-600">Total : {prixTotal}€</label>
+          </div>
           <button
             onClick={() => validateActiveCart()}
             className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-md transition"
+            disabled={!canValidateCart()}
             >
             Valider ma commande
           </button>

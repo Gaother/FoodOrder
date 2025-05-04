@@ -6,7 +6,7 @@ import SearchBarFilter from './SearchBarFilter';
 import FilterBlock from './FilterBlock';
 import DownloadProductExcelButton from './DownloadProductExcelButton';
 
-const Filter = ({ specifications, brands, maxPrice, minPrice, activeFilters = {}, onFilterChange }) => {
+const Filter = ({ specifications, maxPrice, minPrice, activeFilters = {}, onFilterChange }) => {
   const { userRole } = useContext(AuthContext);
   const isMobileOrTablet = /Mobi|Tablet/i.test(navigator.userAgent);
   const [isMenuOpen, setIsMenuOpen] = useState(!isMobileOrTablet); // Par défaut ouvert sur PC
@@ -17,8 +17,6 @@ const Filter = ({ specifications, brands, maxPrice, minPrice, activeFilters = {}
     }
   };
 
-  const tailleSpec = specifications.find(spec => spec.name === 'Taille de produit');
-  const typeSpec = specifications.find(spec => spec.name === 'Type de produit');
   const otherSpecs = specifications.filter(spec => spec.index >= 3);
 
   const getDataArray = (values) => {
@@ -57,31 +55,6 @@ const Filter = ({ specifications, brands, maxPrice, minPrice, activeFilters = {}
           onSearchChange={(value) => onFilterChange('search', value)}
         />
 
-        {/* Taille de produit */}
-        {tailleSpec && (
-          <FilterBlock
-            type="List"
-            name="Taille de produit"
-            data={getDataArray(tailleSpec.values)}
-            displayType="Deroulant"
-            selectedFilters={activeFilters['Taille de produit'] || []}
-            onFilterChange={(value) => onFilterChange('Taille de produit', value)}
-          />
-        )}
-
-        {/* Type de produit */}
-        {typeSpec && (
-          <FilterBlock
-            type="List"
-            name="Type de produit"
-            data={getDataArray(typeSpec.values)}
-            displayType="Deroulant"
-            selectedFilters={activeFilters['Type de produit'] || []}
-            onFilterChange={(value) => onFilterChange('Type de produit', value)}
-            localSearch={true}
-          />
-        )}
-
         {/* Prix */}
         {userRole !== "viewer" && <FilterBlock
           type="Range"
@@ -94,17 +67,6 @@ const Filter = ({ specifications, brands, maxPrice, minPrice, activeFilters = {}
             onFilterChange('maxprice', values[1]);
           }}
         />}
-
-        {/* Marques */}
-        <FilterBlock
-          type="List"
-          name="Marques"
-          data={brands.map(brand => brand.brand)}
-          displayType="Deroulant"
-          selectedFilters={activeFilters.Marques || []}
-          onFilterChange={(value) => onFilterChange('Marques', value)}
-          localSearch={true}
-        />
 
         {/* Autres spécifications */}
         {otherSpecs.map((spec) => (

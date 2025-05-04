@@ -19,7 +19,7 @@ const connectDB = async () => {
         console.log('Connexion à MongoDB réussie...');
         // Utiliser la base de données "intranet"
         dbConnection = connection.connection.useDb('foodOrders');
-        console.log('Base de données par défaut définie sur "destockdis"...');
+        console.log('Base de données par défaut définie sur "foodOrders"...');
 
         return dbConnection; // Retourne l'instance de la connexion
 

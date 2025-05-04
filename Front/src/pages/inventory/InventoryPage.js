@@ -204,7 +204,7 @@ const WarehouseProductList = () => {
             <table className="w-full table-auto table-fixed">
                 <thead className="bg-gray-200">
                     <tr>
-                        <th style={{ width: '60%' }} className="py-2">Dénomination</th>
+                        <th style={{ width: '60%' }} className="py-2">Nom</th>
                         <th style={{ width: '30%' }} className="py-2">Référence</th>
                         <th style={{ width: '10%' }} className="py-2">Qté</th>
                     </tr>

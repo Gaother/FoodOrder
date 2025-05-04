@@ -40,17 +40,12 @@ const ProductList = ({ products, handleEditProduct, loading }) => {
         }
     } else {
         content = products.map((product, index) => (
-            <div key={index} onClick={() => handleRowClick(product)} className={((userRole === 'admin' || userRole === 'superadmin') && isAdminPage) ? 'cursor-pointer border-2 hover:border-yellow-400' : ''}>
+            <div key={index} onClick={() => handleRowClick(product)} className={(userRole === 'superadmin' && isAdminPage) ? 'cursor-pointer border-2 hover:border-yellow-400' : ''}>
                 <ProductListRow
                     product_id={product._id}
-                    productSize={getProductSpecificationValue(product.specifications, "Taille de produit")} // Taille de produit
-                    productType={getProductSpecificationValue(product.specifications, "Type de produit")} // Type de produit
-                    Brand={product.brand ? product.brand.brand : 'Marque inconnue'} // Si la marque existe
-                    designation={product.designation}
+                    nom={product.nom}
                     reference={product.reference}
-                    ean={product.ean}
                     price={product.price}
-                    stock={product.stock}
                     comment={product.comment}
                     active={product.active}
                     userRole={userRole}
@@ -62,18 +57,14 @@ const ProductList = ({ products, handleEditProduct, loading }) => {
         <div className='flex flex-col gap-2'>
             <div className="bg-[#ffffff] border shadow rounded-md h-auto p-4">
                 <div className={`grid gap-4 text-center font-bold ${userRole === 'viewer' ? 'grid-cols-11' : 'grid-cols-12'}`}>
-                    <div className="hidden md:block col-span-2">Taille</div>                    
-                    <div className="col-span-2">Type</div>
-                    <div className="col-span-3 md:col-span-1">Marque</div>
-                    <div className="hidden md:block col-span-2">Désignation</div>
+                    <div className="hidden md:block col-span-2">Nom</div>
                     <div className={`${userRole === 'viewer' ? 'col-span-4' : 'col-span-3'}  md:col-span-2`}>Référence</div>
-                    <div className="hidden md:block col-span-1">EAN</div>
-                    {userRole !== 'viewer' && <div className="md:col-span-1 col-span-2">Prix</div>}
-                    <div className="col-span-1">Stock</div>
+                    <div className="md:col-span-1 col-span-2">Prix</div>
+                    <div className="col-span-1">Ajouter au panier</div>
                 </div>
             </div>
             {content}
-            {selectedProduct && (userRole === 'admin' || userRole === 'superadmin') && isAdminPage && (
+            {selectedProduct && userRole === 'superadmin' && isAdminPage && (
                 <EditProductModal onEdit={handleEditProduct} product={selectedProduct} onClose={handleCloseModal} />
             )}
         </div>

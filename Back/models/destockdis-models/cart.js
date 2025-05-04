@@ -46,10 +46,16 @@ const CartSchema = new Schema({
   dateAdminValidation: {
     type: Date
   },
+  dateLivraison: {
+    type: Date
+  },
   comment: {
     type: String
   },
   note : {
+    type: String
+  },
+  lieuLivraison: {
     type: String
   },
   products: [{
@@ -68,7 +74,11 @@ const CartSchema = new Schema({
     },
     discount: {
       type: Number
-    }
+    },
+    spicy: {
+      type: Boolean,
+      default: false
+    },
   }]
 }, { timestamps: true });
 
@@ -96,10 +106,6 @@ async function generateUniqueOrderID() {
 // Hook "pre-save" pour forcer l'encodage UTF-8 et capitaliser chaque mot
 CartSchema.pre('save', async function (next) {
   try {
-    // if (this.brand) {
-    //   this.brand = forceUTF8(this.brand);
-    //   this.brand = capitalizeWords(this.brand);
-    // }
     for (let item of this.products) {
       if (!item.price || item.price === 0) {
       const product = await mongoose.models.Product.findById(item.product);
@@ -116,6 +122,14 @@ CartSchema.pre('save', async function (next) {
     }
     if (!this.orderID) {
       this.orderID = await generateUniqueOrderID();
+    }
+    if (!this.lieuLivraison) {
+      if (this.user && this.user.role === 'epitech') {
+        this.lieuLivraison = forceUTF8("Epitech");
+      }
+      else if (this.user && this.user.role === 'quadra') {
+        this.lieuLivraison = forceUTF8("Quadra-Diffusion");
+      }
     }
     next();
   } catch (error) {

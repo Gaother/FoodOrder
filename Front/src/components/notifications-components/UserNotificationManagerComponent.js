@@ -12,6 +12,7 @@ const UserNotificationsManager = () => {
   const [activeTab, setActiveTab] = useState('order'); // Onglet actif par défaut
   const notificationRef = useRef(null);
   // Trier les notifications pour que les non lues soient en premier
+  console.log(userNotification, "userNotification")
   const sortedNotifications = [...userNotification].sort((a, b) => {
     return a.notificationIsRead === b.notificationIsRead
       ? 0

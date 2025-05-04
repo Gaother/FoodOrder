@@ -21,7 +21,6 @@ var cors = require('cors')
 const userRoutes = require('./routes/userRoutes');
 const userHistoriesRoutes = require('./routes/user-routes/userHistories.route');
 const resetPasswordRoutes = require('./routes/user-routes/resetPassword.route');
-const brandRoutes = require('./routes/destockdis-routes/brandRoutes');
 
 const backupRoutes = require('./routes/backupRoutes');
 
@@ -45,7 +44,6 @@ async function initializeAdminUser(db) {
             const adminUser = {
                 firstName: 'SuperAdmin',
                 lastName: 'SuperAdmin',
-                companyName: 'SuperAdmin',
                 password: 'P@ssw0rdP@ssw0rd',
                 email: "admin@mail.fr",
                 phone: '0000000000',
@@ -145,7 +143,6 @@ connectDB().then((db) => {
     app.use('/api/user-histories', userHistoriesRoutes);
 
     app.use('/api/backup', backupRoutes);
-    app.use('/api/brands', brandRoutes);
 
     app.use('/api/products', productRoutes);
     app.use('/api/product-specifications', productSpecificationsRoutes);
