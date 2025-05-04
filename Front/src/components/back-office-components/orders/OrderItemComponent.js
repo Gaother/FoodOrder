@@ -22,28 +22,28 @@ const OrderItemComponent = ({ order, onStatusChange }) => {
       return (
         <div className="flex items-center bg-red-100 text-red-600 rounded-full px-3 py-1">
           <FaTimesCircle className="mr-2" />
-          Annulé par l'administrateur
+          Annulée par l'administrateur
         </div>
       );
     } else if (order.userCanceled) {
       return (
         <div className="flex items-center bg-yellow-100 text-yellow-600 rounded-full px-3 py-1">
           <FaExclamationTriangle className="mr-2" />
-          Annulé par l'utilisateur
+          Annulée par l'utilisateur
         </div>
       );
     } else if (order.adminValidated) {
       return (
         <div className="flex items-center bg-green-100 text-green-600 rounded-full px-3 py-1">
           <FaCheckCircle className="mr-2" />
-          Validé par l'administrateur
+          Payée
         </div>
       );
     } else if (order.userValidated) {
       return (
         <div className="flex items-center bg-blue-100 text-blue-600 rounded-full px-3 py-1">
-          <FaCheckCircle className="mr-2" />
-          Validé par l'utilisateur
+          <FaClock className="mr-2" />
+          Pas encore payée
         </div>
       );
     } else {
@@ -89,25 +89,41 @@ const OrderItemComponent = ({ order, onStatusChange }) => {
     }
   };
 
+  const formatDate = (date) => {
+    let newDate = date.toLocaleDateString('fr-FR', {
+      weekday: 'long',
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    });
+    return newDate.charAt(0).toUpperCase() + newDate.slice(1);
+  }
+
   return (
     <div className="bg-white p-4 shadow rounded-lg w-full">
       <div className="flex lg:flex-row flex-col justify-between lg:items-center border-gray-200 ">
-        <div className="lg:w-2/6 overflow-x-auto mr-2">
-          <h3 className="text-lg font-bold">Ref. commande: {order.orderID}</h3>
+        <div className="lg:w-3/12">
+          <p className="text-lg font-bold text-gray-600">{order.user.firstName} {order.user.lastName}</p>
+          <p className="text-lg text-gray-600">{order.user.phone}</p>
         </div>
-        <div className="lg:w-2/6">
-          <p className="text-lg text-gray-600">Utilisateur: {order.user.firstName} {order.user.lastName}</p>
-          <p className="text-lg text-gray-600">Email: {order.user.email}</p>
+        <div className="lg:w-2/6 lg:text-center flex flex-col">
+          <p className="text-lg text-gray-600">
+            {order.dateLivraison ? formatDate(new Date(order.dateLivraison)): 'N/A'} {/*A CHANGER PAR LA DATE DE LIVRAISON*/}
+          </p>
+          <p className="text-lg text-gray-600">
+            {order.lieuLivraison ? order.lieuLivraison : 'N/A'}
+          </p>
         </div>
         <div className="lg:w-1/6 lg:text-center">
-          <p className="text-lg text-gray-600">
-            {order.dateUserValidation ? new Date(order.dateUserValidation).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' }) : 'N/A'}
-          </p>
-          <p className="text-lg text-gray-600">
-            {order.dateUserValidation ? new Date(order.dateUserValidation).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }) : 'N/A'}
+          <p>
+            <span className="text-lg text-gray-600">
+              {order.products.length > 1
+                ? order.products.length + ' articles'
+                : order.products?.[0].product.nom}
+            </span>
           </p>
         </div>
-        <div className="lg:w-5/12 flex flex-row justify-between whitespace-nowrap">
+        <div className="lg:w-2/6 flex flex-row justify-between whitespace-nowrap">
           <div className="lg:py-0 py-2">
             {defineStatut(order)}
           </div>

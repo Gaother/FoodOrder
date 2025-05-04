@@ -6,6 +6,7 @@ import CircularLoadingComponent from '../../CircularLoadingComponent';
 const AddProductToCartModal = ({ product, onClose }) => {
   const { nom, reference } = product;
   const [quantity, setQuantity] = useState(1);
+  const [spicy, setSpicy] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -30,6 +31,7 @@ const AddProductToCartModal = ({ product, onClose }) => {
         productID: product._id,
         productQTY: quantity,
         productPrice: product.price,
+        productSpicy: spicy,
       });
       setIsLoading(false);
       onClose(); // Ferme la modal après ajout au panier
@@ -55,7 +57,7 @@ const AddProductToCartModal = ({ product, onClose }) => {
         <div className="p-5">
 
           <div className="mb-4">
-            <p className="text-sm font-bold">Désignation :</p>
+            <p className="text-sm font-bold">Nom :</p>
             <p>{nom}</p>
           </div>
 
@@ -64,6 +66,16 @@ const AddProductToCartModal = ({ product, onClose }) => {
               <p className="text-sm font-bold">Référence :</p>
               <p>{reference}</p>
             </div>
+          </div>
+
+          <div className="mb-4">
+            <p className="text-sm font-bold">Piquant :</p>
+            <button
+              onClick={() => setSpicy(!spicy)}
+              className={`py-1 px-2 rounded-full ${spicy ? 'bg-red-500' : 'bg-gray-300'} text-white`}
+            >
+              {spicy ? 'Oui' : 'Non'}
+            </button>
           </div>
 
           <div className="mb-4 flex items-center justify-between">

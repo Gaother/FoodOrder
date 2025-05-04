@@ -46,10 +46,16 @@ const CartSchema = new Schema({
   dateAdminValidation: {
     type: Date
   },
+  dateLivraison: {
+    type: Date
+  },
   comment: {
     type: String
   },
   note : {
+    type: String
+  },
+  lieuLivraison: {
     type: String
   },
   products: [{
@@ -68,7 +74,11 @@ const CartSchema = new Schema({
     },
     discount: {
       type: Number
-    }
+    },
+    spicy: {
+      type: Boolean,
+      default: false
+    },
   }]
 }, { timestamps: true });
 
@@ -112,6 +122,14 @@ CartSchema.pre('save', async function (next) {
     }
     if (!this.orderID) {
       this.orderID = await generateUniqueOrderID();
+    }
+    if (!this.lieuLivraison) {
+      if (this.user && this.user.role === 'epitech') {
+        this.lieuLivraison = forceUTF8("Epitech");
+      }
+      else if (this.user && this.user.role === 'quadra') {
+        this.lieuLivraison = forceUTF8("Quadra-Diffusion");
+      }
     }
     next();
   } catch (error) {
