@@ -46,7 +46,7 @@ services:
     volumes:
       - mongodb_data:/data/db# - ./init-mongo:/docker-entrypoint-initdb.d  # Monter le répertoire des scripts d'initialisation
     networks:
-      - nginx-prox
+      - nginx-proxy
 
 volumes:
   mongodb_data:
