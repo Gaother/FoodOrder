@@ -27,7 +27,7 @@ router.post('/', checkRole(['superadmin']), async (req, res) => {
 });
 
 // Ajouter un produit à un panier
-router.post('/product', checkRole(['superadmin']), async (req, res) => {
+router.post('/product', checkRole(['superadmin', 'epitech', 'quadra', 'autre']), async (req, res) => {
     const { productID, productQTY, cartID, productPrice } = req.body;
 
     try {
@@ -98,14 +98,14 @@ router.post('/filter', checkRole(['superadmin']), async (req, res) => {
 
         // Filter by date range
         if (dateStart && dateEnd) {
-            filterQuery.dateUserValidation = { 
+            filterQuery.dateLivraison = {
             $gte: new Date(dateStart), 
             $lt: new Date(new Date(dateEnd).setDate(new Date(dateEnd).getDate() + 1)) 
             };
         } else if (dateStart) {
-            filterQuery.dateUserValidation = { $gte: new Date(dateStart) };
+            filterQuery.dateLivraison = { $gte: new Date(dateStart) };
         } else if (dateEnd) {
-            filterQuery.dateUserValidation = { $lt: new Date(new Date(dateEnd).setDate(new Date(dateEnd).getDate() + 1)) };
+            filterQuery.dateLivraison = { $lt: new Date(new Date(dateEnd).setDate(new Date(dateEnd).getDate() + 1)) };
         }
 
         // Filter by userValidated, userCanceled, adminValidated, adminCanceled

@@ -42,14 +42,14 @@ const OrderList = () => {
       return (
         <div className="flex items-center bg-red-100 text-red-600 rounded-full px-3 py-1">
           <FaTimesCircle className="mr-2" />
-          Annulé par l'administrateur
+          Annulée par l'administrateur
         </div>
       );
     } else if (order.userCanceled === true) {
       return (
         <div className="flex items-center bg-yellow-100 text-yellow-600 rounded-full px-3 py-1">
           <FaExclamationTriangle className="mr-2" />
-          Annulé par l'utilisateur
+          Annulée par l'utilisateur
         </div>
       );
     } else if (order.adminValidated === true) {
@@ -57,7 +57,7 @@ const OrderList = () => {
         <>
           <div className="flex items-center bg-green-100 text-green-600 rounded-full px-3 py-1">
             <FaCheckCircle className="mr-2" />
-            Validé par l'administrateur
+            Paiement reçu
           </div>
           <div className="flex self-center mt-2">
             <DownloadOrderPdfButton order={order} />
@@ -68,7 +68,7 @@ const OrderList = () => {
       return (
         <div className="flex items-center bg-blue-100 text-blue-600 rounded-full px-3 py-1">
           <FaCheckCircle className="mr-2" />
-          Validé par l'utilisateur
+          Paiement pas encore reçu
         </div>
       );
     } else {
