@@ -15,6 +15,7 @@ const CartPage = () => {
   const [prixTotal, setPrixTotal] = useState(0); // Prix total du panier
   const [totalItems, setTotalItems] = useState(0); // Nombre total d'articles
   const [isLoading, setIsLoading] = useState(true);
+  const [canValidate, setCanValidate] = useState(false);
   const [error, setError] = useState(null);
   const [cartError, setCartError] = useState(null);
   const [errorId, setErrorId] = useState(null);
@@ -22,6 +23,10 @@ const CartPage = () => {
   useEffect(() => {
     fetchCartData();
   }, []);
+
+  useEffect(() => {
+    handleCanValidate()
+  }, [dateLivraison, cartData]);
 
   const fetchCartData = async () => {
     try {
@@ -99,8 +104,8 @@ const CartPage = () => {
     }
   };
 
-  const canValidateCart = () => {
-    return cartData.length > 0 && dateLivraison !== '';
+  const handleCanValidate = () => {
+    setCanValidate(cartData.length > 0 && dateLivraison !== '')
   }
 
     const validateActiveCart = async () => {
@@ -166,15 +171,18 @@ return (
                         {error && errorId === item.product._id && <p className="text-sm text-red-500 w-full">{error}</p>}
                     </div>
                   <div className="w-full flex items-center">
-                    <div className="flex flex-col items-start space-y-1">
+                    <div className="w-full flex flex-col items-start space-y-1">
                       <p className="text-base font-semibold text-gray-900">{item.product.nom}</p>
-                      <p className="text-sm text-gray-500">Réf: {item.product.reference}</p>
-                      <p className="text-sm text-gray-500">Piquant: {item.product.spicy ? 'Oui' : 'Non'}</p>
+                      {item.specifications.map(((spec, index) => (
+                        <div key={index} className="flex items-center">
+                          <p className="text-sm text-gray-500">{spec.nameParent} : {spec.value}</p>
+                        </div>
+                      )))}
                       <p className="text-sm text-gray-500">Prix unitaire: {item.price} €</p>
                     </div>
-    
-                    <div className="flex w-full flex-col items-end space-y-3">
-                      <div className="flex flex-col items-center">
+
+                    <div className="flex flex-col items-end space-y-3">
+                    <div className="flex flex-col items-center">
                         <div className="flex items-center space-x-3">
                           {/* Bouton "-" pour diminuer la quantité */}
                           <button
@@ -261,8 +269,8 @@ return (
           </div>
           <button
             onClick={() => validateActiveCart()}
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-md transition"
-            disabled={!canValidateCart()}
+            className={`w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-md transition ${!canValidate ? 'opacity-50 cursor-not-allowed' : ''}`}
+            disabled={!canValidate}
             >
             Valider ma commande
           </button>

@@ -3,7 +3,7 @@ import { FaExclamationTriangle, FaTimes, FaCartArrowDown, FaCartPlus } from 'rea
 import api from '../../api/api';
 import AddProductToCartModal from './new-product-modal/AddToCartModal'; // Assurez-vous d'importer la modal
 
-const ProductListRow = ({ product_id, nom, reference, price, comment = "", active, userRole }) => {
+const ProductListRow = ({ product_id, nom, reference, price, comment = "", active, userRole, specifications }) => {
     const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
     const [isAddToCartModalOpen, setIsAddToCartModalOpen] = useState(false); // État pour ouvrir/fermer la modal d'ajout au panier
 
@@ -90,7 +90,6 @@ const ProductListRow = ({ product_id, nom, reference, price, comment = "", activ
                     </div>
                 </div>
             )}
-
             {/* Modal d'ajout au panier */}
             {isAddToCartModalOpen && (
                 <AddProductToCartModal
@@ -99,6 +98,7 @@ const ProductListRow = ({ product_id, nom, reference, price, comment = "", activ
                         price,
                         nom,
                         reference,
+                        specifications
                     }}
                     onClose={toggleAddToCartModal}
                 />

@@ -48,6 +48,7 @@ const ProductList = ({ products, handleEditProduct, loading }) => {
                     price={product.price}
                     comment={product.comment}
                     active={product.active}
+                    specifications={product.specifications}
                     userRole={userRole}
                 />
             </div>

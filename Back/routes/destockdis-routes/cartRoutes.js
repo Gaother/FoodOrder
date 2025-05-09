@@ -28,7 +28,7 @@ router.post('/', checkRole(['superadmin']), async (req, res) => {
 
 // Ajouter un produit à un panier
 router.post('/product', checkRole(['superadmin', 'epitech', 'quadra', 'autre']), async (req, res) => {
-    const { productID, productQTY, cartID, productPrice } = req.body;
+    const { productID, productQTY, cartID, productPrice, specifications } = req.body;
 
     try {
         const CartModel = req.db.model('Cart', Cart.schema);
@@ -49,11 +49,11 @@ router.post('/product', checkRole(['superadmin', 'epitech', 'quadra', 'autre']),
                     product: productID,
                     quantity: productQTY,
                     price: productPrice,
+                    specifications: specifications,
                 }]
             });
         } else {
-            // ICI il faut vérifier si le produit à ajouter n'a pas la quantité supérieur à la quantité en stock
-            const existingProductIndex = activeUserCart.products.findIndex(p => p.product.toString() === productID);
+            const existingProductIndex = activeUserCart.products.findIndex(p => p.product.toString() === productID && checkSameSpecification(p.specifications, specifications));
             if (existingProductIndex !== -1) {
                 // If the product already exists in the cart, update the quantity
                 activeUserCart.products[existingProductIndex].quantity += productQTY;
@@ -63,6 +63,7 @@ router.post('/product', checkRole(['superadmin', 'epitech', 'quadra', 'autre']),
                     product: productID,
                     quantity: productQTY,
                     price: productPrice,
+                    specifications: specifications,
                 });
             }
             await activeUserCart.save();
@@ -471,8 +472,9 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+//Diverse actions sur le panier (Valider, Cancel, ...)
 router.put('/active-cart-user-action', async (req, res) => {
-    const { action, cartID, user, comment } = req.body;
+    const { action, cartID, user, comment, dateLivraison, lieuLivraison } = req.body;
     try {
         const CartModel = req.db.model('Cart', Cart.schema);
         const ProductModel = req.db.model('Product', Product.schema);
@@ -490,6 +492,8 @@ router.put('/active-cart-user-action', async (req, res) => {
             userCart.userValidated = true;
             userCart.dateUserValidation = new Date();
             if (comment) userCart.comment = comment
+            if (dateLivraison) userCart.dateLivraison = dateLivraison
+            if (lieuLivraison) userCart.lieuLivraison = lieuLivraison
             await userCart.save();
             notificationLogger.logger(req.db, 'order', `Nouvelle commande validée, numéro ${userCart.orderID}`, "", ['superadmin']);
         } else if (action === 'cancel') {
@@ -671,5 +675,14 @@ router.delete('/:id', checkRole(['superadmin']), async (req, res) => {
         res.status(500).send('Erreur lors de la suppression du panier');
     }
 });
+
+const checkSameSpecification = (productSpec, newSpec) => {
+    if (!productSpec || !newSpec) return false;
+    if (productSpec.length !== newSpec.length) return false;
+    for (let i = 0; i < productSpec.length; i++) {
+        if (productSpec[i].value !== newSpec[i].value) return false;
+    }
+    return true;
+}
 
 module.exports = router;
