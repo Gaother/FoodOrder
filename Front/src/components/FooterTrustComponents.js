@@ -13,8 +13,8 @@ const TrustIcons = () => {
                 className="h-12 w-12 object-contain"
               />
             </figure>
-            <h3 className="font-bold mt-4">Réservé aux pros</h3>
-            <p>Accès sécurisé</p>
+            <h3 className="font-bold mt-4">Fait maison</h3>
+            <p>Avec des produits frais</p>
           </div>
           <div className="trust text-center">
             <figure className="flex justify-center">
@@ -25,7 +25,7 @@ const TrustIcons = () => {
               />
             </figure>
             <h3 className="font-bold mt-4">Paiement pro sécurisé</h3>
-            <p>Virement ou CB</p>
+            <p>Produit frais</p>
           </div>
           <div className="trust text-center">
             <figure className="flex justify-center">
@@ -35,8 +35,8 @@ const TrustIcons = () => {
                 className="h-12 w-12 object-contain"
               />
             </figure>
-            <h3 className="font-bold mt-4">Retrait personnalisé</h3>
-            <p>Retrait ou livraison</p>
+            <h3 className="font-bold mt-4">sdfsdfdsfsfds</h3>
+            <p>Gout vietnamiens authentique</p>
           </div>
           <div className="trust text-center">
             <figure className="flex justify-center">
