@@ -35,7 +35,7 @@ const LoginRegister = () => {
   }
 
   const handleEmailChange = (event) => {
-    setEmail(event.target.value);
+    setEmail(event.target.value.trim());
     if (error) setError(''); // Réinitialiser l'erreur lorsque l'utilisateur commence à taper
   };
 
@@ -181,7 +181,7 @@ const LoginRegister = () => {
                   <div className="mb-5">
                     <label htmlFor="role" className="block mb-2 text-sm font-medium text-gray-600">Rôle</label>
                     <select
-                      className="block mb-2 text-sm font-medium text-gray-600"
+                      className='block w-full p-3 rounded bg-gray-200 border focus:outline-none'
                       value={role}
                       onChange={handleRoleChange}>
                       <option value="" disabled selected>Choisissez un rôle</option>
