@@ -17,8 +17,6 @@ const Filter = ({ specifications, maxPrice, minPrice, activeFilters = {}, onFilt
     }
   };
 
-  const otherSpecs = specifications.filter(spec => spec.index >= 3);
-
   const getDataArray = (values) => {
     if (!values || values.length === 0) {
       return [];
@@ -44,7 +42,6 @@ const Filter = ({ specifications, maxPrice, minPrice, activeFilters = {}, onFilt
           isMenuOpen ? '' : 'max-h-0'
         }`}
         >
-        {userRole != 'viewer' && <DownloadProductExcelButton/>}
         <ActiveFilter
           activeFilters={activeFilters}
           onFilterChange={onFilterChange}
@@ -69,7 +66,7 @@ const Filter = ({ specifications, maxPrice, minPrice, activeFilters = {}, onFilt
         />}
 
         {/* Autres spécifications */}
-        {otherSpecs.map((spec) => (
+        {specifications.map((spec) => (
           <FilterBlock
             key={spec._id}
             type="List"
