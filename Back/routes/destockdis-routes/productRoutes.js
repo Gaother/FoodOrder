@@ -71,7 +71,7 @@ router.post('/filter', async (req, res) => {
             ];
         }
 
-                // Filtrage par spécifications (ex: Type de produit, Largeur, Taille de produit)
+        // Filtrage par spécifications (ex: Sauce, Piquant, etc. dans le body)
         const specificationsFilters = [];
         
         for (const [key, values] of Object.entries(filters)) {
