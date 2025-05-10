@@ -40,19 +40,21 @@ const ProductListRow = ({ product_id, nom, reference, price, comment = "", activ
 
     return (
         <div className={`${active === false ? 'bg-red-300' : 'bg-[#ffffff]'} border shadow rounded-md h-auto p-4`}>
-            <div className={`grid gap-4 text-center ${userRole === 'viewer' ? 'grid-cols-11' : 'grid-cols-12'}`}>
-                <div className="hidden md:block col-span-2 overflow-auto">{nom}</div>
-                <div className={`${userRole === 'viewer' ? 'col-span-4' : 'col-span-3'}  md:col-span-2 overflow-auto`}>
-                    <a href={`https://www.google.com/search?q=${reference}`} target="_blank" rel="noopener noreferrer">{reference}</a>
+            <div className={`grid gap-4 text-center grid-cols-6`}>
+                <div className="hidden md:block col-span-1 overflow-auto">
+                    <img src={'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.futura-sciences.com%2Ftech%2Fdossiers%2Ftechnologie-photo-numerique-capteur-image-773%2F&psig=AOvVaw1hGv8vcsfPaSeiLE9gIUow&ust=1746953997268000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCND7xPbEmI0DFQAAAAAdAAAAABAE'} alt={nom} className="w-16 h-16 object-cover"/>
                 </div>
-
-                {userRole !== 'viewer' && (
-                    <div className="md:col-span-1 col-span-2 overflow-auto">
-                        <div>{price} €</div>
-
-                    </div>
-                )}
-
+                <div className="md:col-span-1 col-span-2 overflow-auto">
+                    <a href={`https://www.google.com/search?q=${nom}`} target="_blank" rel="noopener noreferrer">
+                        {nom}
+                    </a>
+                </div>
+                <div className="hidden md:block col-span-2 overflow-auto">
+                    V
+                </div>
+                <div className="md:col-span-1 col-span-2 overflow-auto">
+                    <div>{price} €</div>
+                </div>
                 <div
                   className="md:col-span-1 col-span-2 flex flex-col md:flex-row md:gap-2 items-center justify-center relative">
                     {comment !== "" && (
