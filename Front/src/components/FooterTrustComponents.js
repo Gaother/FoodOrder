@@ -1,12 +1,4 @@
 import React from 'react';
-import vietnam from '../assets/flags/vietnam.png';
-import japon from '../assets/flags/japon.png';
-import chine from '../assets/flags/chine.png';
-import coree from '../assets/flags/coree.png';
-import thailande from '../assets/flags/thailande.png';
-import cuisine from '../assets/cuisine.png';
-
-
 
 const TrustIcons = () => {
   return (
@@ -35,11 +27,11 @@ const TrustIcons = () => {
             <h3 className="font-bold mt-4">Gouts asiatiques authentiques</h3>
             <div className={'flex flex-row gap-2 justify-center'}>
               <p>Cuisine</p>
-              <img src={vietnam} className={'h-6 w-6'}/>
-              <img src={japon} className={'h-6 w-6'}/>
-              <img src={thailande} className={'h-6 w-6'}/>
-              <img src={chine} className={'h-6 w-6'}/>
-              <img src={coree} className={'h-6 w-6'}/>
+              <img src={require('../assets/flags/vietnam.png')} className={'h-6 w-6'}/>
+              <img src={require('../assets/flags/japon.png')} className={'h-6 w-6'}/>
+              <img src={require('../assets/flags/thailande.png')} className={'h-6 w-6'}/>
+              <img src={require('../assets/flags/chine.png')} className={'h-6 w-6'}/>
+              <img src={require('../assets/flags/coree.png')} className={'h-6 w-6'}/>
             </div>
           </div>
           <div className="trust text-center">
