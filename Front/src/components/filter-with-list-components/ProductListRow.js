@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { FaExclamationTriangle, FaTimes, FaCartArrowDown, FaCartPlus } from 'react-icons/fa';
 import api from '../../api/api';
 import AddProductToCartModal from './new-product-modal/AddToCartModal'; // Assurez-vous d'importer la modal
+import feuille from '../../assets/feuille.png';
+import croixRouge from '../../assets/croix-rouge.png';
+
 
 const ProductListRow = ({ product_id, nom, reference, price, comment = "", active, userRole, specifications, imageUrl }) => {
     const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
@@ -16,6 +19,13 @@ const ProductListRow = ({ product_id, nom, reference, price, comment = "", activ
     const toggleAddToCartModal = () => {
         setIsAddToCartModalOpen(!isAddToCartModalOpen);
     };
+
+    const isDispoVege = () => {
+        if (specifications.some(spec => spec.value === "Végétarien")) {
+            return feuille;
+        }
+        return croixRouge;
+    }
 
     const removeProductToCart = async () => {
         console.log('removeProductToCart');
@@ -44,15 +54,19 @@ const ProductListRow = ({ product_id, nom, reference, price, comment = "", activ
                 <div className="hidden md:block col-span-1 overflow-auto justify-center">
                     <img src={imageUrl} alt={nom} className="w-32 h-24 object-cover"/>
                 </div>
-                <div className="md:col-span-1 col-span-2 overflow-auto">
+                <div className="md:col-span-1 col-span-2 flex items-center justify-center overflow-auto">
                     <a className="font-bold" href={`https://www.google.com/search?q=${nom}`} target="_blank" rel="noopener noreferrer">
                         {nom}
                     </a>
                 </div>
-                <div className="hidden md:block col-span-2 overflow-auto">
-                    V
+                <div className="hidden flex justify-center m-auto md:block col-span-2 overflow-auto">
+                    <img
+                      src={isDispoVege()}
+                      alt="végétarien"
+                      className="h-6 w-6"
+                    />
                 </div>
-                <div className="md:col-span-1 col-span-2 overflow-auto">
+                <div className="md:col-span-1 flex col-span-2 items-center justify-center overflow-auto">
                     <div>{price} €</div>
                 </div>
                 <div
