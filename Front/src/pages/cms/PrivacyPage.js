@@ -1,13 +1,9 @@
 import React from 'react';
 import FooterTrust from '../../components/FooterTrustComponents';
-import HomePageForProComponents from '../../components/HomePageForProComponents';
 
 const PrivacyPolicy = () => {
   return (
     <div className="bg-gray-100" style={{ minHeight: "84vh" }}>
-      {/* HomePageForProComponents */}
-      <HomePageForProComponents />
-
       {/* Main Content */}
       <div className="flex justify-center py-8">
         <div id="content-wrapper" className="w-full md:w-3/4 lg:w-1/2">

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
 import api from '../../api/api';
-import HomePageForProComponents from '../../components/HomePageForProComponents';
 
 const ResetPasswordPage = () => {
   const location = useLocation(); // Pour lire l'URL actuelle
@@ -80,8 +79,6 @@ const ResetPasswordPage = () => {
 
   return (
     <div className='flex md:flex-row flex-col min-h-[84vh]'>
-      <HomePageForProComponents className="w-1/2" />
-
       <div className="container mx-auto p-8 flex overflow-hidden md:w-1/2 items-center">
         <div className="max-w-md w-full mx-auto">
           <h1 className="text-4xl text-left pl-4 mb-8 font-bold border-l-8 border-yellow-500">Réinitialiser le mot de passe</h1>

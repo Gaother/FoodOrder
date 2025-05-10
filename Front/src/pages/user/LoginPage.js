@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../../components/AuthContext';
-import HomePageForProComponents from '../../components/HomePageForProComponents';
 import api from '../../api/api';
 
 const LoginRegister = () => {
@@ -135,7 +134,6 @@ const LoginRegister = () => {
 
   return (
     <div className='flex md:flex-row flex-col min-h-[84vh]'>
-         <HomePageForProComponents className="w-1/2"/>
     <div className="container mx-auto p-8 flex overflow-hidden md:w-1/2 items-center">
       <div className="max-w-md w-full mx-auto">
         <h1 className="text-4xl text-left pl-4 mb-8 font-bold border-l-8 border-yellow-500">{isRegister ? 'Inscription' : 'Connexion'}</h1>
