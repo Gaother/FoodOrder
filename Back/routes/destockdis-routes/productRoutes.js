@@ -119,11 +119,10 @@ router.post('/filter', async (req, res) => {
 
 // Créer un nouveau produit
 router.post('/', checkRole(['superadmin']), async (req, res) => {
-    const { reference, nom, price, reception, comment, specifications } = req.body;
+    const { reference, nom, price, reception, comment, imageUrl, specifications } = req.body;
 
     try {
         const ProductModel = req.db.model('Product', Product.schema);
-        
 
         const product = await ProductModel.create({
             reference,
@@ -131,6 +130,7 @@ router.post('/', checkRole(['superadmin']), async (req, res) => {
             price,
             reception,
             comment,
+            imageUrl,
             specifications
         });
 
@@ -221,7 +221,7 @@ router.get('/:id', async (req, res) => {
 
 // Mettre à jour un produit par son ID
 router.put('/:id', checkRole(['superadmin']), async (req, res) => {
-    const { reference, nom, price, reception, comment, specifications, active } = req.body;
+    const { reference, nom, price, reception, comment, imageUrl, specifications, active } = req.body;
 
     try {
         const ProductModel = req.db.model('Product', Product.schema);
@@ -237,6 +237,7 @@ router.put('/:id', checkRole(['superadmin']), async (req, res) => {
         if (price) product.price = price;
         if (reception) product.reception = reception;
         if (comment || comment === "") product.comment = comment;
+        if (imageUrl) product.imageUrl = imageUrl;
         if (specifications) product.specifications = specifications;
         if (active === false) product.active = false;
         if (active === true) product.active = true;

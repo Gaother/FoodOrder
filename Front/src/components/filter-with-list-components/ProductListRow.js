@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import { FaExclamationTriangle, FaTimes, FaCartArrowDown, FaCartPlus } from 'react-icons/fa';
 import api from '../../api/api';
 import AddProductToCartModal from './new-product-modal/AddToCartModal'; // Assurez-vous d'importer la modal
+import feuille from '../../assets/feuille.png';
+import croixRouge from '../../assets/croix-rouge.png';
 
-const ProductListRow = ({ product_id, nom, reference, price, comment = "", active, userRole, specifications }) => {
+
+const ProductListRow = ({ product_id, nom, reference, price, comment = "", active, userRole, specifications, imageUrl }) => {
     const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
     const [isAddToCartModalOpen, setIsAddToCartModalOpen] = useState(false); // État pour ouvrir/fermer la modal d'ajout au panier
 
@@ -16,6 +19,13 @@ const ProductListRow = ({ product_id, nom, reference, price, comment = "", activ
     const toggleAddToCartModal = () => {
         setIsAddToCartModalOpen(!isAddToCartModalOpen);
     };
+
+    const isDispoVege = () => {
+        if (specifications.some(spec => spec.value === "Végétarien")) {
+            return feuille;
+        }
+        return croixRouge;
+    }
 
     const removeProductToCart = async () => {
         console.log('removeProductToCart');
@@ -40,19 +50,25 @@ const ProductListRow = ({ product_id, nom, reference, price, comment = "", activ
 
     return (
         <div className={`${active === false ? 'bg-red-300' : 'bg-[#ffffff]'} border shadow rounded-md h-auto p-4`}>
-            <div className={`grid gap-4 text-center ${userRole === 'viewer' ? 'grid-cols-11' : 'grid-cols-12'}`}>
-                <div className="hidden md:block col-span-2 overflow-auto">{nom}</div>
-                <div className={`${userRole === 'viewer' ? 'col-span-4' : 'col-span-3'}  md:col-span-2 overflow-auto`}>
-                    <a href={`https://www.google.com/search?q=${reference}`} target="_blank" rel="noopener noreferrer">{reference}</a>
+            <div className={`grid gap-4 text-center grid-cols-6`}>
+                <div className="hidden md:block col-span-1 overflow-auto justify-center">
+                    <img src={imageUrl} alt={nom} className="w-32 h-24 object-cover"/>
                 </div>
-
-                {userRole !== 'viewer' && (
-                    <div className="md:col-span-1 col-span-2 overflow-auto">
-                        <div>{price} €</div>
-
-                    </div>
-                )}
-
+                <div className="md:col-span-1 col-span-2 flex items-center justify-center overflow-auto">
+                    <a className="font-bold" href={`https://www.google.com/search?q=${nom}`} target="_blank" rel="noopener noreferrer">
+                        {nom}
+                    </a>
+                </div>
+                <div className="hidden flex justify-center m-auto md:block col-span-2 overflow-auto">
+                    <img
+                      src={isDispoVege()}
+                      alt="végétarien"
+                      className="h-6 w-6"
+                    />
+                </div>
+                <div className="md:col-span-1 flex col-span-2 items-center justify-center overflow-auto">
+                    <div>{price} €</div>
+                </div>
                 <div
                   className="md:col-span-1 col-span-2 flex flex-col md:flex-row md:gap-2 items-center justify-center relative">
                     {comment !== "" && (
