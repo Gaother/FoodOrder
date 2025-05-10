@@ -3,7 +3,7 @@ import { FaExclamationTriangle, FaTimes, FaCartArrowDown, FaCartPlus } from 'rea
 import api from '../../api/api';
 import AddProductToCartModal from './new-product-modal/AddToCartModal'; // Assurez-vous d'importer la modal
 
-const ProductListRow = ({ product_id, nom, reference, price, comment = "", active, userRole, specifications }) => {
+const ProductListRow = ({ product_id, nom, reference, price, comment = "", active, userRole, specifications, imageUrl }) => {
     const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
     const [isAddToCartModalOpen, setIsAddToCartModalOpen] = useState(false); // État pour ouvrir/fermer la modal d'ajout au panier
 
@@ -41,11 +41,11 @@ const ProductListRow = ({ product_id, nom, reference, price, comment = "", activ
     return (
         <div className={`${active === false ? 'bg-red-300' : 'bg-[#ffffff]'} border shadow rounded-md h-auto p-4`}>
             <div className={`grid gap-4 text-center grid-cols-6`}>
-                <div className="hidden md:block col-span-1 overflow-auto">
-                    <img src={'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.futura-sciences.com%2Ftech%2Fdossiers%2Ftechnologie-photo-numerique-capteur-image-773%2F&psig=AOvVaw1hGv8vcsfPaSeiLE9gIUow&ust=1746953997268000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCND7xPbEmI0DFQAAAAAdAAAAABAE'} alt={nom} className="w-16 h-16 object-cover"/>
+                <div className="hidden md:block col-span-1 overflow-auto justify-center">
+                    <img src={imageUrl} alt={nom} className="w-32 h-24 object-cover"/>
                 </div>
                 <div className="md:col-span-1 col-span-2 overflow-auto">
-                    <a href={`https://www.google.com/search?q=${nom}`} target="_blank" rel="noopener noreferrer">
+                    <a className="font-bold" href={`https://www.google.com/search?q=${nom}`} target="_blank" rel="noopener noreferrer">
                         {nom}
                     </a>
                 </div>

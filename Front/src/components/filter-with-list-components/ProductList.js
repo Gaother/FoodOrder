@@ -50,6 +50,7 @@ const ProductList = ({ products, handleEditProduct, loading }) => {
                     active={product.active}
                     specifications={product.specifications}
                     userRole={userRole}
+                    imageUrl={product.imageUrl}
                 />
             </div>
         ));

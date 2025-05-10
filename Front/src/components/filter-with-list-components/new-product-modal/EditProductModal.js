@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../../api/api';
 import { FaPlus, FaTrash, FaCheck, FaTimes, FaExclamationTriangle } from 'react-icons/fa';
+import ImageUploader from "../../user-profile-components/ImageUploader";
 
 const EditProductModal = ({ product, onClose, onEdit }) => {
   const [brands, setBrands] = useState([]);
@@ -8,12 +9,13 @@ const EditProductModal = ({ product, onClose, onEdit }) => {
   const [values, setValues] = useState({});
   const [selectedValues, setSelectedValues] = useState(product.specifications.map(spec => spec._id)); // IDs des valeurs spécifiées du produit
   const [selectedSpecification, setSelectedSpecification] = useState(null);
+  const [image, setImage] = useState(product.imageUrl || '');
   const [productData, setProductData] = useState({
     reference: product.reference || '',
     nom: product.nom || '',
     price: product.price || '',
     comment: product.comment || '',
-    active: product.active
+    active: product.active,
   });
   const [errorMessage, setErrorMessage] = useState('');
   const [searchTerm, setSearchTerm] = useState(''); // Local search term
@@ -85,6 +87,7 @@ const EditProductModal = ({ product, onClose, onEdit }) => {
 
     const body = {
       ...productData,
+      imageUrl: image,
       specifications: selectedValues // Envoyer les IDs de valeurs sélectionnées
     };
 
@@ -197,6 +200,9 @@ const EditProductModal = ({ product, onClose, onEdit }) => {
                 />
               </div>
             </div>
+
+            {/* Image Upload */}
+            <ImageUploader image={image} setImage={setImage} />
 
             {/* Bouton Actif/Inactif */}
             <div className="mb-4">
