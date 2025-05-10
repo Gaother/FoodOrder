@@ -107,8 +107,8 @@ const OrderItemComponent = ({ order, onStatusChange }) => {
           <p className="text-lg text-gray-600">{order.user.phone}</p>
         </div>
         <div className="lg:w-2/6 lg:text-center flex flex-col">
-          <p className="text-lg text-gray-600">
-            {order.dateLivraison ? formatDate(new Date(order.dateLivraison)): 'N/A'} {/*A CHANGER PAR LA DATE DE LIVRAISON*/}
+          <p className="text-lg text-gray-600 font-bold">
+            {order.dateLivraison ? formatDate(new Date(order.dateLivraison)): 'N/A'}
           </p>
           <p className="text-lg text-gray-600">
             {order.lieuLivraison ? order.lieuLivraison : 'N/A'}

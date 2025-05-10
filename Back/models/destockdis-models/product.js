@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ProductSchema = new Schema({
-  // MARQUE	- EAN	- REFERENCE	- DÉSIGNATION - PRIX UNITAIRE HT -	FAMILLE 1	- FAMILLE 3	- STOCK	-- DATE DE RECEPTTION	COMMANDE
   reference: {
     type: String,
     required: true,
@@ -28,7 +27,9 @@ const ProductSchema = new Schema({
   comment : {
     type: String
   },
-
+  imageUrl:{
+    type: String,
+  },
   specifications : [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'productSpecificationsValue'
@@ -84,6 +85,9 @@ ProductSchema.pre('save', function (next) {
     if (this.comment) {
       this.comment = forceUTF8(this.comment);
       this.comment = capitalizeString(this.comment);
+    }
+    if (this.imageUrl) {
+      this.imageUrl = forceUTF8(this.imageUrl);
     }
     next();
   } catch (error) {
