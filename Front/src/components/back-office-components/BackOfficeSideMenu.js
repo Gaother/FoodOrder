@@ -34,7 +34,7 @@ const Menu = () => {
             </button>
 
             {/* Menu latéral */}
-            <nav className={`bg-black p-4 w-80 md:w-48 flex flex-col gap-1 fixed h-full z-40 transform ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 transition-transform duration-300 ease-in-out`}>
+            <nav className={`bg-[#3C3333] p-4 w-80 md:w-48 flex flex-col gap-1 fixed h-full z-40 transform ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 transition-transform duration-300 ease-in-out`}>
                 <Link 
                     to="/admin/orders"
                     className={`whitespace-nowrap px-3 py-2 rounded-md text-sm font-medium flex items-center ${isActiveLink('/admin/orders') ? 'bg-yellow-500 text-black border-yellow-500' : 'text-white hover:bg-yellow-600'}`}

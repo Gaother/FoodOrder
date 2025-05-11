@@ -14,7 +14,7 @@ const HomePage = () => {
 
   return (
     <>
-      <div className="bg-gray-100 flex flex-col justify-between" style={{ minHeight: "84vh" }}>
+      <div className="bg-[#FFFBF3] flex flex-col justify-between" style={{ minHeight: "84vh" }}>
         <FilterAndProductList key={refreshKey} onEdit={handleRefresh}/>
         <FooterTrust/>
       </div>

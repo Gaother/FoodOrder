@@ -95,7 +95,7 @@ const AddProductToCartModal = ({ product, onClose }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 overflow-y-auto h-full w-full z-50 flex justify-center items-center" onClick={(e) => e.target === e.currentTarget && onClose()}>
       <div className="relative my-4 mx-auto w-11/12 md:max-w-md lg:max-w-lg shadow-lg rounded-md bg-white">
-        <div className="bg-blue-500 w-full h-12 rounded-t-md flex justify-between items-center p-2">
+        <div className="bg-[#C60C30] w-full h-12 rounded-t-md flex justify-between items-center p-2">
           <h3 className="text-lg leading-6 font-medium text-white ml-2">Ajouter au panier</h3>
           <button
             onClick={onClose}
@@ -171,7 +171,7 @@ const AddProductToCartModal = ({ product, onClose }) => {
           <div className="flex justify-between mt-6 gap-8">
             <button
               onClick={onClose}
-              className="bg-gray-600 text-white py-2 px-4 rounded-md"
+              className="bg-[#C60C30] text-white py-2 px-4 rounded-md"
             >
               Annuler
             </button>
@@ -179,7 +179,7 @@ const AddProductToCartModal = ({ product, onClose }) => {
             <button
               disabled={!canValidate}
               onClick={addProductToCart}
-              className={`bg-green-600 text-white py-2 px-4 rounded-md flex items-center gap-2 ${!canValidate ? 'opacity-50 cursor-not-allowed' : ''}`}
+              className={`bg-[#3A8D35] text-white py-2 px-4 rounded-md flex items-center gap-2 ${!canValidate ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
               {isLoading ? <CircularLoadingComponent /> : <><FaShoppingBasket /> Ajouter au panier</>}
             </button>

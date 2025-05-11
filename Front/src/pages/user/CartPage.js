@@ -121,11 +121,11 @@ const CartPage = () => {
 
     if (isLoading) {
         return (
-            <div className="flex flex-col justify-center items-center bg-gray-100" style={{ minHeight: "84vh" }}>
+            <div className="flex flex-col justify-center items-center bg-[#FFFBF3]" style={{ minHeight: "84vh" }}>
                 <div className="mb-4">
-                    <FaShoppingCart className="text-yellow-500 text-6xl mx-auto" />
+                    <FaShoppingCart className="text-[#C60C30] text-6xl mx-auto" />
                 </div>
-                <Loading color='orange'/>
+                <Loading color='#C60C30'/>
             </div>
         );
     }

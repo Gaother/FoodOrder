@@ -100,24 +100,26 @@ const ProfileOrderView = ({order, changeOrder}) => {
                     <div className="flex flex-col w-full items-center">
                         {error && errorId === item.product._id && <p className="text-sm text-red-500 w-full">{error}</p>}
                     </div>
-                    <div className="flex flex-row items-center">
+                    <div className="flex flex-row gap-4 items-center">
                         <div className="flex flex-col space-y-1">
-                            <p className="text-base font-semibold text-gray-900">{item.product.designation}</p>
-                            <p className="text-sm text-gray-500">Marque: {item.product.brand.brand}</p>
-                            <p className="text-sm text-gray-500">Réf: {item.product.reference}</p>
-                            <p className="text-sm text-gray-500">EAN: {item.product.ean}</p>
+                            <p className="text-base font-semibold text-gray-900">{item.product.nom}</p>
+                            {item.specifications.map(((spec, index) => (
+                              <div key={index} className="flex items-center">
+                                <p className="text-sm text-gray-500">{spec.nameParent} : {spec.value}</p>
+                              </div>
+                            )))}
                             <p className="text-sm text-gray-500">Prix unitaire: {item.price} €</p>
                         </div>
                         <div className="flex flex-col items-center space-y-3">
                             <div className="flex items-start space-x-3">
                                 {/* Bouton "-" pour diminuer la quantité */}
-                                {!order.adminValidated && !order.adminCanceled && !order.userCanceled && <button
+                                {/*{!order.adminValidated && !order.adminCanceled && !order.userCanceled && <button
                                 onClick={() => removeProductQuantityToCart(item.product._id, item.quantity, 1)}
                                 className="bg-gray-200 hover:bg-gray-300 text-gray-800 p-2 rounded-full transition"
                                 disabled={item.quantity <= 0}
                                 >
                                 <FaMinus />
-                                </button>}
+                                </button>}*/}
             
                                 {/* Champ pour afficher la quantité */}
                                 <span className="text-lg font-semibold border-gray-300 border-2 py-1 px-4 text-center rounded-md">
@@ -125,20 +127,20 @@ const ProfileOrderView = ({order, changeOrder}) => {
                                 </span>
             
                                 {/* Bouton "+" pour augmenter la quantité */}
-                                {!order.adminValidated && !order.adminCanceled && !order.userCanceled && <button
+                                {/*{!order.adminValidated && !order.adminCanceled && !order.userCanceled && <button
                                 onClick={() => addProductQuantityToCart(item.product._id, item.quantity, 1)}
                                 className="bg-gray-200 hover:bg-gray-300 text-gray-800 p-2 rounded-full transition"
                                 >
                                 <FaPlus />
-                                </button>}
+                                </button>}*/}
                             </div>
                             {/* Bouton pour supprimer le produit */}
-                            {!order.adminValidated && !order.adminCanceled && !order.userCanceled && <button
+                            {/*{!order.adminValidated && !order.adminCanceled && !order.userCanceled && <button
                                 onClick={() => removeProductFromCart(item.product._id, item.quantity)}
                                 className="text-red-500 hover:text-red-700 transition mt-2"
                                 >
                                 <FaTrash />
-                            </button>}
+                            </button>}*/}
                         </div>
                     </div>
                   </li>

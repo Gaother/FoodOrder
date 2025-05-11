@@ -2,7 +2,7 @@ import React from 'react';
 
 const TrustIcons = () => {
   return (
-    <div className="bg-white py-8">
+    <div className="bg-[#FFFBF3] py-8">
       <div className="container mx-auto">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-5 text-center px-16">
           <div className="trust text-center">

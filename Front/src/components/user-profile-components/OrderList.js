@@ -40,7 +40,7 @@ const OrderList = () => {
   const defineStatut = (order) => {
     if (order.adminCanceled === true) {
       return (
-        <div className="flex items-center bg-red-100 text-red-600 rounded-full px-3 py-1">
+        <div className="flex items-center bg-red-100 text-[#C60C30] rounded-full px-3 py-1">
           <FaTimesCircle className="mr-2" />
           Annulée par l'administrateur
         </div>
@@ -59,14 +59,14 @@ const OrderList = () => {
             <FaCheckCircle className="mr-2" />
             Paiement reçu
           </div>
-          <div className="flex self-center mt-2">
+          {/*<div className="flex self-center mt-2">
             <DownloadOrderPdfButton order={order} />
-          </div>
+          </div>*/}
         </>
       );
     } else if (order.userValidated === true) {
       return (
-        <div className="flex items-center bg-blue-100 text-blue-600 rounded-full px-3 py-1">
+        <div className="flex items-center bg-[#FFFBF3] text-[#948C1D] border border-[#948C1D] rounded-full px-3 py-1">
           <FaCheckCircle className="mr-2" />
           Paiement pas encore reçu
         </div>
@@ -121,7 +121,7 @@ const OrderList = () => {
         {orders.map(order => {
           const totalQuantity = order.products.reduce((sum, product) => sum + product.quantity, 0);
           return (
-            <li key={order._id} className="p-6 md:mr-4 bg-white shadow-md rounded-lg hover:shadow-lg transition-shadow duration-300 border-2">
+            <li key={order._id} className="p-6 md:mr-4 bg-[#FFFBF3] shadow-md rounded-lg hover:shadow-lg transition-shadow duration-300 border-2 border-[#948C1D]">
               <div className="flex flex-col justify-between items-start w-full">
                 <div className="flex justify-between items-center w-full">
                   <div>
@@ -156,7 +156,7 @@ const OrderList = () => {
                         className={`py-1 px-2 mt-2 rounded-md transition font-semibold ${
                           order.adminValidated || order.adminCanceled || order.userCanceled
                           ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                          : 'bg-red-500 hover:bg-red-600 text-white'
+                          : 'bg-[#C60C30] hover:bg-red-600 text-white'
                         }`}
                         disabled={order.adminValidated || order.adminCanceled || order.userCanceled}
                         >
