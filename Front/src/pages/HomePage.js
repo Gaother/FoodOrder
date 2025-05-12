@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
 import { AuthContext } from '../components/AuthContext';
-import HomePageForProComponents from '../components/HomePageForProComponents';
 import FooterTrust from '../components/FooterTrustComponents';
 import FilterAndProductList from '../components/filter-with-list-components/FilterAndProductList';
 import GuestMessage from '../components/GuestMessage'; // Importer le nouveau composant
@@ -15,13 +14,8 @@ const HomePage = () => {
 
   return (
     <>
-      <div className="bg-gray-100" style={{ minHeight: "84vh" }}>
-        <HomePageForProComponents/>
-        {userRole === 'guest' ? (
-          <GuestMessage/>
-        ) : (
-          <FilterAndProductList key={refreshKey} onEdit={handleRefresh}/>
-        )}
+      <div className="bg-[#FFFBF3] flex flex-col justify-between" style={{ minHeight: "84vh" }}>
+        <FilterAndProductList key={refreshKey} onEdit={handleRefresh}/>
         <FooterTrust/>
       </div>
     </>

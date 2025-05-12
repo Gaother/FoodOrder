@@ -104,16 +104,17 @@ const NotificationsManager = () => {
 
   return (
     <>
-      <div className="ml-4 flex p-0.5 items-center justify-center bg-yellow-500 text-white rounded-full h-12 w-12 hover:bg-yellow-600">
+      <div className="ml-4 flex p-0.5 items-center justify-center border-4 border-[#948C1D] bg-[#FFFBF3] text-white rounded-full h-12 w-12">
         <div className="relative flex flex-col">
           <div className="flex items-center" onClick={handleToggleNotifications}>
             <FaEnvelope
+              color="#3C3333"
               className={`text-black p-2 h-10 w-10 cursor-pointer ${
                 hasUnreadNotifications ? 'ml-5' : ''
               }`}
             />
             {hasUnreadNotifications && (
-              <span className="relative bottom-3 right-3 h-5 w-5 bg-red-500 text-white text-xs font-bold flex items-center justify-center rounded-full">
+              <span className="relative bottom-3 right-3 h-5 w-5 bg-[#C60C30] text-white text-xs font-bold flex items-center justify-center rounded-full">
                 {unreadOrderNotifications.length +
                   unreadUserNotifications.length +
                   unreadMessageNotifications.length}

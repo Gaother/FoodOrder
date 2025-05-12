@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../../api/api';
 import { FaPlus, FaTrash, FaCheck, FaTimes, FaExclamationTriangle } from 'react-icons/fa';
+import ImageUploader from '../../user-profile-components/ImageUploader';
 
 const CreateProductModal = ({ onClose, onCreate }) => {
   const [specifications, setSpecifications] = useState([]);
@@ -8,6 +9,7 @@ const CreateProductModal = ({ onClose, onCreate }) => {
   const [selectedValues, setSelectedValues] = useState([]); // To store selected value IDs
   const [selectedSpecification, setSelectedSpecification] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
+  const [image, setImage] = useState(null);
   const [searchTerm, setSearchTerm] = useState(''); // Local search term
   const [productData, setProductData] = useState({
     reference: '',
@@ -83,6 +85,7 @@ const CreateProductModal = ({ onClose, onCreate }) => {
 
     const body = {
       ...productData,
+      imageUrl: image,
       specifications: selectedValues // Send only value IDs
     };
 
@@ -183,6 +186,9 @@ const CreateProductModal = ({ onClose, onCreate }) => {
                 />
               </div>
             </div>
+
+            {/* Image Upload */}
+            <ImageUploader image={image} setImage={setImage} />
   
             {/* Specifications and Values */}
             <div className="flex">

@@ -48,7 +48,9 @@ const ProductList = ({ products, handleEditProduct, loading }) => {
                     price={product.price}
                     comment={product.comment}
                     active={product.active}
+                    specifications={product.specifications}
                     userRole={userRole}
+                    imageUrl={product.imageUrl}
                 />
             </div>
         ));
@@ -56,11 +58,12 @@ const ProductList = ({ products, handleEditProduct, loading }) => {
     return (
         <div className='flex flex-col gap-2'>
             <div className="bg-[#ffffff] border shadow rounded-md h-auto p-4">
-                <div className={`grid gap-4 text-center font-bold ${userRole === 'viewer' ? 'grid-cols-11' : 'grid-cols-12'}`}>
-                    <div className="hidden md:block col-span-2">Nom</div>
-                    <div className={`${userRole === 'viewer' ? 'col-span-4' : 'col-span-3'}  md:col-span-2`}>Référence</div>
+                <div className={`grid gap-4 text-center font-bold grid-cols-6 decoration-[#948C1D]`}>
+                    <div className="hidden md:block col-span-1">Image</div>
+                    <div className="md:col-span-1 col-span-2">Nom</div>
+                    <div className="hidden md:block col-span-2">Est disponible en version végé</div>
                     <div className="md:col-span-1 col-span-2">Prix</div>
-                    <div className="col-span-1">Ajouter au panier</div>
+                    <div className="md:col-span-1 col-span-2">Ajouter au panier</div>
                 </div>
             </div>
             {content}

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../../components/AuthContext';
-import HomePageForProComponents from '../../components/HomePageForProComponents';
 import api from '../../api/api';
 
 const LoginRegister = () => {
@@ -35,7 +34,7 @@ const LoginRegister = () => {
   }
 
   const handleEmailChange = (event) => {
-    setEmail(event.target.value);
+    setEmail(event.target.value.trim());
     if (error) setError(''); // Réinitialiser l'erreur lorsque l'utilisateur commence à taper
   };
 
@@ -134,11 +133,10 @@ const LoginRegister = () => {
   const inputStyle = error ? "block w-full p-3 rounded bg-gray-200 border border-red-500 focus:outline-none" : "block w-full p-3 rounded bg-gray-200 border border-transparent focus:outline-none";
 
   return (
-    <div className='flex md:flex-row flex-col min-h-[84vh]'>
-         <HomePageForProComponents className="w-1/2"/>
+    <div className='flex md:flex-row flex-col min-h-[84vh] bg-[#FFFBF3]'>
     <div className="container mx-auto p-8 flex overflow-hidden md:w-1/2 items-center">
-      <div className="max-w-md w-full mx-auto">
-        <h1 className="text-4xl text-left pl-4 mb-8 font-bold border-l-8 border-yellow-500">{isRegister ? 'Inscription' : 'Connexion'}</h1>
+      <div className="max-w-md w-full mx-auto bg-white">
+        <h1 className="text-4xl text-left pl-4 mb-8 font-bold border-l-8 border-[#948C1D]">{isRegister ? 'Inscription' : 'Connexion'}</h1>
 
         <div className="bg-white rounded-lg overflow-hidden shadow-2xl">
           <div className="p-8">
@@ -181,7 +179,7 @@ const LoginRegister = () => {
                   <div className="mb-5">
                     <label htmlFor="role" className="block mb-2 text-sm font-medium text-gray-600">Rôle</label>
                     <select
-                      className="block mb-2 text-sm font-medium text-gray-600"
+                      className='block w-full p-3 rounded bg-gray-200 border focus:outline-none'
                       value={role}
                       onChange={handleRoleChange}>
                       <option value="" disabled selected>Choisissez un rôle</option>
@@ -218,7 +216,7 @@ const LoginRegister = () => {
                 {error && <p className="text-red-500 text-xs italic mt-4">{error}</p>} {/* Afficher le message d'erreur ici */}
               </div>
 
-              <button type="submit" className="w-full p-3 bg-yellow-500 text-white rounded shadow">
+              <button type="submit" className="w-full p-3 bg-[#FFFBF3] border border-[#948C1D] text-[#948C1D] rounded shadow">
                 {isRegister ? 'Inscription' : 'Connexion'}
               </button>
             </form>
@@ -226,12 +224,12 @@ const LoginRegister = () => {
             <div className="mt-4 text-center">
               <button 
                 onClick={() => setIsRegister(!isRegister)} 
-                className="text-indigo-600 hover:underline"
+                className="text-[#E36A88] hover:underline"
                 >
                 {isRegister ? 'Vous avez déjà un compte ? Connectez-vous à la place !' : 'Pas de compte ? Créez-en un'}
               </button>
               <div className="mt-2">
-              <Link to="/reset-password" className="text-indigo-600 hover:underline">
+              <Link to="/reset-password" className="text-[#E36A88] hover:underline">
                   Mot de passe oublié ?
               </Link>
               </div>

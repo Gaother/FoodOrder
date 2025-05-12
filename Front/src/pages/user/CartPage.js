@@ -15,6 +15,7 @@ const CartPage = () => {
   const [prixTotal, setPrixTotal] = useState(0); // Prix total du panier
   const [totalItems, setTotalItems] = useState(0); // Nombre total d'articles
   const [isLoading, setIsLoading] = useState(true);
+  const [canValidate, setCanValidate] = useState(false);
   const [error, setError] = useState(null);
   const [cartError, setCartError] = useState(null);
   const [errorId, setErrorId] = useState(null);
@@ -22,6 +23,10 @@ const CartPage = () => {
   useEffect(() => {
     fetchCartData();
   }, []);
+
+  useEffect(() => {
+    handleCanValidate()
+  }, [dateLivraison, cartData]);
 
   const fetchCartData = async () => {
     try {
@@ -99,8 +104,8 @@ const CartPage = () => {
     }
   };
 
-  const canValidateCart = () => {
-    return cartData.length > 0 && dateLivraison !== '';
+  const handleCanValidate = () => {
+    setCanValidate(cartData.length > 0 && dateLivraison !== '')
   }
 
     const validateActiveCart = async () => {
@@ -116,21 +121,21 @@ const CartPage = () => {
 
     if (isLoading) {
         return (
-            <div className="flex flex-col justify-center items-center bg-gray-100" style={{ minHeight: "84vh" }}>
+            <div className="flex flex-col justify-center items-center bg-[#FFFBF3]" style={{ minHeight: "84vh" }}>
                 <div className="mb-4">
-                    <FaShoppingCart className="text-yellow-500 text-6xl mx-auto" />
+                    <FaShoppingCart className="text-[#C60C30] text-6xl mx-auto" />
                 </div>
-                <Loading color='orange'/>
+                <Loading color='#C60C30'/>
             </div>
         );
     }
 
   if (cartData.length === 0) {
     return (
-        <div className="flex flex-col justify-center items-center bg-gray-100" style={{ minHeight: "84vh" }}>
+        <div className="flex flex-col justify-center items-center bg-[#FFFBF3]" style={{ minHeight: "84vh" }}>
             <div className="text-center p-6 bg-white rounded-lg shadow-lg max-w-md">
                 <div className="mb-4">
-                    <FaShoppingCart className="text-gray-500 text-6xl mx-auto" />
+                    <FaShoppingCart color='3C3333' className="text-gray-500 text-6xl mx-auto" />
                 </div>
                 <h2 className="text-2xl font-bold mb-2">Votre panier est vide</h2>
                 <p className="text-gray-500 mb-6">
@@ -138,7 +143,7 @@ const CartPage = () => {
                 </p>
                 <button
                     onClick={() => navigate('/')}
-                    className="flex w-full items-center justify-center bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-md"
+                    className="flex w-full items-center justify-center bg-[#FFFBF3] border border-[#948C1D] text-[#3C3333] font-bold py-2 px-4 rounded-md"
                 >
                     <FaShoppingBag className="mr-2" />
                     Retourner à la boutique
@@ -166,15 +171,18 @@ return (
                         {error && errorId === item.product._id && <p className="text-sm text-red-500 w-full">{error}</p>}
                     </div>
                   <div className="w-full flex items-center">
-                    <div className="flex flex-col items-start space-y-1">
+                    <div className="w-full flex flex-col items-start space-y-1">
                       <p className="text-base font-semibold text-gray-900">{item.product.nom}</p>
-                      <p className="text-sm text-gray-500">Réf: {item.product.reference}</p>
-                      <p className="text-sm text-gray-500">Piquant: {item.product.spicy ? 'Oui' : 'Non'}</p>
+                      {item.specifications.map(((spec, index) => (
+                        <div key={index} className="flex items-center">
+                          <p className="text-sm text-gray-500">{spec.nameParent} : {spec.value}</p>
+                        </div>
+                      )))}
                       <p className="text-sm text-gray-500">Prix unitaire: {item.price} €</p>
                     </div>
-    
-                    <div className="flex w-full flex-col items-end space-y-3">
-                      <div className="flex flex-col items-center">
+
+                    <div className="flex flex-col items-end space-y-3">
+                    <div className="flex flex-col items-center">
                         <div className="flex items-center space-x-3">
                           {/* Bouton "-" pour diminuer la quantité */}
                           <button
@@ -261,8 +269,8 @@ return (
           </div>
           <button
             onClick={() => validateActiveCart()}
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-md transition"
-            disabled={!canValidateCart()}
+            className={`w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-md transition ${!canValidate ? 'opacity-50 cursor-not-allowed' : ''}`}
+            disabled={!canValidate}
             >
             Valider ma commande
           </button>

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ProductsManagerComponent from '../../../components/filter-with-list-components/FilterAndProductList';
 import CreateProductModal from '../../../components/filter-with-list-components/new-product-modal/CreateProductModal';
-import UpdateProductStockButton from '../../../components/filter-with-list-components/UpdateProductStockButton';
 import { FaTrash, FaPencilAlt, FaTimes, FaCheck, FaPlus, FaExclamationTriangle, FaSearch } from 'react-icons/fa';
 
 const ProductsManager = () => {
@@ -32,7 +31,6 @@ const ProductsManager = () => {
             <h1 className="text-2xl py-7 font-bold text-gray-800">Gérez vos produits</h1>
           </div>
           <div className='flex flex-row'>
-            <UpdateProductStockButton />
             <button onClick={() => setShowModal(true)} className="rounded-md bg-green-500 hover:bg-green-600 p-4 m-4">
               <span className="text-white flex flex-row items-center md:text-nowrap"><FaPlus className='m-0 md:mr-2'/><span className='hidden md:block font-bold text-sm'>Ajouter un nouveau produit</span></span>
             </button>

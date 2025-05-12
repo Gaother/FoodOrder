@@ -1,12 +1,10 @@
 import React from 'react';
 import FooterTrust from '../../components/FooterTrustComponents';
-import HomePageForProComponents from '../../components/HomePageForProComponents';
 
 const ShippingAndReturns = () => {
   return (
     <div className="bg-gray-100" style={{ minHeight: "84vh" }}>
       {/* HomePageForProComponents */}
-      <HomePageForProComponents />
 
       {/* Main Content */}
       <div className="flex justify-center py-8">

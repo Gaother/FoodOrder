@@ -42,7 +42,7 @@ const ActiveFilter = ({ activeFilters, onFilterChange }) => {
           {Object.keys(activeFilters).map((filterKey) => (
             Array.isArray(activeFilters[filterKey]) ? (
               activeFilters[filterKey].map((value) => (
-                <div key={`${filterKey}-${value}`} className="flex items-center bg-yellow-400 text-black text-sm px-2 py-1 rounded-full">
+                <div key={`${filterKey}-${value}`} className="flex items-center bg-[#FFFBF3] border border-[#948C1D] text-[#E36A88] text-sm px-2 py-1 rounded-full">
                   {capitalizeFirstLetter(value)}
                   <button onClick={() => handleRemoveFilterValue(filterKey, value)} className="ml-1 text-red-500">
                     <FaTimes />
@@ -50,7 +50,7 @@ const ActiveFilter = ({ activeFilters, onFilterChange }) => {
                 </div>
               ))
             ) : (
-              <div key={filterKey} className="flex items-center bg-yellow-400 text-black text-sm px-2 py-1 rounded-full">
+              <div key={filterKey} className="flex items-center bg-[#FFFBF3] border border-[#948C1D] text-[#E36A88] text-sm px-2 py-1 rounded-full">
                 {capitalizeFirstLetter(activeFilters[filterKey])}
                 <button onClick={() => handleRemoveFilterValue(filterKey, activeFilters[filterKey])} className="ml-1 text-red-500">
                   <FaTimes />
@@ -60,7 +60,7 @@ const ActiveFilter = ({ activeFilters, onFilterChange }) => {
           ))}
           <button 
             onClick={handleClearAllFilters} 
-            className="absolute bottom-2 right-2 text-red-500 underline"
+            className="absolute bottom-2 right-2 text-[#E36A88] underline"
           >
             Effacer tout
           </button>

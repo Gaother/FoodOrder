@@ -107,8 +107,8 @@ const OrderItemComponent = ({ order, onStatusChange }) => {
           <p className="text-lg text-gray-600">{order.user.phone}</p>
         </div>
         <div className="lg:w-2/6 lg:text-center flex flex-col">
-          <p className="text-lg text-gray-600">
-            {order.dateLivraison ? formatDate(new Date(order.dateLivraison)): 'N/A'} {/*A CHANGER PAR LA DATE DE LIVRAISON*/}
+          <p className="text-lg text-gray-600 font-bold">
+            {order.dateLivraison ? formatDate(new Date(order.dateLivraison)): 'N/A'}
           </p>
           <p className="text-lg text-gray-600">
             {order.lieuLivraison ? order.lieuLivraison : 'N/A'}
@@ -137,7 +137,7 @@ const OrderItemComponent = ({ order, onStatusChange }) => {
 
       {isExpanded && (
         <div className="mt-4">
-          {order.adminValidated && !order.adminCanceled && <div className='mb-4 mr-1'><DownloadOrderPdfButton order={order}/></div>}
+          {/*{order.adminValidated && !order.adminCanceled && <div className='mb-4 mr-1'><DownloadOrderPdfButton order={order}/></div>}*/}
           <div className="flex items-center justify-between border-b-2 border-gray-200 pb-2 mb-2 font-semibold">
             <p className="w-3/6 text-gray-800">Produit</p>
             <p className="w-1/6 text-gray-800">Prix Unitaire</p>
@@ -158,7 +158,11 @@ const OrderItemComponent = ({ order, onStatusChange }) => {
                 <li className="flex justify-between items-center py-4">
                   <div className="w-3/6 flex flex-col">
                     <p className="text-base font-semibold text-gray-900">{item.product.nom}</p>
-                    <p className="text-sm text-gray-500">Réf: {item.product.reference}</p>
+                    {item.specifications.map(((spec, index) => (
+                      <div key={index} className="flex items-center">
+                        <p className="text-sm text-gray-500">{spec.nameParent} : {spec.value}</p>
+                      </div>
+                    )))}
                   </div>
                   <div className="w-1/6 flex justify-start">
                     {editMode === item._id ? (
@@ -196,19 +200,13 @@ const OrderItemComponent = ({ order, onStatusChange }) => {
           {apiError && <p className="text-red-500 mt-2">{apiError}</p>}
 
           <div className="py-2 border-b-2 border-gray-200">
-            <p className="text-lg font-semibold text-gray-900">
-              Total: {order.products.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)} €
-            </p>
-            <p className="text-md font-semibold text-gray-900">
-              Total des produits: {order.products.reduce((total, item) => total + item.quantity, 0)}
-            </p>
-            <p className="text-md font-semibold text-gray-900">
-              Total des références: {order.products.length}
-            </p>
-            <br/>
             <p className="text-md font-semibold text-gray-900">
               Commentaire: {order.comment ? order.comment : 'Aucun'}
             </p>
+            <p className="text-lg font-semibold text-gray-900">
+              Total: {order.products.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)} €
+            </p>
+            <br/>
           </div>
           <div className="flex gap-4 mt-4">
             <button
@@ -216,14 +214,14 @@ const OrderItemComponent = ({ order, onStatusChange }) => {
               className={`px-4 py-2 rounded-md ${order.adminValidated || order.userCanceled || (order.userValidated === false) || order.adminCanceled ? 'bg-gray-400 text-gray-700 cursor-not-allowed' : 'bg-green-500 text-white'}`}
               disabled={order.adminValidated || order.userCanceled || order.adminCanceled || (order.userValidated === false)}
             >
-              Validate
+              Valider
             </button>
             <button
               onClick={() => handleStatusChange('cancel')}
               className={`px-4 py-2 rounded-md ${order.adminCanceled || order.userCanceled || (order.userValidated === false) ? 'bg-gray-400 text-gray-700 cursor-not-allowed' : 'bg-red-500 text-white'}`}
               disabled={order.adminCanceled || order.userCanceled || (order.userValidated === false)}
             >
-              Cancel
+              Annuler
             </button>
           </div>
         </div>

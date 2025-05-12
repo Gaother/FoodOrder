@@ -75,9 +75,8 @@ const CartSchema = new Schema({
     discount: {
       type: Number
     },
-    spicy: {
-      type: Boolean,
-      default: false
+    specifications: {
+      type: Array,
     },
   }]
 }, { timestamps: true });
