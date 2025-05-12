@@ -149,11 +149,11 @@ const FilterBlock = ({
                   return (
                     <div
                       {...props}
-                      className="relative w-full h-2 rounded bg-gray-300"
+                      className="relative w-full h-1 rounded bg-white"
                     >
                       {/* Barre noire représentant la plage sélectionnée */}
                       <div
-                        className="absolute h-full bg-gray-600 rounded"
+                        className="absolute h-1 bg-[#6F6856] rounded"
                         style={{
                           left: `${left}%`,
                           width: `${width}%`
@@ -166,7 +166,7 @@ const FilterBlock = ({
                 renderThumb={({ props }) => (
                   <div
                     {...props}
-                    className="w-4 h-4 bg-blue-500 rounded-full"
+                    className="w-4 h-4 bg-[#E36A88] rounded-full"
                   />
                 )}
               />

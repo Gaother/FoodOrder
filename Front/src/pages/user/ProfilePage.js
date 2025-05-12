@@ -118,30 +118,30 @@ const handleEditProfile = async () => {
 
   if (isLoading) {
     return (
-        <div className="flex flex-col justify-center items-center bg-gray-100" style={{ minHeight: "84vh" }}>
+        <div className="flex flex-col justify-center items-center bg-[#FFFBF3]" style={{ minHeight: "84vh" }}>
             <div className="mb-4">
-                <FaUser className="text-yellow-500 text-6xl mx-auto" />
+                <FaUser className="text-[#C60C30] text-6xl mx-auto" />
             </div>
-            <Loading color='orange'/>
+            <Loading color='#C60C30'/>
         </div>
     );
 }
 
   return (
-    <div className='flex justify-center bg-gray-100' style={{ minHeight: "83vh" }}>
+    <div className='flex justify-center bg-[#FFFBF3]' style={{ minHeight: "83vh" }}>
       {/* Container with profile and orders */}
       <div className="container mx-auto p-4 md:my-8 bg-white shadow-lg md:rounded-lg flex flex-col md:flex-row max-w-5xl">
         
         {/* Left side: Profile Form */}
         <div className="flex-1 p-4">
           <div className="flex flex-col items-center">
-            <div className="mb-4 bg-yellow-500 w-full py-10 flex items-center justify-center rounded-t-lg">
-              <FaUser className="text-white h-16 w-16" />
+            <div className="mb-4 bg-[#FFFBF3] border-2 border-[#948C1D] w-full py-10 flex items-center justify-center rounded-t-lg">
+              <FaUser className="text-[#3C3333] h-16 w-16" />
             </div>
             <div className="w-full flex flex-col p-4">
                 <div className="flex items-center border-b py-2">
                     <FaBriefcase className="text-gray-400 mr-2" />
-                    <span className="p-1">Status: </span>
+                    <span className="p-1">Rôle: </span>
                     <span className="p-1 flex-grow">{userInfo.role}</span> {/* Le rôle est affiché, non modifiable */}
                 </div>
               <div className="flex items-center border-b py-2">
@@ -189,7 +189,7 @@ const handleEditProfile = async () => {
                   className="border-2 rounded-md p-1 flex-grow"
                 />
               </div>
-              { (userInfo.role != "viewer" && userInfo.role != "guest") && ( <><div className="flex items-center border-b py-2 justify-between">
+             {/* <div className="flex items-center border-b py-2 justify-between">
                 <div className='flex items-center'>
                   <FaNewspaper className="text-gray-400 mr-2" />
                   <span className="p-1">Abonné à la newsletter:</span>
@@ -205,8 +205,8 @@ const handleEditProfile = async () => {
                   <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none rounded-full peer-checked:bg-yellow-500 transition-colors duration-300 ease-in-out"></div>
                   <div className="absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform duration-300 ease-in-out peer-checked:translate-x-full"></div>
                 </label>
-              </div>
-              <div className="flex items-center border-b py-2">
+              </div>*/}
+              {/*<div className="flex items-center border-b py-2">
                 <FaEnvelope className="text-gray-400 mr-2" />
                 <span className="p-1">Email de la newsletter: </span>
                 <input
@@ -216,24 +216,24 @@ const handleEditProfile = async () => {
                   onChange={handleInputChange}
                   className="border-2 rounded-md p-1 flex-grow"
                 />
-              </div></>)}
-              { userInfo.role === "superadmin"&& <div className="flex items-center border-b py-2">
+              </div>*/}
+              { userInfo.role === "superadmin" && <div className="flex items-center border-b py-2">
                 <PushNotification checked={editableUserInfo.pushNotificationsIsSubscribe} user={userInfo}/>
               </div>}
             </div>
             <button
               onClick={handleEditProfile}
-              className={`font-bold py-2 px-4 rounded w-full mt-4 ${
-                isUpdated ? 'bg-green-400 text-white' 
-                : hasError ? 'bg-red-400 text-white' 
-                : 'bg-yellow-500 hover:bg-yellow-600 text-white'
+              className={`font-bold py-2 px-4 rounded w-full mt-4 border border-[#948C1D] ${
+                isUpdated ? 'bg-[#3A8D35] text-white' 
+                : hasError ? 'bg-[#C60C30] text-white' 
+                : 'bg-[#FFFBF3] text-[#3C3333]'
               }`}
             >
               Mettre à jour le profil
             </button>
             <button
               onClick={handleLogout}
-              className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded w-full mt-4"
+              className="bg-[#FFFBF3] border border-[#948C1D] text-[#3C3333] font-bold py-2 px-4 rounded w-full mt-4"
             >
               Déconnexion
             </button>
@@ -246,7 +246,7 @@ const handleEditProfile = async () => {
         {/* Right side: Orders */}
         <div className="flex-1 p-4">
           <div className="flex items-center mb-4">
-            <FaShoppingBag className="text-yellow-500 text-2xl mr-2" />
+            <FaShoppingBag className="text-[#C60C30] text-2xl mr-2" />
             <h2 className="text-2xl font-bold">Vos commandes</h2>
           </div>
           <OrderList />

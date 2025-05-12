@@ -33,7 +33,7 @@ const App = () => {
   return (
     <AuthProvider>
       <Router>
-        <div className='pt-16  ' >
+        <div className='pt-16' >
           <Menu />
           <Routes>
             <Route path="/auto-login" element={<AutoLoginPage />} />

@@ -79,7 +79,7 @@ const ProductListRow = ({ product_id, nom, reference, price, comment = "", activ
                     <div>
                         {/* Bouton pour ouvrir la modal d'ajout au panier */}
                         <button onClick={toggleAddToCartModal}
-                                className="bg-blue-500 hover:bg-blue-700 text-white my-2 py-2 px-4 rounded-md">
+                                className="bg-[#C60C30] text-white my-2 py-2 px-4 rounded-md">
                             <FaCartPlus/>
                         </button>
                     </div>

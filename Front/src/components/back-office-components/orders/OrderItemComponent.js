@@ -137,7 +137,7 @@ const OrderItemComponent = ({ order, onStatusChange }) => {
 
       {isExpanded && (
         <div className="mt-4">
-          {order.adminValidated && !order.adminCanceled && <div className='mb-4 mr-1'><DownloadOrderPdfButton order={order}/></div>}
+          {/*{order.adminValidated && !order.adminCanceled && <div className='mb-4 mr-1'><DownloadOrderPdfButton order={order}/></div>}*/}
           <div className="flex items-center justify-between border-b-2 border-gray-200 pb-2 mb-2 font-semibold">
             <p className="w-3/6 text-gray-800">Produit</p>
             <p className="w-1/6 text-gray-800">Prix Unitaire</p>

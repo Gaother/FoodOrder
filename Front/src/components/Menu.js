@@ -5,7 +5,6 @@ import { useLocation } from 'react-router-dom';
 import { FaShoppingCart, FaUser, FaArrowUp } from 'react-icons/fa';
 import NotificationsManager from './notifications-components/NotificationManagerComponent';
 import UserNotificationsManager from './notifications-components/UserNotificationManagerComponent';
-import destockdisSvg from '../assets/destockdis.svg';
 
 
 const Menu = () => {
@@ -49,17 +48,19 @@ const Menu = () => {
 
   return (
     <div className="flex z-100">
-      <nav className="flex justify-between items-center fixed top-0 left-0 right-0 z-10 bg-black p-4">
+      <nav className="flex justify-between items-center fixed top-0 left-0 right-0 z-10 bg-[#3C3333] p-4">
         <div className="flex items-center">
-          {isLoggedIn && <Link to="/"><img src={destockdisSvg} alt="Logo" className="h-12 w-36 mr-4 visible sm:block" /></Link>}
-          {!isLoggedIn && <img src={destockdisSvg} alt="Logo" className="h-12 w-36 mr-4 visible sm:block" />}
-          {isLoggedIn && userRole === "superadmin" && <Link to="/admin/orders" className="text-white px-3 py-2 rounded-md text-lg leading-6 font-bold hover:bg-yellow-600">Admin Dashboard</Link>}
+          {isLoggedIn && <Link to="/"><h1 className="font-bold text-2xl text-[#E36A88] mr-4 visible font-fraunces">Mai's Kitchen</h1></Link>}
+          {!isLoggedIn &&
+            <h1 className="font-bold text-2xl text-[#E36A88] mr-4 visible font-fraunces">Mai's Kitchen</h1>}
+          {isLoggedIn && userRole === "superadmin" &&
+            <Link to="/admin/orders" className="text-white px-3 py-2 rounded-md text-lg leading-6 font-bold">Admin Dashboard</Link>}
         </div>
         <div className="flex items-center">
-          {!isLoggedIn && location.pathname !== "/login" && location.pathname !== "/reset-password" && location.pathname !== "/change-password" && <Link to="/login" className="text-black px-3 py-2 rounded-md text-sm font-medium bg-yellow-500 hover:bg-yellow-600">Se connecter</Link>}
+          {!isLoggedIn && location.pathname !== "/login" && location.pathname !== "/reset-password" && location.pathname !== "/change-password" && <Link to="/login" className="text-black px-3 py-2 rounded-md text-sm font-medium border-3 border-[#948C1D] bg-[#3C3333]">Se connecter</Link>}
           {isLoggedIn &&
-            <Link to="/profile" className="ml-4 flex p-0.5 items-center justify-center bg-yellow-500 text-white rounded-full h-12 w-12 hover:bg-yellow-600">
-              <FaUser color='black' className='p-2 h-full w-full' />
+            <Link to="/profile" className="ml-4 flex p-0.5 items-center justify-center border-4 border-[#948C1D] bg-[#FFFBF3] text-white rounded-full h-12 w-12">
+              <FaUser color='#3C3333' className='p-2 h-full w-full' />
             </Link>
           }
           {isLoggedIn && userRole === "superadmin" ?
@@ -68,9 +69,10 @@ const Menu = () => {
             null
               //<UserNotificationsManager/>
           }
-          <Link to="/cart" className="ml-4 flex p-0.5 items-center justify-center bg-yellow-500 text-white rounded-full h-12 w-12 hover:bg-yellow-600">
-            <FaShoppingCart color='black' className='p-2 h-full w-full' />
-          </Link>
+          {isLoggedIn &&
+          <Link to="/cart" className="ml-4 flex p-0.5 items-center justify-center border-4 border-[#948C1D] bg-[#FFFBF3] rounded-full h-12 w-12"> {/*hover:bg-yellow-600*/}
+            <FaShoppingCart color='#3C3333' className='p-2 h-full w-full' />
+          </Link>}
         </div>
       </nav>
       <div className="mt-4 w-full h-full">

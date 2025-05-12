@@ -93,7 +93,7 @@ const FilterAndProductList = ({ onEdit }) => {
   };
 
   return (
-    <div className="bg-[#f4f4f4] h-auto flex md:flex-row flex-col p-4 gap-4">
+    <div className="bg-[#FFFBF3] h-auto flex md:flex-row flex-col p-4 gap-4">
       <div className="md:w-1/4">
         <Filter
           specifications={specifications}

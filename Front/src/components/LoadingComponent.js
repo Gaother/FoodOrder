@@ -1,7 +1,7 @@
 import React from 'react';
 import { ThreeDots } from 'react-loader-spinner';
 
-const LoadingSpinner = ({ color = "#00BFFF", height = 80, width = 80 }) => {
+const LoadingSpinner = ({ color = "#C60C30", height = 80, width = 80 }) => {
   return (
     <div className="flex justify-center items-center h-20vh">
       <div className="flex justify-center items-center">
