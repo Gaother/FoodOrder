@@ -132,10 +132,10 @@ const CartPage = () => {
 
   if (cartData.length === 0) {
     return (
-        <div className="flex flex-col justify-center items-center bg-gray-100" style={{ minHeight: "84vh" }}>
+        <div className="flex flex-col justify-center items-center bg-[#FFFBF3]" style={{ minHeight: "84vh" }}>
             <div className="text-center p-6 bg-white rounded-lg shadow-lg max-w-md">
                 <div className="mb-4">
-                    <FaShoppingCart className="text-gray-500 text-6xl mx-auto" />
+                    <FaShoppingCart color='3C3333' className="text-gray-500 text-6xl mx-auto" />
                 </div>
                 <h2 className="text-2xl font-bold mb-2">Votre panier est vide</h2>
                 <p className="text-gray-500 mb-6">
@@ -143,7 +143,7 @@ const CartPage = () => {
                 </p>
                 <button
                     onClick={() => navigate('/')}
-                    className="flex w-full items-center justify-center bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-md"
+                    className="flex w-full items-center justify-center bg-[#FFFBF3] border border-[#948C1D] text-[#3C3333] font-bold py-2 px-4 rounded-md"
                 >
                     <FaShoppingBag className="mr-2" />
                     Retourner à la boutique

@@ -104,7 +104,7 @@ const NotificationsManager = () => {
 
   return (
     <>
-      <div className="ml-4 flex p-0.5 items-center justify-center border-4 border-[#948C1D] bg-[#FFFBF3] text-white rounded-full h-12 w-12 hover:bg-yellow-600">
+      <div className="ml-4 flex p-0.5 items-center justify-center border-4 border-[#948C1D] bg-[#FFFBF3] text-white rounded-full h-12 w-12">
         <div className="relative flex flex-col">
           <div className="flex items-center" onClick={handleToggleNotifications}>
             <FaEnvelope

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import destockdisSvg from '../assets/destockdis.svg';
 
 const Footer = () => {
   const scrollToTop = () => {
@@ -11,14 +10,10 @@ const Footer = () => {
     <footer className="bg-[#3C3333] text-white">
       <div className="container mx-auto py-4">
         <div className="flex flex-col md:flex-row items-center justify-between">
-          <div className="flex-shrink-0 w-full md:w-1/4 md:mb-0 mb-0">
+          <div className="flex-shrink-0 w-full h-12 md:w-1/4 md:mb-0 mb-0">
             <figure className="object-contain">
               <Link to="/" onClick={scrollToTop}>
-                <img 
-                  src={destockdisSvg}
-                  alt="DestockDis" 
-                  className="h-12 w-36 md:ml-12 ml-6"
-                />
+                <h1 className="font-bold text-3xl text-[#E36A88] mr-4 visible font-fraunces">Mai's Kitchen</h1>
               </Link>
             </figure>
           </div>
