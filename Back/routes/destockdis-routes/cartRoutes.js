@@ -53,7 +53,11 @@ router.post('/product', checkRole(['superadmin', 'epitech', 'quadra', 'autre']),
                 }]
             });
         } else {
-            const existingProductIndex = activeUserCart.products.findIndex(p => p.product.toString() === productID && checkSameSpecification(p.specifications, specifications));
+            const existingProductIndex = activeUserCart
+              .products.findIndex(p =>
+                p.product.toString() === productID
+                && (specifications && checkSameSpecification(p.specifications, specifications) || !specifications) // Check if specifications match
+              );
             if (existingProductIndex !== -1) {
                 // If the product already exists in the cart, update the quantity
                 activeUserCart.products[existingProductIndex].quantity += productQTY;
@@ -608,7 +612,7 @@ router.put('/:id', checkRole(['superadmin']), async (req, res) => {
 });
 
 // Supprimer un produit d'un panier par son ID
-router.delete('/product', checkRole(['superadmin']), async (req, res) => {
+router.delete('/product', async (req, res) => {
     const { productID, productQTY, cartID } = req.body;
     try {
         const CartModel = req.db.model('Cart', Cart.schema);
