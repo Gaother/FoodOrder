@@ -120,18 +120,22 @@ router.post('/filter', async (req, res) => {
 // Créer un nouveau produit
 router.post('/', upload.single('image'), checkRole(['superadmin']), async (req, res) => {
     const { reference, nom, price, reception, comment, specifications } = req.body;
+    let imageUrl = null;
 
     try {
         const ProductModel = req.db.model('Product', Product.schema);
-        const filePath = req.file.path;
 
-        const data = fs.readFileSync(filePath); // Lecture synchrone du fichier
-        const base64Image = data.toString('base64'); // Conversion en base64
-        const mimeType = req.file.mimetype;
+        if (req.file) {
+            const filePath = req.file.path;
 
-        fs.unlinkSync(filePath); // Supprimer le fichier après lecture
+            const data = fs.readFileSync(filePath); // Lecture synchrone du fichier
+            const base64Image = data.toString('base64'); // Conversion en base64
+            const mimeType = req.file.mimetype;
 
-        const imageUrl = `data:${mimeType};base64,${base64Image}`;
+            fs.unlinkSync(filePath); // Supprimer le fichier après lecture
+
+            imageUrl = `data:${mimeType};base64,${base64Image}`;
+        }
 
         const product = await ProductModel.create({
             reference,
@@ -145,6 +149,7 @@ router.post('/', upload.single('image'), checkRole(['superadmin']), async (req, 
 
         res.status(201).json(product);
     } catch (err) {
+        console.log(err)
         console.error(err.message);
         res.status(500).send('Erreur lors de la création du produit');
     }
