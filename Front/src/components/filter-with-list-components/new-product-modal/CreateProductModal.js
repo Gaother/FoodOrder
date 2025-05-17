@@ -79,18 +79,19 @@ const CreateProductModal = ({ onClose, onCreate }) => {
 
   const createProduct = async () => {
     if (!validateFields()) {
-      setErrorMessage('Veuillez remplir tous les champs et sélectionner au moins une valeur pour chaque spécification.');
+      setErrorMessage('Veuillez remplir tous les champs');
       return;
     }
-
-    const body = {
-      ...productData,
-      imageUrl: image,
-      specifications: selectedValues // Send only value IDs
-    };
-
+    const formData = new FormData();
+    for (const key in productData) {
+      formData.append(key, productData[key]);
+    }
+    formData.append('image', image);
+    selectedValues.forEach((valueId) => {
+      formData.append('specifications[]', valueId);
+    })
     try {
-      await api.addProduct(body);
+      await api.addProduct(formData);
       onCreate(); // Refresh the product list
       resetFields(); // Close the modal after creation
     } catch (error) {
