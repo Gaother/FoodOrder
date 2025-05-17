@@ -41,6 +41,13 @@ const ProductListRow = ({ product_id, nom, reference, price, comment = "", activ
         }
     };
 
+    const validImageUrl = () =>  {
+        if (imageUrl === null || imageUrl === undefined || imageUrl === "") {
+            return require('../../assets/placeholder/defaultProduct.png');
+        }
+        return imageUrl;
+    }
+
     // Fonction pour fermer la modal si on clique à l'extérieur de celle-ci
     const handleModalClick = (event) => {
         if (event.target === event.currentTarget) {
@@ -52,7 +59,7 @@ const ProductListRow = ({ product_id, nom, reference, price, comment = "", activ
         <div className={`${active === false ? 'bg-red-300' : 'bg-[#ffffff]'} border shadow rounded-md h-auto p-4`}>
             <div className={`grid gap-4 text-center grid-cols-6`}>
                 <div className="hidden md:block col-span-1 overflow-auto justify-center">
-                    <img src={imageUrl} alt={nom} className="w-32 h-24 object-cover"/>
+                    <img src={validImageUrl()} alt={nom} className="w-32 h-24 object-cover"/>
                 </div>
                 <div className="md:col-span-1 col-span-2 flex items-center justify-center overflow-auto">
                     <a className="font-bold" href={`https://www.google.com/search?q=${nom}`} target="_blank" rel="noopener noreferrer">
