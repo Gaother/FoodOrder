@@ -8,7 +8,7 @@ const EditProductModal = ({ product, onClose, onEdit }) => {
   const [values, setValues] = useState({});
   const [selectedValues, setSelectedValues] = useState(product.specifications.map(spec => spec._id)); // IDs des valeurs spécifiées du produit
   const [selectedSpecification, setSelectedSpecification] = useState(null);
-  const [image, setImage] = useState(product.imageUrl || '');
+  const [image, setImage] = useState(product.imageUrl || null);
   const [productData, setProductData] = useState({
     reference: product.reference || '',
     nom: product.nom || '',
