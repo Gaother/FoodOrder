@@ -151,14 +151,13 @@ const UserManagerComponent = ({ onUserCreated }) => {
                 <table className="min-w-full">
                   <thead className="sticky top-0 bg-white">
                     <tr className='bg-gray-200'>
-                      <th className="w-1/8 px-4 py-2">Nom</th>
-                      <th className="w-1/8 px-4 py-2">Prénom</th>
-                      <th className="w-1/8 px-4 py-2">Société</th>
-                      <th className="w-1/8 px-4 py-2">Email</th>
-                      <th className="w-1/8 px-4 py-2">Phone</th>
-                      <th className="w-1/8 px-4 py-2">MdP</th>
-                      <th className="w-1/8 px-4 py-2">Role</th>
-                      <th className="w-1/8 px-4 py-2 text-center">Actions</th>
+                      <th className="px-4 py-2">Nom</th>
+                      <th className="px-4 py-2">Prénom</th>
+                      <th className="px-4 py-2">Email</th>
+                      <th className="px-4 py-2">Phone</th>
+                      <th className="px-4 py-2">MdP</th>
+                      <th className="px-4 py-2">Role</th>
+                      <th className="px-4 py-2 text-center">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
