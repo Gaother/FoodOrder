@@ -4,12 +4,11 @@ import { FaPlus, FaTrash, FaCheck, FaTimes, FaExclamationTriangle } from 'react-
 import ImageUploader from "../../user-profile-components/ImageUploader";
 
 const EditProductModal = ({ product, onClose, onEdit }) => {
-  const [brands, setBrands] = useState([]);
   const [specifications, setSpecifications] = useState([]);
   const [values, setValues] = useState({});
   const [selectedValues, setSelectedValues] = useState(product.specifications.map(spec => spec._id)); // IDs des valeurs spécifiées du produit
   const [selectedSpecification, setSelectedSpecification] = useState(null);
-  const [image, setImage] = useState(product.imageUrl || '');
+  const [image, setImage] = useState(product.imageUrl || null);
   const [productData, setProductData] = useState({
     reference: product.reference || '',
     nom: product.nom || '',
@@ -84,15 +83,17 @@ const EditProductModal = ({ product, onClose, onEdit }) => {
       setErrorMessage('Veuillez remplir tous les champs et sélectionner au moins une valeur pour chaque spécification.');
       return;
     }
-
-    const body = {
-      ...productData,
-      imageUrl: image,
-      specifications: selectedValues // Envoyer les IDs de valeurs sélectionnées
-    };
+    const formData = new FormData();
+    for (const key in productData) {
+      formData.append(key, productData[key]);
+    }
+    formData.append('image', image);
+    selectedValues.forEach((valueId) => {
+      formData.append('specifications[]', valueId);
+    })
 
     try {
-      await api.updateProduct(product._id, body);
+      await api.updateProduct(product._id, formData);
       onEdit(); // Rafraîchir la liste des produits
       onClose(); // Fermer la modal après la mise à jour
     } catch (error) {

@@ -234,16 +234,31 @@ router.get('/:id', async (req, res) => {
 });
 
 // Mettre à jour un produit par son ID
-router.put('/:id', checkRole(['superadmin']), async (req, res) => {
-    const { reference, nom, price, reception, comment, imageUrl, specifications, active } = req.body;
-
+router.put('/:id', upload.single('image'), checkRole(['superadmin']), async (req, res) => {
+    const { reference, nom, price, reception, comment, specifications, active } = req.body;
+    let imageUrl = null;
     try {
         const ProductModel = req.db.model('Product', Product.schema);
+
+        if (req.file) {
+            const filePath = req.file.path;
+
+            const data = fs.readFileSync(filePath); // Lecture synchrone du fichier
+            const base64Image = data.toString('base64'); // Conversion en base64
+            const mimeType = req.file.mimetype;
+
+            fs.unlinkSync(filePath); // Supprimer le fichier après lecture
+
+            imageUrl = `data:${mimeType};base64,${base64Image}`;
+        }
 
         let product = await ProductModel.findById(req.params.id);
         if (!product) {
             return res.status(404).send('Produit non trouvé');
         }
+
+        console.log('////////////////////////////////////////4', req.body)
+        console.log(nom)
 
         // Mettre à jour les champs
         if (reference) product.reference = reference;
