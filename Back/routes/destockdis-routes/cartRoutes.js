@@ -170,9 +170,14 @@ router.post('/filter', checkRole(['superadmin']), async (req, res) => {
             model: UserModel,
             select: 'firstName lastName email phone'
             })
-            .sort({ createdAt: -1 }) // Sort by createdAt in descending order
             .skip(skip)
             .limit(size);
+
+        carts.sort((a, b) => {
+            if (a.dateLivraison === null) return 1;
+            if (b.dateLivraison === null) return -1;
+            return new Date(a.dateLivraison) - new Date(b.dateLivraison);
+        });
 
         // Return the filtered and paginated carts
         res.status(200).json({ maxPage, carts });
