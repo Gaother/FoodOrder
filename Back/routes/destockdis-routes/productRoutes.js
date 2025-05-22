@@ -257,9 +257,6 @@ router.put('/:id', upload.single('image'), checkRole(['superadmin']), async (req
             return res.status(404).send('Produit non trouvé');
         }
 
-        console.log('////////////////////////////////////////4', req.body)
-        console.log(nom)
-
         // Mettre à jour les champs
         if (reference) product.reference = reference;
         if (nom) product.nom = nom;
@@ -268,8 +265,7 @@ router.put('/:id', upload.single('image'), checkRole(['superadmin']), async (req
         if (comment || comment === "") product.comment = comment;
         if (imageUrl) product.imageUrl = imageUrl;
         if (specifications) product.specifications = specifications;
-        if (active === false) product.active = false;
-        if (active === true) product.active = true;
+        if (active) product.active = active;
 
         await product.save();
         res.json(product);
