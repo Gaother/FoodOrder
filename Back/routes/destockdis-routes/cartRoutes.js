@@ -111,6 +111,10 @@ router.post('/filter', checkRole(['superadmin']), async (req, res) => {
             filterQuery.dateLivraison = { $gte: new Date(dateStart) };
         } else if (dateEnd) {
             filterQuery.dateLivraison = { $lt: new Date(new Date(dateEnd).setDate(new Date(dateEnd).getDate() + 1)) };
+        } else {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            filterQuery.dateLivraison = { $gte: today };
         }
 
         // Filter by userValidated, userCanceled, adminValidated, adminCanceled
@@ -174,8 +178,8 @@ router.post('/filter', checkRole(['superadmin']), async (req, res) => {
             .limit(size);
 
         carts.sort((a, b) => {
-            if (a.dateLivraison === null) return 1;
-            if (b.dateLivraison === null) return -1;
+            if (a.dateLivraison === undefined) return 1;
+            if (b.dateLivraison === undefined) return -1;
             return new Date(a.dateLivraison) - new Date(b.dateLivraison);
         });
 
