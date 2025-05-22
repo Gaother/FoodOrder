@@ -1,18 +1,18 @@
 {
-  "short_name": "Stock DestockDis",
-  "name": "Stock DestockDis",
+  "short_name": "Mai's Kitchen",
+  "name": "Mai's Kitchen",
   "icons": [
     {
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "https://destockdis.com/img/destockdis.svg",
+      "src": "https://food.paolo-sportelli.fr/img/logo.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "https://destockdis.com/img/destockdis.svg",
+      "src": "https://food.paolo-sportelli.fr/img/logo.png",
       "type": "image/png",
       "sizes": "512x512"
     }

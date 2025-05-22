@@ -50,11 +50,18 @@ const Menu = () => {
     <div className="flex z-100">
       <nav className="flex justify-between items-center fixed top-0 left-0 right-0 z-10 bg-[#3C3333] p-4">
         <div className="flex items-center">
-          {isLoggedIn && <Link to="/"><h1 className="font-bold text-2xl text-[#E36A88] mr-4 visible font-fraunces">Mai's Kitchen</h1></Link>}
+          {isLoggedIn && <Link className='flex items-center' to="/">
+            <img src="/logo.png" alt="Logo" className="rounded-full h-12 w-12 mr-2" />
+            <h1 className="font-bold text-2xl text-[#E36A88] mr-4 visible font-fraunces">Mai's Kitchen</h1>
+          </Link>}
           {!isLoggedIn &&
-            <h1 className="font-bold text-2xl text-[#E36A88] mr-4 visible font-fraunces">Mai's Kitchen</h1>}
+            <div className='flex items-center'>
+              <img src="/logo.png" alt="Logo" className="rounded-full h-12 w-12 mr-2"/>
+              <h1 className="font-bold text-2xl text-[#E36A88] mr-4 visible font-fraunces">Mai's Kitchen</h1>
+            </div>}
           {isLoggedIn && userRole === "superadmin" &&
-            <Link to="/admin/orders" className="text-white px-3 py-2 rounded-md text-lg leading-6 font-bold">Admin Dashboard</Link>}
+            <Link to="/admin/orders" className="text-white px-3 py-2 rounded-md text-lg leading-6 font-bold">Admin
+              Dashboard</Link>}
         </div>
         <div className="flex items-center">
           {!isLoggedIn && location.pathname !== "/login" && location.pathname !== "/reset-password" && location.pathname !== "/change-password" && <Link to="/login" className="text-black px-3 py-2 rounded-md text-sm font-medium border-3 border-[#948C1D] bg-[#3C3333]">Se connecter</Link>}
