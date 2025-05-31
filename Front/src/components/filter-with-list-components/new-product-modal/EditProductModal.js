@@ -8,6 +8,7 @@ const EditProductModal = ({ product, onClose, onEdit }) => {
   const [values, setValues] = useState({});
   const [selectedValues, setSelectedValues] = useState(product.specifications.map(spec => spec._id)); // IDs des valeurs spécifiées du produit
   const [selectedSpecification, setSelectedSpecification] = useState(null);
+  const [passedImage, setPassedImage] = useState(product.imageUrl);
   const [image, setImage] = useState(product.imageUrl || null);
   const [productData, setProductData] = useState({
     reference: product.reference || '',
@@ -78,6 +79,10 @@ const EditProductModal = ({ product, onClose, onEdit }) => {
     return reference && nom && price;
   };
 
+  const newImage = () => {
+    return passedImage !== image;
+  }
+
   const updateProduct = async () => {
     if (!validateFields()) {
       setErrorMessage('Veuillez remplir tous les champs et sélectionner au moins une valeur pour chaque spécification.');
@@ -87,7 +92,9 @@ const EditProductModal = ({ product, onClose, onEdit }) => {
     for (const key in productData) {
       formData.append(key, productData[key]);
     }
-    formData.append('image', image);
+    if (newImage()) {
+      formData.append('image', image);
+    }
     selectedValues.forEach((valueId) => {
       formData.append('specifications[]', valueId);
     })
