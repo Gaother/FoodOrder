@@ -99,6 +99,12 @@ const OrderItemComponent = ({ order, onStatusChange }) => {
     return newDate.charAt(0).toUpperCase() + newDate.slice(1);
   }
 
+  const totalQuantity = () => {
+    return order.products.reduce((total, item) => {
+      return total + item.quantity;
+    }, 0);
+  }
+
   return (
     <div className="bg-white p-4 shadow rounded-lg w-full">
       <div className="flex lg:flex-row flex-col justify-between lg:items-center border-gray-200 ">
@@ -118,8 +124,8 @@ const OrderItemComponent = ({ order, onStatusChange }) => {
           <p>
             <span className="text-lg text-gray-600">
               {order.products.length > 1
-                ? order.products.length + ' articles'
-                : order.products?.[0].product.nom}
+                ? totalQuantity() + ' articles'
+                : order.products?.[0].quantity + ' ' + order.products?.[0].product.nom}
             </span>
           </p>
         </div>
