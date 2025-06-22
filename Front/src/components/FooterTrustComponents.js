@@ -19,7 +19,7 @@ const TrustIcons = () => {
           <div className="trust text-center">
             <figure className="flex justify-center">
               <img
-                src={require('../assets/paiementSecu.jpg')}
+                src={require('../assets/langue.png')}
                 alt="Gouts asiatiques authentiques"
                 className="h-12 w-12 object-contain"
               />
