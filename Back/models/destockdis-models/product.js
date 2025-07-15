@@ -34,7 +34,11 @@ const ProductSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'productSpecificationsValue'
   }],
-
+  type : {
+    type: String,
+    required: true,
+    default: 'lunchBoxEpitech'
+  },
   active : {
     type: Boolean,
     required: true,

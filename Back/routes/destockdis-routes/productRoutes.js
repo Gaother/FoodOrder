@@ -7,6 +7,7 @@ const path = require('path');
 const Product = require('../../models/destockdis-models/product');
 const ProductSpecificationsValue = require('../../models/destockdis-models/productSpecificationsValue');
 const ProductSpecifications = require('../../models/destockdis-models/productSpecifications');
+const ProductValidation = require('../../services/Validations/ProductValidation')
 const User = require('../../models/user');
 const checkRole = require('../../middleware/roleMiddleware');
 const userHistoryLogger = require('../../middleware/userHistoryMiddleware');
@@ -71,6 +72,10 @@ router.post('/filter', async (req, res) => {
             ];
         }
 
+        if (filters.type) {
+            filterQuery.type = filters.type
+        }
+
         // Filtrage par spécifications (ex: Sauce, Piquant, etc. dans le body)
         const specificationsFilters = [];
         
@@ -119,10 +124,12 @@ router.post('/filter', async (req, res) => {
 
 // Créer un nouveau produit
 router.post('/', upload.single('image'), checkRole(['superadmin']), async (req, res) => {
-    const { reference, nom, price, reception, comment, specifications } = req.body;
-    let imageUrl = null;
-
     try {
+        //Validation des datas du produit
+        ProductValidation(req.body)
+
+        const { reference, nom, price, reception, comment, specifications, type } = req.body;
+        let imageUrl = null;
         const ProductModel = req.db.model('Product', Product.schema);
 
         if (req.file) {
@@ -136,7 +143,7 @@ router.post('/', upload.single('image'), checkRole(['superadmin']), async (req, 
 
             imageUrl = `data:${mimeType};base64,${base64Image}`;
         }
-
+        console.log('//////////////////////////////////////////////', type)
         const product = await ProductModel.create({
             reference,
             nom,
@@ -144,7 +151,8 @@ router.post('/', upload.single('image'), checkRole(['superadmin']), async (req, 
             reception,
             comment,
             imageUrl,
-            specifications
+            specifications,
+            type
         });
 
         res.status(201).json(product);
@@ -235,7 +243,7 @@ router.get('/:id', async (req, res) => {
 
 // Mettre à jour un produit par son ID
 router.put('/:id', upload.single('image'), checkRole(['superadmin']), async (req, res) => {
-    const { reference, nom, price, reception, comment, specifications, active } = req.body;
+    const { reference, nom, price, reception, comment, specifications, active, type } = req.body;
     let imageUrl = null;
     try {
         const ProductModel = req.db.model('Product', Product.schema);
@@ -266,6 +274,7 @@ router.put('/:id', upload.single('image'), checkRole(['superadmin']), async (req
         if (imageUrl) product.imageUrl = imageUrl;
         if (specifications) product.specifications = specifications;
         if (active) product.active = active;
+        if (type) product.type = type;
 
         await product.save();
         res.json(product);
