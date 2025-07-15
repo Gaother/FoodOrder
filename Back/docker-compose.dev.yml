@@ -1,0 +1,45 @@
+services:
+  food-back:
+    build:
+      context: .
+      dockerfile: dockerfile.dev
+    depends_on:
+      - mongodb
+    environment:
+      MONGODB_URI: mongodb://paolo:paoloMai@mongodb:27017/
+      JWT_SECRET: "@4bG7!fZsP3wH9#M"
+      SESSION_SECRET: Y6n%8kPq@1#4!vTz
+      COOKIE_SECRET: M4%rSfwh8:eAztq
+      CSRF_SECRET: P$rN5o+AZ1H]~Bk
+      DB_URI: mongodb://paolo:paoloMai@mongodb:27017
+      DB_HOST: mongo
+      DB_PORT: 27017
+      DB_USER: paolo
+      DB_PASS: paoloMai
+      SMTP_PASS: "dhsp ufbv vmjd fhrq"
+      SMTP_MAIL: "stock.destockdis@gmail.com"
+      VAPID_PUBLIC_KEY: BH6Kn4hcDhq0fPY1eC5f40MF6gR2b6JIRhdl5rSCWRqZiRTJEqS3NisROYkPOeFiD_J2IKifjbsdb_Sz78IEcQo
+      VAPID_PRIVATE_KEY: Nhld1bsoEH-kvCQ3roVe_wG4yVNRAKhOY-fKkjiS_LA
+    volumes:
+      - ./:/usr/src/api
+      - /usr/src/api/node_modules
+    ports:
+      - "2700:2700"
+    command: npm run dev
+    restart: unless-stopped
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: paolo
+      MONGO_INITDB_ROOT_PASSWORD: paoloMai
+      MONGO_INITDB_DATABASE: foodOrders
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:
