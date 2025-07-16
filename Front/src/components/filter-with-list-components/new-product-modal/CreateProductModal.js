@@ -16,6 +16,7 @@ const CreateProductModal = ({ onClose, onCreate }) => {
     nom: '',
     price: '',
     comment: '',
+    active: [],
   });
 
   // Fetch brands and specifications on mount
@@ -44,7 +45,17 @@ const CreateProductModal = ({ onClose, onCreate }) => {
   };
 
   const handleInputChange = (event) => {
-    const { name, value } = event.target;
+    let { name, value } = event.target;
+    if (name === 'active') {
+      if (productData.active.includes(value)) {
+        value = productData.active.filter(a => a !== value);
+      } else if (value !== '') {
+        value = [...productData.active, value];
+      }
+      if (value === '') {
+        value = [];
+      }
+    }
     setProductData({ ...productData, [name]: value });
   };
 
@@ -70,6 +81,7 @@ const CreateProductModal = ({ onClose, onCreate }) => {
       nom: '',
       price: '',
       comment: '',
+      active: [],
     });
     setSelectedValues([]);
     setSelectedSpecification(null);
@@ -171,6 +183,25 @@ const CreateProductModal = ({ onClose, onCreate }) => {
                 className="border-2 w-full p-2 rounded-md"
                 placeholder="Commentaire"
               />
+            </div>
+
+            {/* Actif pour */}
+            <div className="flex mb-4">
+              <div className="w-1/2">
+                <label className="block text-sm font-bold mb-2">Actif pour</label>
+                <select
+                  name="active"
+                  value={productData.active}
+                  onChange={handleInputChange}
+                  multiple
+                  className="border-2 w-full p-2 rounded-md"
+                >
+                  <option value="">Inactif</option>
+                  <option value="lunchBoxEpitech">Lunch-Box Epitech</option>
+                  <option value="lunchBoxQuadra">Lunch-Box Quadra</option>
+                  <option value="aEmporter">A Emporter</option>
+                </select>
+              </div>
             </div>
   
             {/* Price */}

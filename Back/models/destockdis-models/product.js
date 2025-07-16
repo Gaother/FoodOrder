@@ -34,18 +34,9 @@ const ProductSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'productSpecificationsValue'
   }],
-  type : {
-    type: String,
-    required: true,
-    default: 'lunchBoxEpitech'
-  },
   active : {
-    type: Boolean,
-    required: true,
-    default: true
+    type: Array
   },
- //Famille 1 famille 2 marque nom reference EAN prix stock
-
 
 
   // imageLink: {

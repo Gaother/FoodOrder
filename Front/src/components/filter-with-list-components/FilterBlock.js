@@ -9,9 +9,10 @@ const FilterBlock = ({
   displayType,      // "Fixe" ou "Deroulant"
   selectedFilters = [],  // Liste des filtres sélectionnés, par défaut un tableau vide
   localSearch,      // true ou false
-  onFilterChange    // Fonction de rappel pour signaler les changements au parent
+  onFilterChange,    // Fonction de rappel pour signaler les changements au parent
+  open = false,   // État d'ouverture du bloc, par défaut false
 }) => {
-  const [isOpen, setIsOpen] = useState(displayType === 'Fixe');
+  const [isOpen, setIsOpen] = useState(open || displayType === 'Fixe');
   const [searchTerm, setSearchTerm] = useState('');
   const [rangeValues, setRangeValues] = useState([0, 1]); // Valeurs par défaut initialisées à [0, 1]
   const [minValue, setMinValue] = useState(0); // Minimum initialisé à 0

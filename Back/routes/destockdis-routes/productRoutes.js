@@ -72,8 +72,8 @@ router.post('/filter', async (req, res) => {
             ];
         }
 
-        if (filters.type) {
-            filterQuery.type = filters.type
+        if (filters.active) {
+            filterQuery.active = filters.active;
         }
 
         // Filtrage par spécifications (ex: Sauce, Piquant, etc. dans le body)
@@ -128,7 +128,7 @@ router.post('/', upload.single('image'), checkRole(['superadmin']), async (req, 
         //Validation des datas du produit
         ProductValidation(req.body)
 
-        const { reference, nom, price, reception, comment, specifications, type } = req.body;
+        const { reference, nom, price, reception, comment, specifications, active } = req.body;
         let imageUrl = null;
         const ProductModel = req.db.model('Product', Product.schema);
 
@@ -143,7 +143,7 @@ router.post('/', upload.single('image'), checkRole(['superadmin']), async (req, 
 
             imageUrl = `data:${mimeType};base64,${base64Image}`;
         }
-        console.log('//////////////////////////////////////////////', type)
+
         const product = await ProductModel.create({
             reference,
             nom,
@@ -152,7 +152,7 @@ router.post('/', upload.single('image'), checkRole(['superadmin']), async (req, 
             comment,
             imageUrl,
             specifications,
-            type
+            active
         });
 
         res.status(201).json(product);
@@ -243,11 +243,12 @@ router.get('/:id', async (req, res) => {
 
 // Mettre à jour un produit par son ID
 router.put('/:id', upload.single('image'), checkRole(['superadmin']), async (req, res) => {
-    const { reference, nom, price, reception, comment, specifications, active, type } = req.body;
-    let imageUrl = null;
     try {
+        //Validation des datas du produit
+        ProductValidation(req.body)
+        const { reference, nom, price, reception, comment, specifications, active } = req.body;
+        let imageUrl = null;
         const ProductModel = req.db.model('Product', Product.schema);
-
         if (req.file) {
             const filePath = req.file.path;
 
@@ -259,12 +260,10 @@ router.put('/:id', upload.single('image'), checkRole(['superadmin']), async (req
 
             imageUrl = `data:${mimeType};base64,${base64Image}`;
         }
-
         let product = await ProductModel.findById(req.params.id);
         if (!product) {
             return res.status(404).send('Produit non trouvé');
         }
-
         // Mettre à jour les champs
         if (reference) product.reference = reference;
         if (nom) product.nom = nom;
@@ -274,7 +273,7 @@ router.put('/:id', upload.single('image'), checkRole(['superadmin']), async (req
         if (imageUrl) product.imageUrl = imageUrl;
         if (specifications) product.specifications = specifications;
         if (active) product.active = active;
-        if (type) product.type = type;
+        else product.active = [];
 
         await product.save();
         res.json(product);

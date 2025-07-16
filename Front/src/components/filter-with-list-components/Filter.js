@@ -6,7 +6,7 @@ import SearchBarFilter from './SearchBarFilter';
 import FilterBlock from './FilterBlock';
 import DownloadProductExcelButton from './DownloadProductExcelButton';
 
-const Filter = ({ specifications, maxPrice, minPrice, activeFilters = {}, onFilterChange }) => {
+const Filter = ({ specifications, maxPrice, minPrice, productTypes, activeFilters = {}, onFilterChange }) => {
   const { userRole } = useContext(AuthContext);
   const isMobileOrTablet = /Mobi|Tablet/i.test(navigator.userAgent);
   const [isMenuOpen, setIsMenuOpen] = useState(!isMobileOrTablet); // Par défaut ouvert sur PC
@@ -26,6 +26,16 @@ const Filter = ({ specifications, maxPrice, minPrice, activeFilters = {}, onFilt
     }
     return values.map(v => v.key);
   };
+
+  const getUserPossibleProductTypes = () => {
+    if (userRole === "quadra") {
+      return productTypes.filter(type => type !== "luchBoxEpitech");
+    }
+    if (userRole === "epitech") {
+      return productTypes.filter(type => type !== "luchBoxQuadra");
+    }
+    return productTypes;
+  }
 
   return (
     <div className={`${!isMenuOpen ? 'pt-4' : 'py-4'} flex flex-col bg-[#ffffff] gap-4 border shadow rounded-md h-auto px-4 w-full`} >
@@ -51,6 +61,17 @@ const Filter = ({ specifications, maxPrice, minPrice, activeFilters = {}, onFilt
           searchQuery={activeFilters.search || ''}
           onSearchChange={(value) => onFilterChange('search', value)}
         />
+
+        {/* Product Types */}
+        <FilterBlock
+            type="List"
+            name="Type"
+            data={getUserPossibleProductTypes()}
+            displayType="Deroulant"
+            selectedFilters={activeFilters["type"] || []}
+            onFilterChange={(value) => onFilterChange("type", value)}
+            open
+          />
 
         {/* Prix */}
         {userRole !== "viewer" && <FilterBlock

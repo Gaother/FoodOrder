@@ -14,6 +14,7 @@ const FilterAndProductList = ({ onEdit }) => {
   const [activeFilters, setActiveFilters] = useState({}); // Contient les filtres actifs
   const location = useLocation(); // Utilisé pour lire l'URL actuelle
   const navigate = useNavigate(); // Utilisé pour mettre à jour l'URL
+  const productTypes = ["luchBoxEpitech", "luchBoxQuadra", "aEmporter"]
 
   // Cette fonction extrait les filtres de l'URL au démarrage
   const parseFiltersFromURL = () => {
@@ -99,6 +100,7 @@ const FilterAndProductList = ({ onEdit }) => {
           specifications={specifications}
           maxPrice={maxPrice}
           minPrice={minPrice}
+          productTypes={productTypes}
           activeFilters={activeFilters} // Passer les filtres actifs au composant
           onFilterChange={handleFilterChange} // Passer la fonction pour capturer les filtres
         />

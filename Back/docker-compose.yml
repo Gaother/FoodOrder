@@ -16,6 +16,7 @@ services:
       DB_HOST: mongo
       DB_PORT: 27017
       DB_USER: paolo
+
       DB_PASS: paoloMai
       SMTP_PASS: "dhsp ufbv vmjd fhrq"
       SMTP_MAIL: "stock.destockdis@gmail.com"

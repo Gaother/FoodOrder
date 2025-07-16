@@ -15,7 +15,7 @@ const EditProductModal = ({ product, onClose, onEdit }) => {
     nom: product.nom || '',
     price: product.price || '',
     comment: product.comment || '',
-    active: product.active,
+    active: product.active || []
   });
   const [errorMessage, setErrorMessage] = useState('');
   const [searchTerm, setSearchTerm] = useState(''); // Local search term
@@ -52,7 +52,17 @@ const EditProductModal = ({ product, onClose, onEdit }) => {
   };
 
   const handleInputChange = (event) => {
-    const { name, value } = event.target;
+    let { name, value } = event.target;
+    if (name === 'active') {
+      if (productData.active.includes(value)) {
+        value = productData.active.filter(a => a !== value);
+      } else if (value !== '') {
+        value = [...productData.active, value];
+      }
+      if (value === '') {
+        value = [];
+      }
+    }
     setProductData({ ...productData, [name]: value });
   };
 
@@ -65,13 +75,6 @@ const EditProductModal = ({ product, onClose, onEdit }) => {
     } else {
       setSelectedValues([...selectedValues, valueId]);
     }
-  };
-
-  const toggleActiveStatus = () => {
-    setProductData(prevState => ({
-      ...prevState,
-      active: !prevState.active
-    }));
   };
 
   const validateFields = () => {
@@ -173,11 +176,11 @@ const EditProductModal = ({ product, onClose, onEdit }) => {
               <label className="block text-sm font-bold mb-2">Nom</label>
               <input
                 type="text"
-                name="designation"
+                name="nom"
                 value={productData.nom}
                 onChange={handleInputChange}
                 className="border-2 w-full p-2 rounded-md"
-                placeholder="Désignation"
+                placeholder="Nom"
               />
             </div>
   
@@ -212,15 +215,29 @@ const EditProductModal = ({ product, onClose, onEdit }) => {
             {/* Image Upload */}
             <ImageUploader image={image} setImage={setImage} />
 
-            {/* Bouton Actif/Inactif */}
-            <div className="mb-4">
-              <button
-              type='button'
-                onClick={toggleActiveStatus}
-                className={`w-full p-2 rounded-md text-white ${productData.active ? 'bg-green-500' : 'bg-red-500'}`}
-              >
-                {productData.active ? 'Actif' : 'Inactif'}
-              </button>
+            {/*<div>
+              {productData.active.forEach((type => {
+                <p>{type}</p>
+              }))}
+            </div>*/}
+            {/* Actif pour */}
+            {}
+            <div className="flex mb-4">
+              <div className="w-1/2">
+                <label className="block text-sm font-bold mb-2">Actif pour</label>
+                <select
+                  name="active"
+                  multiple
+                  value={productData.active}
+                  onChange={handleInputChange}
+                  className="border-2 w-full p-2 rounded-md"
+                >
+                  <option value="">Inactif</option>
+                  <option value="lunchBoxEpitech">Lunch-Box Epitech</option>
+                  <option value="lunchBoxQuadra">Lunch-Box Quadra</option>
+                  <option value="aEmporter">A Emporter</option>
+                </select>
+              </div>
             </div>
   
             {/* Specifications and Values */}
