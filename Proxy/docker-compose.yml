@@ -60,6 +60,7 @@ services:
     volumes:
       - ./nginx:/etc/nginx/conf.d
       - /etc/letsencrypt:/etc/letsencrypt:ro
+      - ../../Leaff/leaff-stats/dist:/usr/share/nginx/html:ro
       # - /home/ubuntu/web-api/public:/var/www/public
     networks:
       - nginx-proxy

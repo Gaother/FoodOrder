@@ -14,7 +14,6 @@ services:
       - ./vhost.d:/etc/nginx/vhost.d
       - ./html:/usr/share/nginx/html
       - ./no_limit.conf:/etc/nginx/conf.d/my_proxy.conf:ro
-      - ../../Leaff/leaff-stats/dist:/usr/share/nginx/html:ro
     environment:
       - DEFAULT_HOST=api-intra.cuisinesetfourneaux.com
     networks:
