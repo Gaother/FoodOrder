@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaChevronDown, FaChevronUp, FaCheckCircle, FaTimesCircle, FaExclamationTriangle, FaClock, FaPen, FaCheck, FaTimes } from 'react-icons/fa';
+import { FaChevronDown, FaCommentDots, FaChevronUp, FaCheckCircle, FaTimesCircle, FaExclamationTriangle, FaClock, FaPen, FaCheck, FaTimes } from 'react-icons/fa';
 import DownloadOrderPdfButton from './DownloadOrderPdfButton';
 import api from '../../../api/api';
 
@@ -99,6 +99,12 @@ const OrderItemComponent = ({ order, onStatusChange }) => {
     return newDate.charAt(0).toUpperCase() + newDate.slice(1);
   }
 
+  const totalQuantity = () => {
+    return order.products.reduce((total, item) => {
+      return total + item.quantity;
+    }, 0);
+  }
+
   return (
     <div className="bg-white p-4 shadow rounded-lg w-full">
       <div className="flex lg:flex-row flex-col justify-between lg:items-center border-gray-200 ">
@@ -118,8 +124,8 @@ const OrderItemComponent = ({ order, onStatusChange }) => {
           <p>
             <span className="text-lg text-gray-600">
               {order.products.length > 1
-                ? order.products.length + ' articles'
-                : order.products?.[0].product.nom}
+                ? totalQuantity() + ' articles'
+                : order.products?.[0].quantity + ' ' + order.products?.[0].product.nom}
             </span>
           </p>
         </div>
@@ -128,8 +134,13 @@ const OrderItemComponent = ({ order, onStatusChange }) => {
             {defineStatut(order)}
           </div>
           <div className="flex lg:justify-center items-center">
+            {order.comment && (
+              <div className="mr-4">
+                <FaCommentDots className="text-[#C60C30] text-2xl"/>
+              </div>
+            )}
             <button onClick={toggleExpand} className="bg-gray-200 p-2 rounded-full">
-              {isExpanded ? <FaChevronUp /> : <FaChevronDown />}
+              {isExpanded ? <FaChevronUp/> : <FaChevronDown/>}
             </button>
           </div>
         </div>
@@ -201,7 +212,7 @@ const OrderItemComponent = ({ order, onStatusChange }) => {
 
           <div className="py-2 border-b-2 border-gray-200">
             <p className="text-md font-semibold text-gray-900">
-              Commentaire: {order.comment ? order.comment : 'Aucun'}
+              Commentaire et Allergies: {order.comment ? order.comment : 'Aucun'}
             </p>
             <p className="text-lg font-semibold text-gray-900">
               Total: {order.products.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)} €
